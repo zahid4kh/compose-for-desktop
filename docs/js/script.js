@@ -3,7 +3,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const generateBtn = document.getElementById("generateBtn");
   const generatingOverlay = document.getElementById("generatingOverlay");
 
-  function updatePreview() {
+  const tabButtons = document.querySelectorAll(".tab-button");
+  const tabContents = document.querySelectorAll(".tab-content");
+
+  tabButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      tabButtons.forEach((btn) => btn.classList.remove("active"));
+      tabContents.forEach((content) => content.classList.remove("active"));
+
+      button.classList.add("active");
+
+      const tabId = button.getAttribute("data-tab");
+      document.getElementById(`${tabId}-tab`).classList.add("active");
+    });
+  });
+
+  function updatePreviews() {
     const options = {
       appName:
         document.getElementById("appName").value.trim() || "MyComposeApp",
@@ -24,22 +39,27 @@ document.addEventListener("DOMContentLoaded", function () {
       includeMarkdown: document.getElementById("markdown").checked,
     };
 
-    const previewContent = generateBuildGradlePreview(options);
-    const previewElement = document.getElementById("gradlePreview");
-    previewElement.textContent = previewContent;
-    Prism.highlightElement(previewElement);
+    const gradlePreviewContent = generateBuildGradlePreview(options);
+    const gradlePreviewElement = document.getElementById("gradlePreview");
+    gradlePreviewElement.textContent = gradlePreviewContent;
+    Prism.highlightElement(gradlePreviewElement);
+
+    const settingsPreviewContent = generateSettingsGradlePreview(options);
+    const settingsPreviewElement = document.getElementById("settingsPreview");
+    settingsPreviewElement.textContent = settingsPreviewContent;
+    Prism.highlightElement(settingsPreviewElement);
   }
 
   const inputs = form.querySelectorAll("input");
   inputs.forEach((input) => {
     if (input.type === "checkbox") {
-      input.addEventListener("change", updatePreview);
+      input.addEventListener("change", updatePreviews);
     } else {
-      input.addEventListener("input", updatePreview);
+      input.addEventListener("input", updatePreviews);
     }
   });
 
-  updatePreview();
+  updatePreviews();
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
