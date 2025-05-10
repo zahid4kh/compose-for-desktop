@@ -677,7 +677,7 @@ To build a native distribution for your platform:
 ./gradlew packageDistributionForCurrentOS
 \`\`\`
 
-This will create a platform-specific installer in the \`build/compose/binaries\` directory.
+This will create a platform-specific installer in the \`build/compose/binaries/main-release/{extension}/\` directory.
 
 ## Generated with Compose for Desktop Wizard
 
