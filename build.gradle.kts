@@ -30,7 +30,12 @@ dependencies {
 
 compose.desktop {
     application {
-        mainClass = "MainKt"
+        /*
+        must match the annotation in Main.kt
+        @file:JvmName("Desktop").
+        This also sets the app's dock name on Linux.
+         */
+        mainClass = "Desktop"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Exe)
