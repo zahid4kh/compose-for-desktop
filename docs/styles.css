@@ -44,9 +44,20 @@ body {
 }
 
 .container {
-  max-width: 800px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 1.5rem;
+}
+
+.row {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.form-section {
+  flex: 1;
+  min-width: 0;
 }
 
 header {
@@ -87,20 +98,22 @@ header::before {
   border-radius: 8px;
   padding: 20px;
   margin-top: 20px;
+  height: calc(100% - 60px);
+  min-height: 400px;
+}
+
+.preview-container pre {
+  margin: 0;
+  white-space: pre-wrap;
+  height: calc(100% - 30px);
+  overflow-y: auto;
 }
 
 .preview-container h3 {
   color: #fff;
   margin-top: 0;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   font-size: 1rem;
-}
-
-pre {
-  margin: 0;
-  white-space: pre-wrap;
-  max-height: 400px;
-  overflow-y: auto;
 }
 
 code {
@@ -438,17 +451,18 @@ footer a:hover {
   opacity: 0;
 }
 
-@media (max-width: 768px) {
-  .container {
-    padding: 1rem;
+@media (max-width: 1024px) {
+  .row {
+    flex-direction: column;
+    gap: 1rem;
   }
 
   .form-section {
-    padding: 1.5rem;
+    width: 100%;
   }
 
-  header h1 {
-    font-size: 2rem;
+  .container {
+    max-width: 800px;
   }
 }
 
