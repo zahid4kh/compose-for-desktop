@@ -65,14 +65,8 @@ The wizard creates a customized Kotlin project with:
 For more detailed information, check out [Wiki](https://github.com/zahid4kh/compose-for-desktop/wiki):
 
 - [Architecture Overview](https://github.com/zahid4kh/compose-for-desktop/wiki/Architecture)
-- [Customizing Templates](https://github.com/zahid4kh/compose-for-desktop/wiki/Customizing-Templates)
-- [Adding Dependencies](https://github.com/zahid4kh/compose-for-desktop/wiki/Adding-Dependencies)
 - [Troubleshooting](https://github.com/zahid4kh/compose-for-desktop/wiki/Troubleshooting)
 
-
-## 🤝 Contributing
-
-Contributions are welcome! See our [Contribution Guidelines](https://github.com/zahid4kh/compose-for-desktop/wiki/Contributing) for more information.
 
 ## 📝 License
 
