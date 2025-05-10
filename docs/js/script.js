@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const generateBtn = document.getElementById("generateBtn");
   const generatingOverlay = document.getElementById("generatingOverlay");
 
+  generatingOverlay.classList.add("hidden");
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     generateProject();
