@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compose for Desktop - Project Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Compose for Desktop Wizard</h1>
+        <p>Generate a production-ready Kotlin Compose for Desktop project</p>
+    </header>
+
+    <main>
+        <div class="container">
+            <form id="projectForm">
+                <section class="form-section">
+                    <h2>Project Information</h2>
+                    <div class="form-group">
+                        <label for="appName">Application Name*</label>
+                        <input type="text" id="appName" required placeholder="MyComposeApp">
+                        <small>Used for window title and app name</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="packageName">Package Name*</label>
+                        <input type="text" id="packageName" required placeholder="com.example.myapp">
+                        <small>E.g. com.yourdomain.appname</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectVersion">Version</label>
+                        <input type="text" id="projectVersion" value="1.0.0" placeholder="1.0.0">
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <h2>UI Configuration</h2>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="materialIcons" checked>
+                        <label for="materialIcons">Material Icons Extended</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="windowWidth">Default Window Width (dp)</label>
+                        <input type="number" id="windowWidth" value="800" min="400">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="windowHeight">Default Window Height (dp)</label>
+                        <input type="number" id="windowHeight" value="600" min="300">
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <h2>Additional Dependencies</h2>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="retrofit" checked>
+                        <label for="retrofit">Retrofit + OkHttp (API Client)</label>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="sqldelight" checked>
+                        <label for="sqldelight">SQLDelight (Local Database)</label>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="ktor">
+                        <label for="ktor">Ktor Client</label>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="decompose">
+                        <label for="decompose">Decompose (Navigation)</label>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="imageLoader">
+                        <label for="imageLoader">Image Loading Library</label>
+                    </div>
+                </section>
+
+                <div class="action-buttons">
+                    <button type="submit" id="generateBtn">Generate Project</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="generatingOverlay" class="hidden">
+            <div class="loading-container">
+                <div class="loading-spinner"></div>
+                <p>Generating your project...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>View project on <a href="https://github.com/zahid4kh/compose-for-desktop" target="_blank">GitHub</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
