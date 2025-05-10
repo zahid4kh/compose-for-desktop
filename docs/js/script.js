@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
       includeKtor: document.getElementById("ktor").checked,
       includeDecompose: document.getElementById("decompose").checked,
       includeImageLoader: document.getElementById("imageLoader").checked,
+      includePrecompose: document.getElementById("precompose").checked,
     };
 
     const previewContent = generateBuildGradlePreview(options);
