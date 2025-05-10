@@ -44,9 +44,10 @@ body {
 }
 
 .container {
-  max-width: 1600px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: none;
   padding: 1.5rem;
+  box-sizing: border-box;
 }
 
 .row {
@@ -58,6 +59,11 @@ body {
 .form-section {
   flex: 1;
   min-width: 0;
+}
+
+.form-section:has(.preview-container) {
+  display: flex;
+  flex-direction: column;
 }
 
 header {
@@ -94,12 +100,15 @@ header::before {
 }
 
 .preview-container {
+  flex: 1;
   background: #1e1e1e;
   border-radius: 8px;
   padding: 20px;
   margin-top: 20px;
   height: calc(100% - 60px);
-  min-height: 400px;
+  min-height: 300px;
+  max-height: 400px; /* Set a max height for the preview */
+  overflow: auto;
 }
 
 .preview-container pre {
@@ -463,6 +472,15 @@ footer a:hover {
 
   .container {
     max-width: 800px;
+  }
+
+  .row:nth-child(2) .form-section {
+    height: auto;
+    max-height: none;
+  }
+
+  .preview-container {
+    max-height: 300px;
   }
 }
 
