@@ -3,8 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const generateBtn = document.getElementById("generateBtn");
   const generatingOverlay = document.getElementById("generatingOverlay");
 
-  generatingOverlay.classList.add("hidden");
-
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     generateProject();
@@ -29,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const includeImageLoader = document.getElementById("imageLoader").checked;
 
       if (!appName || !packageName) {
+        generatingOverlay.classList.add("hidden");
         showError("Please fill out all required fields");
         return;
       }
@@ -84,11 +83,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const content = await zip.generateAsync({ type: "blob" });
       saveAs(content, `${appName.toLowerCase().replace(/\s+/g, "-")}.zip`);
+
+      generatingOverlay.classList.add("hidden");
     } catch (error) {
       console.error("Error generating project:", error);
       showError(
         "An error occurred while generating the project. Please try again."
       );
+      generatingOverlay.classList.add("hidden");
     } finally {
       generatingOverlay.classList.add("hidden");
     }
