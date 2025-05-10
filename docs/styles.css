@@ -232,7 +232,7 @@ header::before {
   margin-top: 20px;
   height: calc(100% - 60px);
   min-height: 300px;
-  max-height: 400px;
+  max-height: 500px;
   overflow: auto;
 }
 
