@@ -544,3 +544,14 @@ This project was generated using the [Compose for Desktop Wizard](https://github
 
   folder.file("README.md", content);
 }
+
+async function addGitignoreFile(folder) {
+  try {
+    const content = await fetchTextFile(".gitignore");
+    folder.file(".gitignore", content);
+    return true;
+  } catch (error) {
+    console.error("Error adding .gitignore file:", error);
+    throw error;
+  }
+}
