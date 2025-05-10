@@ -84,6 +84,12 @@
   z-index: 10;
 }
 
+.theme-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+}
+
 .theme-icon {
   font-size: 1.2rem;
 }
@@ -112,6 +118,43 @@
   transition: 0.4s;
 }
 
+[data-theme="dark"] .sun-icon,
+[data-theme="dark"] .moon-icon {
+  fill: white;
+  color: white;
+}
+
+.sun-icon,
+.moon-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: opacity 0.3s ease;
+  z-index: 3;
+  width: 18px;
+  height: 18px;
+  fill: rgb(20, 16, 16);
+  color: rgb(14, 10, 10);
+  pointer-events: none;
+}
+
+.sun-icon {
+  left: 7px;
+  opacity: 1;
+}
+
+.moon-icon {
+  right: 7px;
+  opacity: 0;
+}
+input:checked + .slider .sun-icon {
+  opacity: 0;
+}
+
+input:checked + .slider .moon-icon {
+  opacity: 1;
+}
+
 .slider:before {
   position: absolute;
   content: "";
@@ -119,8 +162,10 @@
   width: 22px;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0);
   transition: 0.4s;
+  z-index: 2;
+  border-radius: 50%;
 }
 
 input:checked + .slider {
@@ -141,6 +186,25 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.github-links {
+  position: absolute;
+  top: 90px;
+  right: 30px;
+  display: flex;
+  gap: 15px;
+  z-index: 10;
+}
+
+.github-links a {
+  color: white;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.github-links a:hover {
+  opacity: 1;
 }
 
 * {
@@ -248,6 +312,60 @@ header::before {
   margin-top: 0;
   margin-bottom: 10px;
   font-size: 1rem;
+}
+
+.preview-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.tab-button {
+  padding: 8px 16px;
+  background-color: var(--border-color);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.tab-button:hover:not(.active) {
+  background-color: #d0d0d0;
+}
+
+.tab-button.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+[data-theme="dark"] .tab-button {
+  background-color: #333;
+}
+
+[data-theme="dark"] .tab-button:hover:not(.active) {
+  background-color: #444;
+}
+
+.tab-content {
+  display: none;
+  animation: tabFadeIn 0.3s ease;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@keyframes tabFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 code {
@@ -583,6 +701,18 @@ footer a:hover {
 .hidden {
   display: none !important;
   opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+  }
+
+  .github-links {
+    top: 50px;
+    right: 10px;
+  }
 }
 
 @media (max-width: 1024px) {
