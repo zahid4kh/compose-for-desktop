@@ -97,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
         includeKtor,
         includeDecompose,
         includeImageLoader,
+        includePrecompose,
       });
 
       await addSettingsGradle(rootFolder, { appName });
