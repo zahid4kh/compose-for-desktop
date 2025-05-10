@@ -34,7 +34,14 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2")
-    implementation("io.insert-koin:koin-core:4.0.3")
+
+    // Koin for dependency injection
+    implementation("io.insert-koin:koin-core:4.0.3")`;
+
+  if (options.includePrecompose) {
+    content += `
+    // PreCompose for navigation
+    implementation("moe.tlaster:precompose:1.7.0-alpha03")
 `;
 
   if (options.includeRetrofit) {
