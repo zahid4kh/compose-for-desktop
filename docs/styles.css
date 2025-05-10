@@ -39,6 +39,110 @@
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="number"] {
+  background-color: #2a2a2a;
+  color: var(--text-color);
+  border-color: #444;
+}
+
+[data-theme="dark"] input[type="text"]:hover,
+[data-theme="dark"] input[type="number"]:hover {
+  border-color: var(--accent-color);
+}
+
+[data-theme="dark"] input[type="text"]:focus,
+[data-theme="dark"] input[type="number"]:focus {
+  background-color: #121212;
+}
+
+[data-theme="dark"] .checkbox-group input[type="checkbox"] {
+  border-color: #555;
+}
+
+[data-theme="dark"] footer,
+[data-theme="dark"] header {
+  background: linear-gradient(135deg, #394d9e, #641396);
+}
+
+[data-theme="dark"] .loading-container {
+  background-color: var(--card-color);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .preview-container code {
+  filter: brightness(1.1);
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+}
+
+.theme-icon {
+  font-size: 1.2rem;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: var(--accent-color);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--accent-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(30px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -122,13 +226,13 @@ header::before {
 
 .preview-container {
   flex: 1;
-  background: #1e1e1e;
+  background: var(--code-bg);
   border-radius: 8px;
   padding: 20px;
   margin-top: 20px;
   height: calc(100% - 60px);
   min-height: 300px;
-  max-height: 400px; /* Set a max height for the preview */
+  max-height: 400px;
   overflow: auto;
 }
 
@@ -140,7 +244,7 @@ header::before {
 }
 
 .preview-container h3 {
-  color: #fff;
+  color: var(--code-text);
   margin-top: 0;
   margin-bottom: 10px;
   font-size: 1rem;
