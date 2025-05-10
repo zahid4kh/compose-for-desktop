@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
       includeImageLoader: document.getElementById("imageLoader").checked,
       includePrecompose: document.getElementById("precompose").checked,
       includeSentry: document.getElementById("sentry").checked,
+      includeMarkdown: document.getElementById("markdown").checked,
     };
 
     const previewContent = generateBuildGradlePreview(options);
@@ -64,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const includeImageLoader = document.getElementById("imageLoader").checked;
       const includePrecompose = document.getElementById("precompose").checked;
       const includeSentry = document.getElementById("sentry");
+      const includeMarkdown = document.getElementById("markdown").checked;
 
       if (!appName || !packageName) {
         generatingOverlay.classList.add("hidden");
@@ -102,6 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
         includeImageLoader,
         includePrecompose,
         includeSentry,
+        includeMarkdown,
       });
 
       await addSettingsGradle(rootFolder, { appName });

@@ -52,6 +52,13 @@ dependencies {
 `;
   }
 
+  if (options.includeMarkdown) {
+    content += `
+    // Markdown renderer
+    implementation("com.mikepenz:multiplatform-markdown-renderer:0.32.0")
+`;
+  }
+
   if (options.includeRetrofit) {
     content += `
     // Retrofit for API calls
@@ -206,6 +213,13 @@ dependencies {
     content += `
     // Sentry for error tracking
     implementation("io.sentry:sentry:8.8.0")
+`;
+  }
+
+  if (options.includeMarkdown) {
+    content += `
+    // Markdown renderer
+    implementation("com.mikepenz:multiplatform-markdown-renderer:0.32.0")
 `;
   }
 
