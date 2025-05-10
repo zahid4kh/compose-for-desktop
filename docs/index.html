@@ -20,12 +20,21 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-kotlin.min.js"></script>
+    <script src="js/theme.js"></script>
 </head>
 
 <body>
     <header>
         <h1>Compose for Desktop Wizard</h1>
         <p>Generate a production-ready Kotlin Compose for Desktop project in seconds</p>
+        <div class="theme-toggle">
+            <span class="theme-icon">☀️</span>
+            <label class="switch">
+                <input type="checkbox" id="themeToggle">
+                <span class="slider round"></span>
+            </label>
+            <span class="theme-icon">🌙</span>
+        </div>
     </header>
 
     <main>
