@@ -359,47 +359,6 @@ fun main() = application {
   folder.file("Main.kt", content);
 }
 
-// App.kt
-async function addAppFile(folder, options) {
-  const content = `import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import theme.AppTheme
-
-
-@Composable
-@Preview
-fun App(
-    viewModel: MainViewModel
-) {
-    val uiState by viewModel.uiState.collectAsState()
-    AppTheme(darkTheme = uiState.darkMode) {
-        // Your app content here
-    }
-}`;
-
-  folder.file("App.kt", content);
-}
-
-// AppModule.kt
-async function addAppModuleFile(folder, options) {
-  const content = `import org.koin.dsl.module
-
-val appModule = module {
-    single { Database() }
-    single { MainViewModel(get()) }
-}`;
-
-  folder.file("AppModule.kt", content);
-}
-
 // Database.kt
 async function addDatabaseFile(folder, options) {
   const content = `import kotlinx.coroutines.Dispatchers
@@ -443,64 +402,6 @@ class Database {
 }`;
 
   folder.file("Database.kt", content);
-}
-
-// MainViewModel.kt
-async function addMainViewModelFile(folder, options) {
-  const content = `import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-
-class MainViewModel(
-    private val database: Database,
-) {
-    private val _uiState = MutableStateFlow(UiState())
-    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
-
-    private val scope = CoroutineScope(Dispatchers.Main)
-
-    init {
-        scope.launch {
-            val settings = database.getSettings()
-            _uiState.value = _uiState.value.copy(
-                darkMode = settings.darkMode,
-            )
-        }
-    }
-
-    fun toggleDarkMode() {
-        val newDarkMode = !_uiState.value.darkMode
-        _uiState.value = _uiState.value.copy(darkMode = newDarkMode)
-
-        scope.launch {
-            val settings = database.getSettings()
-            database.saveSettings(settings.copy(darkMode = newDarkMode))
-        }
-    }
-
-    data class UiState(
-        val darkMode: Boolean = false,
-        val isLoading: Boolean = false
-    )
-}`;
-
-  folder.file("MainViewModel.kt", content);
-}
-
-// Models.kt
-async function addModelsFile(folder, options) {
-  const content = `import kotlinx.serialization.Serializable
-import java.io.File
-
-@Serializable
-data class AppSettings(
-    val darkMode: Boolean = false
-)`;
-
-  folder.file("Models.kt", content);
 }
 
 // README.md
