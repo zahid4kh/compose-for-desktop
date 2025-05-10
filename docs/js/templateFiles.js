@@ -8,7 +8,13 @@ plugins {
     kotlin("jvm") version "2.1.20"
     id("org.jetbrains.compose")
     id("org.jetbrains.kotlin.plugin.compose")
-    kotlin("plugin.serialization") version "2.1.20"
+    kotlin("plugin.serialization") version "2.1.20"`;
+
+  if (options.includeSQLDelight) {
+    content += `
+    id("app.cash.sqldelight") version "2.0.2"`;
+  }
+  content += `
 }
 
 group = "${options.packageName}"
@@ -44,8 +50,8 @@ dependencies {
   if (options.includeSQLDelight) {
     content += `
     // SQLDelight for local database
-    implementation("app.cash.sqldelight:sqlite-driver:2.0.1")
-    implementation("app.cash.sqldelight:coroutines-extensions:2.0.1")
+    implementation("app.cash.sqldelight:sqlite-driver:2.0.2")
+    implementation("app.cash.sqldelight:coroutines-extensions:2.0.2")
 `;
   }
 
@@ -106,7 +112,18 @@ compose.desktop {
             }
         }
     }
-}
+}`;
+
+  if (options.includeSQLDelight) {
+    content += `
+sqldelight {
+    databases {
+        create("${options.appName}") {
+            packageName.set("${options.packageName}")
+        }
+    }
+}`;
+  }
 
 tasks.register("generateUpgradeUuid") {
     group = "help"
