@@ -43,6 +43,7 @@ dependencies {
     // PreCompose for navigation
     implementation("moe.tlaster:precompose:1.7.0-alpha03")
 `;
+  }
 
   if (options.includeRetrofit) {
     content += `
@@ -65,18 +66,18 @@ dependencies {
   if (options.includeKtor) {
     content += `
     // Ktor client
-    implementation("io.ktor:ktor-client-core:2.3.8")
-    implementation("io.ktor:ktor-client-cio:2.3.8")
-    implementation("io.ktor:ktor-client-content-negotiation:2.3.8")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.8")
+    implementation("io.ktor:ktor-client-core:3.0.3")
+    implementation("io.ktor:ktor-client-cio:3.0.3")
+    implementation("io.ktor:ktor-client-content-negotiation:3.0.3")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.3")
 `;
   }
 
   if (options.includeDecompose) {
     content += `
     // Decompose for navigation
-    implementation("com.arkivanov.decompose:decompose:2.2.2")
-    implementation("com.arkivanov.decompose:extensions-compose-jetbrains:2.2.2")
+    implementation("com.arkivanov.decompose:decompose:3.2.2")
+    implementation("com.arkivanov.decompose:extensions-compose-jetbrains:2.2.3")
 `;
   }
 
@@ -132,6 +133,7 @@ sqldelight {
 }`;
   }
 
+  content += `
 tasks.register("generateUpgradeUuid") {
     group = "help"
     description = "Generates a unique UUID to be used for the Windows MSI upgradeUuid."
@@ -141,7 +143,8 @@ tasks.register("generateUpgradeUuid") {
         println(UUID.randomUUID().toString())
         println("--------------------------------------------------")
     }
-}`;
+}
+`;
 
   folder.file("build.gradle.kts", content);
 }
