@@ -86,8 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const themeFolder = kotlinFolder.folder("theme");
 
-      rootFolder.file(".gitignore", await fetchTextFile(".gitignore"));
-
       await addBuildGradle(rootFolder, {
         appName,
         packageName,
@@ -107,15 +105,11 @@ document.addEventListener("DOMContentLoaded", function () {
       await addGradleWrapperScripts(rootFolder);
 
       await addMainFile(kotlinFolder, { appName, windowWidth, windowHeight });
-      await addAppFile(kotlinFolder);
-      await addAppModuleFile(kotlinFolder);
       await addDatabaseFile(kotlinFolder, { appName });
-      await addMainViewModelFile(kotlinFolder);
-      await addModelsFile(kotlinFolder);
-
+      await addKotlinFiles(kotlinFolder);
       await addThemeFiles(themeFolder);
-
       await addReadmeFile(rootFolder, { appName });
+      await addGitignoreFile(rootFolder);
 
       const content = await zip.generateAsync({ type: "blob" });
       saveAs(content, `${appName.toLowerCase().replace(/\s+/g, "-")}.zip`);
