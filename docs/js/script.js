@@ -3,6 +3,41 @@ document.addEventListener("DOMContentLoaded", function () {
   const generateBtn = document.getElementById("generateBtn");
   const generatingOverlay = document.getElementById("generatingOverlay");
 
+  function updatePreview() {
+    const options = {
+      appName:
+        document.getElementById("appName").value.trim() || "MyComposeApp",
+      packageName:
+        document.getElementById("packageName").value.trim() ||
+        "com.example.myapp",
+      projectVersion:
+        document.getElementById("projectVersion").value.trim() || "1.0.0",
+      windowWidth: document.getElementById("windowWidth").value || "800",
+      windowHeight: document.getElementById("windowHeight").value || "600",
+      includeRetrofit: document.getElementById("retrofit").checked,
+      includeSQLDelight: document.getElementById("sqldelight").checked,
+      includeKtor: document.getElementById("ktor").checked,
+      includeDecompose: document.getElementById("decompose").checked,
+      includeImageLoader: document.getElementById("imageLoader").checked,
+    };
+
+    const previewContent = generateBuildGradlePreview(options);
+    const previewElement = document.getElementById("gradlePreview");
+    previewElement.textContent = previewContent;
+    Prism.highlightElement(previewElement);
+  }
+
+  const inputs = form.querySelectorAll("input");
+  inputs.forEach((input) => {
+    if (input.type === "checkbox") {
+      input.addEventListener("change", updatePreview);
+    } else {
+      input.addEventListener("input", updatePreview);
+    }
+  });
+
+  updatePreview();
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     generateProject();

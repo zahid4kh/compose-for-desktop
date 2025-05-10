@@ -16,6 +16,9 @@
     <script src="js/templateFiles.js"></script>
     <script src="js/themeFiles.js"></script>
     <script src="js/script.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-kotlin.min.js"></script>
 </head>
 
 <body>
@@ -90,6 +93,14 @@
                     <div class="form-group checkbox-group">
                         <input type="checkbox" id="imageLoader">
                         <label for="imageLoader">Image Loading Library</label>
+                    </div>
+                </section>
+
+                <section class="form-section">
+                    <h2>Preview</h2>
+                    <div class="preview-container">
+                        <h3>build.gradle.kts</h3>
+                        <pre><code id="gradlePreview" class="language-kotlin"></code></pre>
                     </div>
                 </section>
 

@@ -82,6 +82,32 @@ header::before {
   z-index: 1;
 }
 
+.preview-container {
+  background: #1e1e1e;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.preview-container h3 {
+  color: #fff;
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
+pre {
+  margin: 0;
+  white-space: pre-wrap;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+}
+
 header h1,
 header p {
   position: relative;
