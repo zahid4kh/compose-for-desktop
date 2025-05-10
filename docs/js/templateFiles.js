@@ -45,6 +45,13 @@ dependencies {
 `;
   }
 
+  if (options.includeSentry) {
+    content += `
+    // Sentry for error tracking
+    implementation("io.sentry:sentry:8.8.0")
+`;
+  }
+
   if (options.includeRetrofit) {
     content += `
     // Retrofit for API calls
@@ -192,6 +199,13 @@ dependencies {
     content += `
     // PreCompose for navigation
     implementation("moe.tlaster:precompose:1.7.0-alpha03")
+`;
+  }
+
+  if (options.includeSentry) {
+    content += `
+    // Sentry for error tracking
+    implementation("io.sentry:sentry:8.8.0")
 `;
   }
 

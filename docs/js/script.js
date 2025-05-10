@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
       includeDecompose: document.getElementById("decompose").checked,
       includeImageLoader: document.getElementById("imageLoader").checked,
       includePrecompose: document.getElementById("precompose").checked,
+      includeSentry: document.getElementById("sentry").checked,
     };
 
     const previewContent = generateBuildGradlePreview(options);
@@ -61,6 +62,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const includeKtor = document.getElementById("ktor").checked;
       const includeDecompose = document.getElementById("decompose").checked;
       const includeImageLoader = document.getElementById("imageLoader").checked;
+      const includePrecompose = document.getElementById("precompose").checked;
+      const includeSentry = document.getElementById("sentry");
 
       if (!appName || !packageName) {
         generatingOverlay.classList.add("hidden");
@@ -98,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
         includeDecompose,
         includeImageLoader,
         includePrecompose,
+        includeSentry,
       });
 
       await addSettingsGradle(rootFolder, { appName });
