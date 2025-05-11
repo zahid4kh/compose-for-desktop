@@ -301,6 +301,7 @@ header::before {
 }
 
 .preview-container pre {
+  border-radius: 8px;
   margin: 0;
   white-space: pre-wrap;
   height: calc(100% - 30px);
