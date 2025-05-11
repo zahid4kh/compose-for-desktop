@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const includeDecompose = document.getElementById("decompose").checked;
       const includeImageLoader = document.getElementById("imageLoader").checked;
       const includePrecompose = document.getElementById("precompose").checked;
-      const includeSentry = document.getElementById("sentry");
+      const includeSentry = document.getElementById("sentry").checked;
       const includeMarkdown = document.getElementById("markdown").checked;
       const includeHotReload = document.getElementById("hot-reload").checked;
 
