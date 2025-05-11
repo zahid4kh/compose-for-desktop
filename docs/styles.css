@@ -425,49 +425,6 @@ button:active {
   transform: translateY(1px);
 }
 
-footer {
-  text-align: center;
-  padding: 2.5rem 1rem;
-  background: transparent; /* Remove gradient background */
-  color: var(--text-color); /* Change text color to match theme */
-  margin-top: 3rem;
-  position: relative;
-  overflow: hidden;
-  border-top: 1px solid var(--border-color); /* Add subtle top border */
-}
-
-footer::before {
-  display: none;
-}
-
-.project-name {
-  font-weight: 700;
-  color: var(--primary-color);
-  letter-spacing: -0.5px;
-  font-size: 1.1rem;
-}
-
-footer a {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 600;
-  position: relative;
-  transition: all var(--transition-fast);
-}
-
-footer a:hover {
-  text-decoration: underline;
-  color: var(--secondary-color);
-}
-
-[data-theme="dark"] .project-name {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-[data-theme="dark"] footer a {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
-
 #generatingOverlay {
   position: fixed;
   top: 0;
