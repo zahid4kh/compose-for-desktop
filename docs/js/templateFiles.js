@@ -153,6 +153,17 @@ sqldelight {
 }`;
   }
 
+  if (options.includeHotReload) {
+    content += `
+//https://github.com/JetBrains/compose-hot-reload
+composeCompiler {
+    featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
+}
+tasks.register<ComposeHotRun>("runHot") {
+    mainClass.set("${options.appName}")
+}`;
+  }
+
   content += `
 tasks.register("generateUpgradeUuid") {
     group = "help"
