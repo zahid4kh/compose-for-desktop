@@ -3,6 +3,25 @@ document.addEventListener("DOMContentLoaded", function () {
   const generateBtn = document.getElementById("generateBtn");
   const generatingOverlay = document.getElementById("generatingOverlay");
 
+  const dependencyCards = document.querySelectorAll(".dependency-card");
+  dependencyCards.forEach((card) => {
+    const checkbox = card.querySelector('input[type="checkbox"]');
+
+    if (checkbox.checked) {
+      card.classList.add("selected");
+    }
+
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        card.classList.add("selected");
+      } else {
+        card.classList.remove("selected");
+      }
+
+      updatePreviews();
+    });
+  });
+
   const tabButtons = document.querySelectorAll(".tab-button");
   const tabContents = document.querySelectorAll(".tab-content");
 
