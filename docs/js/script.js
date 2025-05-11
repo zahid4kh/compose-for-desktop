@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
       includePrecompose: document.getElementById("precompose").checked,
       includeSentry: document.getElementById("sentry").checked,
       includeMarkdown: document.getElementById("markdown").checked,
+      includeHotReload: document.getElementById("hot-reload").checked,
     };
 
     const gradlePreviewContent = generateBuildGradlePreview(options);
@@ -86,6 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const includePrecompose = document.getElementById("precompose").checked;
       const includeSentry = document.getElementById("sentry");
       const includeMarkdown = document.getElementById("markdown").checked;
+      const includeHotReload = document.getElementById("hot-reload").checked;
 
       if (!appName || !packageName) {
         generatingOverlay.classList.add("hidden");
@@ -125,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
         includePrecompose,
         includeSentry,
         includeMarkdown,
+        includeHotReload,
       });
 
       await addSettingsGradle(rootFolder, { appName });
