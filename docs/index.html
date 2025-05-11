@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/form.css">
     <link rel="stylesheet" href="css/preview.css">
     <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/dependency-card.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="js/utils.js"></script>
@@ -108,49 +109,141 @@
 
                     <section class="form-section">
                         <h2>Additional Dependencies</h2>
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="hot-reload" checked>
-                            <label for="hot-reload">Hot Reload</label>
-                        </div>
+                        <div class="dependencies-grid">
+                            <!-- Hot Reload -->
+                            <label class="dependency-card" for="hot-reload">
+                                <input type="checkbox" id="hot-reload" checked>
+                                <div class="dependency-check"></div>
+                                <div class="dependency-card-header">
+                                    <div class="dependency-card-title">Hot Reload</div>
+                                </div>
+                                <div class="dependency-card-description">
+                                    Enable live code updates without restarting the application
+                                </div>
+                                <div class="dependency-card-footer">
+                                    <span class="dependency-card-badge">Compose</span>
+                                </div>
+                            </label>
 
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="retrofit">
-                            <label for="retrofit">Retrofit + OkHttp (API Client)</label>
-                        </div>
+                            <!-- Retrofit -->
+                            <label class="dependency-card" for="retrofit">
+                                <input type="checkbox" id="retrofit">
+                                <div class="dependency-check"></div>
+                                <div class="dependency-card-header">
+                                    <div class="dependency-card-title">Retrofit + OkHttp</div>
+                                </div>
+                                <div class="dependency-card-description">
+                                    Type-safe HTTP client for API calls
+                                </div>
+                                <div class="dependency-card-footer">
+                                    <span class="dependency-card-badge">Network</span>
+                                </div>
+                            </label>
 
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="sqldelight">
-                            <label for="sqldelight">SQLDelight (Local Database)</label>
-                        </div>
+                            <!-- SQLDelight -->
+                            <label class="dependency-card" for="sqldelight">
+                                <input type="checkbox" id="sqldelight">
+                                <div class="dependency-check"></div>
+                                <div class="dependency-card-header">
+                                    <div class="dependency-card-title">SQLDelight</div>
+                                </div>
+                                <div class="dependency-card-description">
+                                    Type-safe SQL for local database storage
+                                </div>
+                                <div class="dependency-card-footer">
+                                    <span class="dependency-card-badge">Database</span>
+                                </div>
+                            </label>
 
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="ktor">
-                            <label for="ktor">Ktor Client</label>
-                        </div>
+                            <!-- Ktor -->
+                            <label class="dependency-card" for="ktor">
+                                <input type="checkbox" id="ktor">
+                                <div class="dependency-check"></div>
+                                <div class="dependency-card-header">
+                                    <div class="dependency-card-title">Ktor Client</div>
+                                </div>
+                                <div class="dependency-card-description">
+                                    Kotlin-first HTTP client with co-routines support
+                                </div>
+                                <div class="dependency-card-footer">
+                                    <span class="dependency-card-badge">Network</span>
+                                </div>
+                            </label>
 
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="decompose">
-                            <label for="decompose">Decompose (Navigation)</label>
-                        </div>
+                            <!-- Decompose -->
+                            <label class="dependency-card" for="decompose">
+                                <input type="checkbox" id="decompose">
+                                <div class="dependency-check"></div>
+                                <div class="dependency-card-header">
+                                    <div class="dependency-card-title">Decompose</div>
+                                </div>
+                                <div class="dependency-card-description">
+                                    Component-based navigation for Compose
+                                </div>
+                                <div class="dependency-card-footer">
+                                    <span class="dependency-card-badge">Navigation</span>
+                                </div>
+                            </label>
 
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="precompose">
-                            <label for="precompose">PreCompose</label>
-                        </div>
+                            <!-- PreCompose -->
+                            <label class="dependency-card" for="precompose">
+                                <input type="checkbox" id="precompose">
+                                <div class="dependency-check"></div>
+                                <div class="dependency-card-header">
+                                    <div class="dependency-card-title">PreCompose</div>
+                                </div>
+                                <div class="dependency-card-description">
+                                    Navigation, ViewModel and DI for Compose
+                                </div>
+                                <div class="dependency-card-footer">
+                                    <span class="dependency-card-badge">Architecture</span>
+                                </div>
+                            </label>
 
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="sentry">
-                            <label for="sentry">Sentry</label>
-                        </div>
+                            <!-- Sentry -->
+                            <label class="dependency-card" for="sentry">
+                                <input type="checkbox" id="sentry">
+                                <div class="dependency-check"></div>
+                                <div class="dependency-card-header">
+                                    <div class="dependency-card-title">Sentry</div>
+                                </div>
+                                <div class="dependency-card-description">
+                                    Error tracking and performance monitoring
+                                </div>
+                                <div class="dependency-card-footer">
+                                    <span class="dependency-card-badge">Analytics</span>
+                                </div>
+                            </label>
 
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="markdown">
-                            <label for="markdown">Markdown Renderer</label>
-                        </div>
+                            <!-- Markdown -->
+                            <label class="dependency-card" for="markdown">
+                                <input type="checkbox" id="markdown">
+                                <div class="dependency-check"></div>
+                                <div class="dependency-card-header">
+                                    <div class="dependency-card-title">Markdown Renderer</div>
+                                </div>
+                                <div class="dependency-card-description">
+                                    Display and render Markdown content
+                                </div>
+                                <div class="dependency-card-footer">
+                                    <span class="dependency-card-badge">UI</span>
+                                </div>
+                            </label>
 
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="imageLoader">
-                            <label for="imageLoader">Image Loading Library</label>
+                            <!-- Image Loader -->
+                            <label class="dependency-card" for="imageLoader">
+                                <input type="checkbox" id="imageLoader">
+                                <div class="dependency-check"></div>
+                                <div class="dependency-card-header">
+                                    <div class="dependency-card-title">Image Loading</div>
+                                </div>
+                                <div class="dependency-card-description">
+                                    Efficient image loading and caching library
+                                </div>
+                                <div class="dependency-card-footer">
+                                    <span class="dependency-card-badge">Media</span>
+                                </div>
+                            </label>
                         </div>
                     </section>
 
