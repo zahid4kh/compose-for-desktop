@@ -1,7 +1,15 @@
 function generateBuildGradlePreview(options) {
   let content = `
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import java.util.UUID
+import java.util.UUID`;
+
+  if (options.includeHotReload) {
+    content += `
+import org.jetbrains.compose.reload.ComposeHotRun 
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag`;
+  }
+
+  content += `
 
 plugins {
     kotlin("jvm") version "2.1.20"
