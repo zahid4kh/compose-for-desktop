@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
         card.classList.remove("selected");
       }
 
-      updatePreviews();
+      //updatePreviews();
     });
   });
 
@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
         includeHotReload,
       });
 
-      await addSettingsGradle(rootFolder, { appName });
+      await addSettingsGradle(rootFolder, { appName, includeHotReload });
       await addGradleProperties(rootFolder);
       await addGradleWrapperFiles(wrapperFolder);
       await addGradleWrapperScripts(rootFolder);
