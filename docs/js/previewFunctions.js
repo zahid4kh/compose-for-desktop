@@ -13,6 +13,12 @@ plugins {
     content += `
     id("app.cash.sqldelight") version "2.0.2"`;
   }
+
+  if (options.includeHotReload) {
+    content += `
+    id("org.jetbrains.compose.hot-reload") version "1.0.0-alpha03"`;
+  }
+
   content += `
 }
 
@@ -146,6 +152,17 @@ sqldelight {
 }`;
   }
 
+  if (options.includeHotReload) {
+    content += `
+//https://github.com/JetBrains/compose-hot-reload
+composeCompiler {
+    featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
+}
+tasks.register<ComposeHotRun>("runHot") {
+    mainClass.set("${options.appName}")
+}`;
+  }
+
   content += `
 tasks.register("generateUpgradeUuid") {
     group = "help"
@@ -175,8 +192,17 @@ function generateSettingsGradlePreview(options) {
         id("org.jetbrains.compose").version(extra["compose.version"] as String)
         id("org.jetbrains.kotlin.plugin.compose").version(extra["kotlin.version"] as String)
     }
-}
+}`;
 
+  if (options.includeHotReload) {
+    content += `
+plugins {
+  //https://github.com/JetBrains/compose-hot-reload?tab=readme-ov-file#set-up-automatic-provisioning-of-the-jetbrains-runtime-jbr-via-gradle
+  id("org.gradle.toolchains.foojay-resolver-convention").version("0.9.0")
+}`;
+  }
+
+  content += `
 rootProject.name = "${options.appName.toLowerCase().replace(/\s+/g, "")}"`;
 
   return content;
