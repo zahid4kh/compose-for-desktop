@@ -217,7 +217,7 @@ rootProject.name = "${options.appName.toLowerCase().replace(/\s+/g, "")}"`;
 
 // Main.kt
 async function addMainFile(folder, options) {
-  const content = `@file:JvmName("${options.appName}")
+  let imports = `@file:JvmName("${options.appName}")
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
@@ -225,9 +225,15 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import theme.AppTheme
 import java.awt.Dimension
-
 import org.koin.core.context.startKoin
-import org.koin.java.KoinJavaComponent.getKoin
+import org.koin.java.KoinJavaComponent.getKoin`;
+
+  if (options.includeHotReload) {
+    imports += `
+import org.jetbrains.compose.reload.DevelopmentEntryPoint`;
+  }
+
+  let mainFunction = `
 
 fun main() = application {
     startKoin {
@@ -243,14 +249,28 @@ fun main() = application {
     ) {
         window.minimumSize = Dimension(${options.windowWidth}, ${options.windowHeight})
 
-        AppTheme {
+        AppTheme {`;
+
+  if (options.includeHotReload) {
+    mainFunction += `
+            DevelopmentEntryPoint {
+                App(
+                    viewModel = viewModel
+                )
+            }`;
+  } else {
+    mainFunction += `
             App(
                 viewModel = viewModel
-            )
+            )`;
+  }
+
+  mainFunction += `
         }
     }
 }`;
 
+  const content = imports + mainFunction;
   folder.file("Main.kt", content);
 }
 
