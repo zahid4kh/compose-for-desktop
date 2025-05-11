@@ -14,6 +14,12 @@ plugins {
     content += `
     id("app.cash.sqldelight") version "2.0.2"`;
   }
+
+  if (options.includeHotReload) {
+    content += `
+    id("org.jetbrains.compose.hot-reload") version "1.0.0-alpha03"`;
+  }
+
   content += `
 }
 
