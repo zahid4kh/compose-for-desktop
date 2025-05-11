@@ -122,10 +122,10 @@ compose.desktop {
     application {
         /*
         must match the annotation in Main.kt
-        @file:JvmName("${options.appName}").
+        @file:JvmName("${options.appName.replace(/\s+/g, "")}").
         This also sets the app's dock name on Linux.
          */
-        mainClass = "${options.appName}"
+        mainClass = "${options.appName.replace(/\s+/g, "")}"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Exe)
@@ -154,7 +154,7 @@ compose.desktop {
     content += `
 sqldelight {
     databases {
-        create("${options.appName}") {
+        create("${options.appName.replace(/\s+/g, "")}") {
             packageName.set("${options.packageName}")
         }
     }

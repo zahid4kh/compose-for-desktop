@@ -121,10 +121,10 @@ compose.desktop {
     application {
         /*
         must match the annotation in Main.kt
-        @file:JvmName("${options.appName}").
+        @file:JvmName("${options.appName.replace(/\s+/g, "")}").
         This also sets the app's dock name on Linux.
          */
-        mainClass = "${options.appName}"
+        mainClass = "${options.appName.replace(/\s+/g, "")}"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Exe)
@@ -153,7 +153,7 @@ compose.desktop {
     content += `
 sqldelight {
     databases {
-        create("${options.appName}") {
+        create("${options.appName.replace(/\s+/g, "")}") {
             packageName.set("${options.packageName}")
         }
     }
@@ -221,7 +221,7 @@ rootProject.name = "${options.appName.toLowerCase().replace(/\s+/g, "")}"`;
 }
 
 function generateMainFilePreview(options) {
-  let imports = `@file:JvmName("${options.appName}")
+  let imports = `@file:JvmName("${options.appName.replace(/\s+/g, "")}")
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
@@ -249,7 +249,7 @@ fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
         state = rememberWindowState(size = DpSize(${options.windowWidth}.dp, ${options.windowHeight}.dp)),
-        title = "${options.appName} - Made with Compose for Desktop"
+        title = "${options.appName} - Made with Compose for Desktop Wizard"
     ) {
         window.minimumSize = Dimension(${options.windowWidth}, ${options.windowHeight})
 
