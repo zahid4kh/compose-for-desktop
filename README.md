@@ -12,9 +12,13 @@ A web-based project generator that creates ready-to-use Kotlin Compose for Deskt
 
 - **Instant Project Setup**: Generate a complete Compose for Desktop project in seconds
 - **Custom Configuration**: Tailor your project with various dependencies and settings
+- **Interactive Dependency Selection**: Visual cards for easy selection of libraries and components
+- **Live Code Preview**: See your build scripts and `Main.kt` file in real-time as you customize your project
 - **Modern UI**: Material 3 theming with dark mode support
 - **Production Ready**: Includes Gradle wrapper, proper project structure, and testing setup
 - **Cross-Platform**: Works on Windows, macOS, and Linux
+
+![Dependency Selection and Live Preview](media/screenshot2.png)
 
 ## 🛠️ How It Works
 
@@ -66,7 +70,6 @@ For more detailed information, check out [Wiki](https://github.com/zahid4kh/comp
 
 - [Architecture Overview](https://github.com/zahid4kh/compose-for-desktop/wiki/Architecture)
 - [Troubleshooting](https://github.com/zahid4kh/compose-for-desktop/wiki/Troubleshooting)
-
 
 ## 📝 License
 
