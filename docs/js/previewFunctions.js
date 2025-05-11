@@ -211,3 +211,61 @@ rootProject.name = "${options.appName.toLowerCase().replace(/\s+/g, "")}"`;
 
   return content;
 }
+
+function generateMainFilePreview(options) {
+  let imports = `@file:JvmName("${options.appName}")
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
+import theme.AppTheme
+import java.awt.Dimension
+import org.koin.core.context.startKoin
+import org.koin.java.KoinJavaComponent.getKoin`;
+
+  if (options.includeHotReload) {
+    imports += `
+import org.jetbrains.compose.reload.DevelopmentEntryPoint`;
+  }
+
+  let mainFunction = `
+
+fun main() = application {
+    startKoin {
+        modules(appModule)
+    }
+
+    val viewModel = getKoin().get<MainViewModel>()
+
+    Window(
+        onCloseRequest = ::exitApplication,
+        state = rememberWindowState(size = DpSize(${options.windowWidth}.dp, ${options.windowHeight}.dp)),
+        title = "${options.appName} - Made with Compose for Desktop"
+    ) {
+        window.minimumSize = Dimension(${options.windowWidth}, ${options.windowHeight})
+
+        AppTheme {`;
+
+  if (options.includeHotReload) {
+    mainFunction += `
+            DevelopmentEntryPoint {
+                App(
+                    viewModel = viewModel
+                )
+            }`;
+  } else {
+    mainFunction += `
+            App(
+                viewModel = viewModel
+            )`;
+  }
+
+  mainFunction += `
+        }
+    }
+}`;
+
+  const content = imports + mainFunction;
+  return content;
+}
