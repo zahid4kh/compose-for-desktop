@@ -179,7 +179,7 @@ tasks.register("generateUpgradeUuid") {
 }
 
 function generateSettingsGradlePreview(options) {
-  const content = `pluginManagement {
+  let content = `pluginManagement {
     repositories {
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         google()
@@ -195,14 +195,18 @@ function generateSettingsGradlePreview(options) {
 }`;
 
   if (options.includeHotReload) {
-    content += `
+    content =
+      content +
+      `
 plugins {
   //https://github.com/JetBrains/compose-hot-reload?tab=readme-ov-file#set-up-automatic-provisioning-of-the-jetbrains-runtime-jbr-via-gradle
   id("org.gradle.toolchains.foojay-resolver-convention").version("0.9.0")
 }`;
   }
 
-  content += `
+  content =
+    content +
+    `
 rootProject.name = "${options.appName.toLowerCase().replace(/\s+/g, "")}"`;
 
   return content;
