@@ -49,6 +49,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const settingsPreviewElement = document.getElementById("settingsPreview");
     settingsPreviewElement.textContent = settingsPreviewContent;
     Prism.highlightElement(settingsPreviewElement);
+
+    const mainPreviewContent = generateMainFilePreview(options);
+    const mainPreviewElement = document.getElementById("mainPreview");
+    mainPreviewElement.textContent = mainPreviewContent;
+    Prism.highlightElement(mainPreviewElement);
   }
 
   const inputs = form.querySelectorAll("input");
