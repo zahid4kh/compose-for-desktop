@@ -182,7 +182,7 @@ tasks.register("generateUpgradeUuid") {
 
 // settings.gradle.kts
 async function addSettingsGradle(folder, options) {
-  const content = `pluginManagement {
+  let content = `pluginManagement {
     repositories {
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         google()
@@ -195,8 +195,21 @@ async function addSettingsGradle(folder, options) {
         id("org.jetbrains.compose").version(extra["compose.version"] as String)
         id("org.jetbrains.kotlin.plugin.compose").version(extra["kotlin.version"] as String)
     }
-}
+}`;
 
+  if (options.includeHotReload) {
+    content =
+      content +
+      `
+plugins {
+  //https://github.com/JetBrains/compose-hot-reload?tab=readme-ov-file#set-up-automatic-provisioning-of-the-jetbrains-runtime-jbr-via-gradle
+  id("org.gradle.toolchains.foojay-resolver-convention").version("0.9.0")
+}`;
+  }
+
+  content =
+    content +
+    `
 rootProject.name = "${options.appName.toLowerCase().replace(/\s+/g, "")}"`;
 
   folder.file("settings.gradle.kts", content);
