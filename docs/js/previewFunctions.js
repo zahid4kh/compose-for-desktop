@@ -1,6 +1,5 @@
 function generateBuildGradlePreview(options) {
-  let content = `
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+  let content = `import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import java.util.UUID`;
 
   if (options.includeHotReload) {
@@ -12,19 +11,19 @@ import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag`;
   content += `
 
 plugins {
-    kotlin("jvm") version "2.1.20"
-    id("org.jetbrains.compose")
-    id("org.jetbrains.kotlin.plugin.compose")
-    kotlin("plugin.serialization") version "2.1.20"`;
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.kotlin.plugin.compose)
+    alias(libs.plugins.kotlin.plugin.serialization)`;
 
   if (options.includeSQLDelight) {
     content += `
-    id("app.cash.sqldelight") version "2.0.2"`;
+    alias(libs.plugins.sqldelight)`;
   }
 
   if (options.includeHotReload) {
     content += `
-    id("org.jetbrains.compose.hot-reload") version "1.0.0-alpha03"`;
+    alias(libs.plugins.hotReload)`;
   }
 
   content += `
@@ -44,78 +43,57 @@ dependencies {
     implementation(compose.material3)
     implementation(compose.materialIconsExtended)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2")
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.swing)
 
     // Koin for dependency injection
-    implementation("io.insert-koin:koin-core:4.0.3")`;
+    implementation(libs.koin.core)`;
 
   if (options.includePrecompose) {
     content += `
-    // PreCompose for navigation
-    implementation("moe.tlaster:precompose:1.7.0-alpha03")
-`;
+    implementation(libs.precompose)`;
   }
 
   if (options.includeSentry) {
     content += `
-    // Sentry for error tracking
-    implementation("io.sentry:sentry:8.8.0")
-`;
+    implementation(libs.sentry)`;
   }
 
   if (options.includeMarkdown) {
     content += `
-    // Markdown renderer
-    implementation("com.mikepenz:multiplatform-markdown-renderer:0.32.0")
-`;
-  }
-
-  if (options.includeRetrofit) {
-    content += `
-    // Retrofit for API calls
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
-`;
-  }
-
-  if (options.includeSQLDelight) {
-    content += `
-    // SQLDelight for local database
-    implementation("app.cash.sqldelight:sqlite-driver:2.0.2")
-    implementation("app.cash.sqldelight:coroutines-extensions:2.0.2")
-`;
-  }
-
-  if (options.includeKtor) {
-    content += `
-    // Ktor client
-    implementation("io.ktor:ktor-client-core:3.0.3")
-    implementation("io.ktor:ktor-client-cio:3.0.3")
-    implementation("io.ktor:ktor-client-content-negotiation:3.0.3")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.3")
-`;
-  }
-
-  if (options.includeDecompose) {
-    content += `
-    // Decompose for navigation
-    implementation("com.arkivanov.decompose:decompose:3.2.2")
-    implementation("com.arkivanov.decompose:extensions-compose-jetbrains:2.2.3")
-`;
+    implementation(libs.markdownRenderer)`;
   }
 
   if (options.includeImageLoader) {
     content += `
-    // Image loading
-    implementation("io.github.qdsfdhvh:image-loader:1.7.1")
-`;
+    implementation(libs.imageLoader)`;
   }
 
-  content += `}
+  if (options.includeRetrofit) {
+    content += `
+
+    implementation(libs.bundles.retrofit)`;
+  }
+
+  if (options.includeSQLDelight) {
+    content += `
+    implementation(libs.bundles.sqldelight)`;
+  }
+
+  if (options.includeKtor) {
+    content += `
+    implementation(libs.bundles.ktorClient)`;
+  }
+
+  if (options.includeDecompose) {
+    content += `
+    implementation(libs.bundles.decompose)`;
+  }
+
+  content += `
+}
+
 
 compose.desktop {
     application {
@@ -151,6 +129,7 @@ compose.desktop {
 
   if (options.includeSQLDelight) {
     content += `
+
 sqldelight {
     databases {
         create("${options.appName.replace(/\s+/g, "")}") {
@@ -162,6 +141,7 @@ sqldelight {
 
   if (options.includeHotReload) {
     content += `
+    
 //https://github.com/JetBrains/compose-hot-reload
 composeCompiler {
     featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
@@ -183,6 +163,183 @@ tasks.register("generateUpgradeUuid") {
     }
 }
 `;
+
+  return content;
+}
+
+function generateVersionCatalogPreview(options) {
+  let content = `[versions]
+composePlugin = "1.7.3"
+kotlin = "2.1.20"
+kotlinxCoroutines = "1.10.2"
+kotlinxSerializationJson = "1.8.1"
+koin = "4.0.3"`;
+
+  if (options.includePrecompose) {
+    content += `
+precompose = "1.7.0-alpha03"`;
+  }
+
+  if (options.includeSentry) {
+    content += `
+sentry = "8.8.0"`;
+  }
+
+  if (options.includeMarkdown) {
+    content += `
+markdownRenderer = "0.32.0"`;
+  }
+
+  if (options.includeRetrofit) {
+    content += `
+retrofit = "2.9.0"
+okhttp = "4.12.0"`;
+  }
+
+  if (options.includeSQLDelight) {
+    content += `
+sqldelight = "2.0.2"`;
+  }
+
+  if (options.includeKtor) {
+    content += `
+ktor = "3.0.3"`;
+  }
+
+  if (options.includeDecompose) {
+    content += `
+decompose = "3.2.2"
+decomposeExtensions = "2.2.3"`;
+  }
+
+  if (options.includeImageLoader) {
+    content += `
+imageLoader = "1.7.1"`;
+  }
+
+  if (options.includeHotReload) {
+    content += `
+hotReload = "1.0.0-alpha03"`;
+  }
+
+  content += `
+
+[libraries]
+# Kotlinx
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinxCoroutines" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+
+# Koin
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }`;
+
+  if (options.includePrecompose) {
+    content += `
+
+# PreCompose
+precompose = { group = "moe.tlaster", name = "precompose", version.ref = "precompose" }`;
+  }
+
+  if (options.includeSentry) {
+    content += `
+
+# Sentry
+sentry = { group = "io.sentry", name = "sentry", version.ref = "sentry" }`;
+  }
+
+  if (options.includeMarkdown) {
+    content += `
+
+# Markdown Renderer
+markdownRenderer = { group = "com.mikepenz", name = "multiplatform-markdown-renderer", version.ref = "markdownRenderer" }`;
+  }
+
+  if (options.includeRetrofit) {
+    content += `
+
+# Retrofit & OkHttp
+retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converterGson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+okhttp-core = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+okhttp-loggingInterceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }`;
+  }
+
+  if (options.includeSQLDelight) {
+    content += `
+
+# SQLDelight
+sqldelight-driver = { group = "app.cash.sqldelight", name = "sqlite-driver", version.ref = "sqldelight" }
+sqldelight-coroutinesExtensions = { group = "app.cash.sqldelight", name = "coroutines-extensions", version.ref = "sqldelight" }`;
+  }
+
+  if (options.includeKtor) {
+    content += `
+
+# Ktor Client
+ktor-clientCore = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
+ktor-clientCio = { group = "io.ktor", name = "ktor-client-cio", version.ref = "ktor" }
+ktor-clientContentNegotiation = { group = "io.ktor", name = "ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serializationKotlinxJson = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }`;
+  }
+
+  if (options.includeDecompose) {
+    content += `
+
+# Decompose
+decompose-core = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
+decompose-extensionsComposeJetbrains = { group = "com.arkivanov.decompose", name = "extensions-compose-jetbrains", version.ref = "decomposeExtensions" }`;
+  }
+
+  if (options.includeImageLoader) {
+    content += `
+
+# Image Loader
+imageLoader = { group = "io.github.qdsfdhvh", name = "image-loader", version.ref = "imageLoader" }`;
+  }
+
+  content += `
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
+kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }`;
+
+  if (options.includeSQLDelight) {
+    content += `
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }`;
+  }
+
+  if (options.includeHotReload) {
+    content += `
+hotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "hotReload" }`;
+  }
+
+  // bundles
+  content += `
+
+[bundles]`;
+
+  if (options.includeRetrofit) {
+    content += `
+retrofit = ["retrofit-core", "retrofit-converterGson", "okhttp-core", "okhttp-loggingInterceptor"]`;
+  }
+
+  if (options.includeSQLDelight) {
+    content += `
+sqldelight = ["sqldelight-driver", "sqldelight-coroutinesExtensions"]`;
+  }
+
+  if (options.includeKtor) {
+    content += `
+ktorClient = ["ktor-clientCore", "ktor-clientCio", "ktor-clientContentNegotiation", "ktor-serializationKotlinxJson"]`;
+  }
+
+  if (options.includeDecompose) {
+    content += `
+decompose = ["decompose-core", "decompose-extensionsComposeJetbrains"]`;
+  }
+
   return content;
 }
 

@@ -25,6 +25,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-kotlin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-toml.min.js"></script>
     <script src="js/theme.js"></script>
     <script src="js/previewFunctions.js"></script>
 </head>
@@ -252,6 +253,7 @@
                         <div class="preview-tabs">
                             <button type="button" class="tab-button active" data-tab="gradle">build.gradle.kts</button>
                             <button type="button" class="tab-button" data-tab="settings">settings.gradle.kts</button>
+                            <button type="button" class="tab-button" data-tab="versions">libs.versions.toml</button>
                             <button type="button" class="tab-button" data-tab="main">Main.kt</button>
                         </div>
                         <div class="preview-container">
@@ -260,6 +262,9 @@
                             </div>
                             <div class="tab-content" id="settings-tab">
                                 <pre><code id="settingsPreview" class="language-kotlin"></code></pre>
+                            </div>
+                            <div class="tab-content" id="versions-tab">
+                                <pre><code id="versionsPreview" class="language-toml"></code></pre>
                             </div>
                             <div class="tab-content" id="main-tab">
                                 <pre><code id="mainPreview" class="language-kotlin"></code></pre>

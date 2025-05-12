@@ -69,6 +69,11 @@ document.addEventListener("DOMContentLoaded", function () {
     settingsPreviewElement.textContent = settingsPreviewContent;
     Prism.highlightElement(settingsPreviewElement);
 
+    const versionsPreviewContent = generateVersionCatalogPreview(options);
+    const versionsPreviewElement = document.getElementById("versionsPreview");
+    versionsPreviewElement.textContent = versionsPreviewContent;
+    Prism.highlightElement(versionsPreviewElement);
+
     const mainPreviewContent = generateMainFilePreview(options);
     const mainPreviewElement = document.getElementById("mainPreview");
     mainPreviewElement.textContent = mainPreviewContent;
@@ -136,6 +141,23 @@ document.addEventListener("DOMContentLoaded", function () {
       testFolder.folder("resources");
 
       const themeFolder = kotlinFolder.folder("theme");
+
+      await addVersionCatalog(gradleFolder, {
+        appName,
+        packageName,
+        projectVersion,
+        windowWidth,
+        windowHeight,
+        includeRetrofit,
+        includeSQLDelight,
+        includeKtor,
+        includeDecompose,
+        includeImageLoader,
+        includePrecompose,
+        includeSentry,
+        includeMarkdown,
+        includeHotReload,
+      });
 
       await addBuildGradle(rootFolder, {
         appName,
