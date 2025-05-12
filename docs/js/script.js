@@ -128,6 +128,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const rootFolder = zip.folder(appName.toLowerCase().replace(/\s+/g, "-"));
 
+      const iconsFolder = rootFolder.folder("icons");
+      await addIconFiles(iconsFolder);
+
       const gradleFolder = rootFolder.folder("gradle");
       const wrapperFolder = gradleFolder.folder("wrapper");
 
