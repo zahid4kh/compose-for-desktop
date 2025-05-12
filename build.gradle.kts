@@ -2,10 +2,10 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import java.util.UUID
 
 plugins {
-    kotlin("jvm") version "2.1.20"
-    id("org.jetbrains.compose")
-    id("org.jetbrains.kotlin.plugin.compose")
-    kotlin("plugin.serialization") version "2.1.20"
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.kotlin.plugin.compose)
+    alias(libs.plugins.kotlin.plugin.serialization)
 }
 
 group = "desktop"
@@ -22,10 +22,10 @@ dependencies {
     implementation(compose.material3)
     implementation(compose.materialIconsExtended)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2")
-    implementation("io.insert-koin:koin-core:4.0.3")
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.swing)
+    implementation(libs.koin.core)
 }
 
 compose.desktop {
