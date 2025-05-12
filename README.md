@@ -6,7 +6,7 @@ A web-based project generator that creates ready-to-use Kotlin Compose for Deskt
 
 ## 🚀 Try It Now
 
-**[Launch the Generator](https://zahid4kh.github.io/compose-for-desktop/)**
+**[Launch the Generator](https://composefordesktop.vercel.app/)**
 
 ## ✨ Features
 
