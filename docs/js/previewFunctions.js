@@ -147,7 +147,7 @@ composeCompiler {
     featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
 }
 tasks.register<ComposeHotRun>("runHot") {
-    mainClass.set("${options.appName}")
+    mainClass.set("${options.appName.replace(/\s+/g, "")}")
 }`;
   }
 
@@ -367,14 +367,17 @@ plugins {
   content =
     content +
     `
-    
+
 rootProject.name = "${options.appName.toLowerCase().replace(/\s+/g, "")}"`;
 
   return content;
 }
 
 function generateMainFilePreview(options) {
-  let imports = `@file:JvmName("${options.appName.replace(/\s+/g, "")}")
+  let imports = `@file:JvmName("${options.appName.replace(
+    /\s+/g,
+    ""
+  )}")  // Must have no spaces!!!
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
