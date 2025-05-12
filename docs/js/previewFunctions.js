@@ -111,6 +111,7 @@ compose.desktop {
 
             linux{
                 shortcut = true
+                iconFile.set(project.file("icons/compose.png"))
             }
 
             windows{
@@ -118,10 +119,12 @@ compose.desktop {
                 dirChooser = true
                 menu = true
                 upgradeUuid = "run the 'generateUpgradeUuid' task and paste the generated UUID here only once"
+                iconFile.set(project.file("icons/compose.ico"))
             }
 
             macOS{
                 dockName = "${options.appName}"
+                iconFile.set(project.file("icons/compose.icns"))
             }
         }
     }
