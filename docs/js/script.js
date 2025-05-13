@@ -2,6 +2,58 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("projectForm");
   const generateBtn = document.getElementById("generateBtn");
   const generatingOverlay = document.getElementById("generatingOverlay");
+  const packageNameInput = document.getElementById("packageName");
+
+  const packageNameError = document.createElement("small");
+  packageNameError.style.color = "var(--error-color)";
+  packageNameError.style.display = "none";
+  packageNameError.textContent =
+    "Package name cannot contain spaces. Use dots instead (e.g., com.example.myapp)";
+  packageNameInput.parentNode.insertBefore(
+    packageNameError,
+    packageNameInput.nextSibling
+  );
+
+  let isValid = true;
+
+  function validatePackageName() {
+    const packageName = packageNameInput.value.trim();
+
+    if (packageName.includes(" ")) {
+      packageNameError.style.display = "block";
+      packageNameInput.style.borderColor = "var(--error-color)";
+      isValid = false;
+    } else {
+      packageNameError.style.display = "none";
+      packageNameInput.style.borderColor = "";
+      isValid = true;
+    }
+
+    updateGenerateButtonState();
+  }
+
+  function updateGenerateButtonState() {
+    generateBtn.disabled = !isValid;
+    if (!isValid) {
+      generateBtn.style.opacity = "0.5";
+      generateBtn.style.cursor = "not-allowed";
+    } else {
+      generateBtn.style.opacity = "1";
+      generateBtn.style.cursor = "pointer";
+    }
+  }
+
+  packageNameInput.addEventListener("input", validatePackageName);
+  packageNameInput.addEventListener("blur", validatePackageName);
+
+  packageNameInput.addEventListener("blur", function () {
+    const value = this.value.trim();
+    if (value.includes(" ")) {
+      this.value = value.replace(/\s+/g, ".");
+      validatePackageName();
+      updatePreviews();
+    }
+  });
 
   const dependencyCards = document.querySelectorAll(".dependency-card");
   dependencyCards.forEach((card) => {
@@ -38,12 +90,16 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function updatePreviews() {
+    const packageName =
+      document.getElementById("packageName").value.trim() ||
+      "com.example.myapp";
+
+    const previewPackageName = packageName.replace(/\s+/g, ".");
+
     const options = {
       appName:
         document.getElementById("appName").value.trim() || "MyComposeApp",
-      packageName:
-        document.getElementById("packageName").value.trim() ||
-        "com.example.myapp",
+      packageName: previewPackageName,
       projectVersion:
         document.getElementById("projectVersion").value.trim() || "1.0.0",
       windowWidth: document.getElementById("windowWidth").value || "800",
@@ -97,11 +153,20 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   async function generateProject() {
+    if (!isValid) {
+      showError(
+        "Please fix all validation errors before generating the project."
+      );
+      return;
+    }
+
     generatingOverlay.classList.remove("hidden");
 
     try {
       const appName = document.getElementById("appName").value.trim();
-      const packageName = document.getElementById("packageName").value.trim();
+      let packageName = document.getElementById("packageName").value.trim();
+      packageName = packageName.replace(/\s+/g, ".");
+
       const projectVersion = document
         .getElementById("projectVersion")
         .value.trim();
