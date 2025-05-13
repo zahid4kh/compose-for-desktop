@@ -30,7 +30,7 @@ plugins {
   content += `
 }
 
-group = "${options.packageName}"
+group = "${options.packageName.replace(/\s+/g, ".")}"
 version = "${options.projectVersion}"
 
 repositories {
@@ -137,7 +137,7 @@ compose.desktop {
 sqldelight {
     databases {
         create("${options.appName.replace(/\s+/g, "")}") {
-            packageName.set("${options.packageName}")
+            packageName.set("${options.packageName.replace(/\s+/g, ".")}")
         }
     }
 }`;
