@@ -38,6 +38,28 @@ button {
   overflow: hidden;
 }
 
+#generateBtn:disabled,
+.action-buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#generateBtn:disabled:hover,
+.action-buttons button:disabled:hover {
+  transform: none;
+  box-shadow: var(--shadow-sm);
+}
+
+input.error {
+  border-color: var(--error-color) !important;
+  background-color: rgba(244, 67, 54, 0.05);
+}
+
+input.error:focus {
+  box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.2);
+}
+
 button::before {
   content: "";
   position: absolute;
