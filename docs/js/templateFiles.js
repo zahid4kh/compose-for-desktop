@@ -511,87 +511,77 @@ class Database {
 
 // README.md
 async function addReadmeFile(folder, options) {
-  const content = `# ${options.appName}
+  console.log("Adding README with options:", options);
 
-A desktop application built with Kotlin and Compose for Desktop.
+  let content = `# ${options.appName}\n\n`;
 
-## Features
+  content += `A desktop application built with Kotlin and Compose for Desktop.\n\n`;
 
-- Modern UI with Material 3 design
-- Dark mode support
-- Cross-platform (Windows, macOS, Linux)${
-    options.includeHotReload
-      ? "\n- Hot reload support for faster development"
-      : ""
+  content += `## Features\n\n`;
+  content += `- Modern UI with Material 3 design\n`;
+  content += `- Dark mode support\n`;
+  content += `- Cross-platform (Windows, macOS, Linux)\n`;
+
+  if (options.includeHotReload) {
+    content += `- Hot reload support for faster development\n`;
   }
 
-## Development Setup
+  content += `\n## Development Setup\n\n`;
+  content += `### Prerequisites\n\n`;
+  content += `- JDK 17 or later\n`;
+  content += `- Kotlin 2.1.20 or later\n`;
+  content += `- IntelliJ IDEA (recommended) or Android Studio\n\n`;
 
-### Prerequisites
+  content += `### Make Gradle Wrapper Executable (Linux/macOS only)\n\n`;
+  content += `After cloning the repository, you need to make the Gradle wrapper executable:\n\n`;
+  content += `\`\`\`bash\n`;
+  content += `chmod +x gradlew\n`;
+  content += `\`\`\`\n\n`;
 
-- JDK 17 or later
-- Kotlin 2.1.20 or later
-- IntelliJ IDEA (recommended) or Android Studio
+  content += `**Note:** This step is not required on Windows as it uses \`gradlew.bat\`.\n\n`;
 
-### Make Gradle Wrapper Executable (Linux/macOS only)
+  content += `### Running the Application\n\n`;
+  content += `#### Standard Run\n`;
+  content += `\`\`\`bash\n`;
+  content += `./gradlew run\n`;
+  content += `\`\`\`\n`;
 
-After cloning the repository, you need to make the Gradle wrapper executable:
-
-\`\`\`bash
-chmod +x gradlew
-\`\`\`
-
-**Note:** This step is not required on Windows as it uses \`gradlew.bat\`.
-
-### Running the Application
-
-#### Standard Run
-\`\`\`bash
-./gradlew run
-\`\`\`
-${
-  options.includeHotReload
-    ? `
-#### Hot Reload (Recommended for Development)
-\`\`\`bash
-./gradlew :runHot --mainClass ${options.appName.replace(/\s+/g, "")} --auto
-\`\`\`
-
-This enables automatic recompilation and hot swapping when you modify your code, making development much faster.
-`
-    : ""
-}
-### Building a Native Distribution
-
-To build a native distribution for your platform:
-
-\`\`\`bash
-./gradlew packageDistributionForCurrentOS
-\`\`\`
-
-This will create a platform-specific installer in the \`build/compose/binaries/main-release/{extension}/\` directory.
-
-### Available Gradle Tasks
-
-- \`./gradlew run\` - Run the application${
-    options.includeHotReload
-      ? `
-- \`./gradlew :runHot --mainClass ${options.appName.replace(
-          /\s+/g,
-          ""
-        )} --auto\` - Run with hot reload`
-      : ""
+  if (options.includeHotReload) {
+    content += `\n#### Hot Reload (Recommended for Development)\n`;
+    content += `\`\`\`bash\n`;
+    content += `./gradlew :runHot --mainClass ${options.appName.replace(
+      /\s+/g,
+      ""
+    )} --auto\n`;
+    content += `\`\`\`\n\n`;
+    content += `This enables automatic recompilation and hot swapping when you modify your code, making development much faster.\n`;
   }
-- \`./gradlew packageDistributionForCurrentOS\` - Build native distribution for current OS
-- \`./gradlew packageDmg\` - Build macOS DMG (macOS only)
-- \`./gradlew packageMsi\` - Build Windows MSI (Windows only)
-- \`./gradlew packageExe\` - Build Windows EXE (Windows only)
-- \`./gradlew packageDeb\` - Build Linux DEB (Linux only)
 
+  content += `\n### Building a Native Distribution\n\n`;
+  content += `To build a native distribution for your platform:\n\n`;
+  content += `\`\`\`bash\n`;
+  content += `./gradlew packageDistributionForCurrentOS\n`;
+  content += `\`\`\`\n\n`;
+  content += `This will create a platform-specific installer in the \`build/compose/binaries/main-release/{extension}/\` directory.\n\n`;
 
-## Generated with Compose for Desktop Wizard
+  content += `### Available Gradle Tasks\n\n`;
+  content += `- \`./gradlew run\` - Run the application\n`;
 
-This project was generated using the [Compose for Desktop Wizard](https://github.com/zahid4kh/compose-for-desktop).`;
+  if (options.includeHotReload) {
+    content += `- \`./gradlew :runHot --mainClass ${options.appName.replace(
+      /\s+/g,
+      ""
+    )} --auto\` - Run with hot reload\n`;
+  }
+
+  content += `- \`./gradlew packageDistributionForCurrentOS\` - Build native distribution for current OS\n`;
+  content += `- \`./gradlew packageDmg\` - Build macOS DMG (macOS only)\n`;
+  content += `- \`./gradlew packageMsi\` - Build Windows MSI (Windows only)\n`;
+  content += `- \`./gradlew packageExe\` - Build Windows EXE (Windows only)\n`;
+  content += `- \`./gradlew packageDeb\` - Build Linux DEB (Linux only)\n`;
+
+  content += `\n\n## Generated with Compose for Desktop Wizard\n\n`;
+  content += `This project was generated using the [Compose for Desktop Wizard](https://github.com/zahid4kh/compose-for-desktop).`;
 
   folder.file("README.md", content);
 }
