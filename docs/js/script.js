@@ -136,6 +136,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const mainPreviewElement = document.getElementById("mainPreview");
     mainPreviewElement.textContent = mainPreviewContent;
     Prism.highlightElement(mainPreviewElement);
+
+    const readmePreviewContent = generateReadmePreview(options);
+    const readmePreviewElement = document.getElementById("readmePreview");
+
+    if (readmePreviewElement.closest("#readme-tab")) {
+      readmePreviewElement.innerHTML = marked.parse(readmePreviewContent);
+      readmePreviewElement.classList.remove("language-markdown");
+    } else {
+      readmePreviewElement.textContent = readmePreviewContent;
+      Prism.highlightElement(readmePreviewElement);
+    }
   }
 
   const inputs = form.querySelectorAll("input");
