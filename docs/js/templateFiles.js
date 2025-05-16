@@ -94,7 +94,7 @@ dependencies {
 
   if (options.includeKotlinxDatetime) {
     content += `
-    
+
     // kotlinx.datetime
     implementation(libs.kotlinx.datetime)`;
   }
@@ -163,9 +163,6 @@ sqldelight {
 //https://github.com/JetBrains/compose-hot-reload
 composeCompiler {
     featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
-}
-tasks.register<ComposeHotRun>("runHot") {
-    mainClass.set("${options.appName.replace(/\s+/g, "")}")
 }`;
   }
 
@@ -238,7 +235,7 @@ imageLoader = "1.7.1"`;
 
   if (options.includeHotReload) {
     content += `
-hotReload = "1.0.0-alpha03"`;
+hotReload = "1.0.0-alpha10"`;
   }
 
   if (options.includeKotlinxDatetime) {
@@ -410,7 +407,7 @@ async function addSettingsGradle(folder, options) {
 
 plugins {
   //https://github.com/JetBrains/compose-hot-reload?tab=readme-ov-file#set-up-automatic-provisioning-of-the-jetbrains-runtime-jbr-via-gradle
-  id("org.gradle.toolchains.foojay-resolver-convention").version("0.9.0")
+  id("org.gradle.toolchains.foojay-resolver-convention").version("0.10.0")
 }`;
   }
 
@@ -439,11 +436,6 @@ import java.awt.Dimension
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin`;
 
-  if (options.includeHotReload) {
-    imports += `
-import org.jetbrains.compose.reload.DevelopmentEntryPoint`;
-  }
-
   let mainFunction = `
 
 fun main() = application {
@@ -456,27 +448,14 @@ fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
         state = rememberWindowState(size = DpSize(${options.windowWidth}.dp, ${options.windowHeight}.dp)),
-        title = "${options.appName} - Made with Compose for Desktop"
+        title = "${options.appName} - Made with Compose for Desktop Wizard"
     ) {
         window.minimumSize = Dimension(${options.windowWidth}, ${options.windowHeight})
 
-        AppTheme {`;
-
-  if (options.includeHotReload) {
-    mainFunction += `
-            DevelopmentEntryPoint {
-                App(
-                    viewModel = viewModel
-                )
-            }`;
-  } else {
-    mainFunction += `
+        AppTheme {
             App(
                 viewModel = viewModel
-            )`;
-  }
-
-  mainFunction += `
+            )
         }
     }
 }`;
