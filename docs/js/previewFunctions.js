@@ -91,6 +91,20 @@ dependencies {
     implementation(libs.bundles.decompose)`;
   }
 
+  if (options.includeKotlinxDatetime) {
+    content += `
+    // Kotlin's datetime library
+    implementation(libs.kotlinx.datetime)`;
+  }
+
+  if (options.includeHotReload) {
+    content += `
+
+    // SLF4J Logging (for hot reload)
+    implementation("org.slf4j:slf4j-api:2.0.12")
+    implementation("org.slf4j:slf4j-simple:2.0.12")`;
+  }
+
   content += `
 }
 
@@ -155,6 +169,7 @@ tasks.register<ComposeHotRun>("runHot") {
   }
 
   content += `
+  
 tasks.register("generateUpgradeUuid") {
     group = "help"
     description = "Generates a unique UUID to be used for the Windows MSI upgradeUuid."
@@ -225,6 +240,11 @@ imageLoader = "1.7.1"`;
 hotReload = "1.0.0-alpha03"`;
   }
 
+  if (options.includeKotlinxDatetime) {
+    content += `
+kotlinxDatetime = "0.6.2"`;
+  }
+
   content += `
 
 [libraries]
@@ -265,6 +285,13 @@ retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.r
 retrofit-converterGson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 okhttp-core = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 okhttp-loggingInterceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }`;
+  }
+
+  if (options.includeKotlinxDatetime) {
+    content += `
+
+# kotlinx.datetime
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }`;
   }
 
   if (options.includeSQLDelight) {
