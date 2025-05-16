@@ -1,0 +1,108 @@
+.warning-section {
+  background-color: var(--card-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  padding: 2rem;
+  margin: 2rem 1.5rem;
+  border-left: 5px solid var(--accent-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.warning-section::before {
+  content: "⚠️";
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  font-size: 2rem;
+  opacity: 0.3;
+}
+
+.warning-section h2 {
+  color: var(--primary-color);
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.warning-section h2::before {
+  content: "⚠️";
+  font-size: 1.2rem;
+}
+
+.warning-section p {
+  color: var(--text-color);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.warning-section .platforms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.platform-card {
+  background-color: rgba(67, 97, 238, 0.05);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .platform-card {
+  background-color: rgba(108, 140, 255, 0.1);
+}
+
+.platform-card h3 {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.platform-card code {
+  background-color: var(--code-bg);
+  color: var(--code-text);
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.9rem;
+  display: block;
+  margin: 0.5rem 0;
+  overflow-x: auto;
+}
+
+.platform-card .note {
+  font-size: 0.85rem;
+  color: #757575;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .warning-section {
+    margin: 1.5rem 1rem;
+    padding: 1.5rem;
+  }
+
+  .warning-section h2 {
+    font-size: 1.2rem;
+  }
+
+  .platforms {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .platform-card {
+    padding: 1rem;
+  }
+
+  .platform-card code {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+  }
+}

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/preview.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/dependency-card.css">
+    <link rel="stylesheet" href="css/warning-section.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="js/utils.js"></script>
@@ -288,6 +289,29 @@
                         </div>
                     </section>
                 </div>
+
+                <section class="warning-section">
+                    <h2>Important: Before Running Your Project</h2>
+                    <p>After extracting your project, you'll need to make the Gradle wrapper executable on Unix-based
+                        systems (Linux and macOS). This is required because ZIP files don't preserve executable
+                        permissions.</p>
+
+                    <div class="platforms">
+                        <div class="platform-card">
+                            <h3>🐧 Linux / 🍎 macOS</h3>
+                            <p>Open terminal in your project directory and run:</p>
+                            <code>chmod +x gradlew</code>
+                            <p class="note">This makes the Gradle wrapper script executable</p>
+                        </div>
+
+                        <div class="platform-card">
+                            <h3>🪟 Windows</h3>
+                            <p>No action needed! Windows uses the <code>gradlew.bat</code> file which doesn't require
+                                executable permissions.</p>
+                            <p class="note">You can run your project directly</p>
+                        </div>
+                    </div>
+                </section>
 
                 <div class="action-buttons">
                     <button type="submit" id="generateBtn">Generate Project</button>
