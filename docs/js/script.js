@@ -113,6 +113,8 @@ document.addEventListener("DOMContentLoaded", function () {
       includeSentry: document.getElementById("sentry").checked,
       includeMarkdown: document.getElementById("markdown").checked,
       includeHotReload: document.getElementById("hot-reload").checked,
+      includeKotlinxDatetime:
+        document.getElementById("kotlinxDatetime").checked,
     };
 
     const gradlePreviewContent = generateBuildGradlePreview(options);
@@ -182,6 +184,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const includeSentry = document.getElementById("sentry").checked;
       const includeMarkdown = document.getElementById("markdown").checked;
       const includeHotReload = document.getElementById("hot-reload").checked;
+      const includeKotlinxDatetime =
+        document.getElementById("kotlinxDatetime").checked;
 
       if (!appName || !packageName) {
         generatingOverlay.classList.add("hidden");
@@ -225,6 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
         includeSentry,
         includeMarkdown,
         includeHotReload,
+        includeKotlinxDatetime,
       });
 
       await addBuildGradle(rootFolder, {
@@ -242,6 +247,7 @@ document.addEventListener("DOMContentLoaded", function () {
         includeSentry,
         includeMarkdown,
         includeHotReload,
+        includeKotlinxDatetime,
       });
 
       await addSettingsGradle(rootFolder, { appName, includeHotReload });
