@@ -93,7 +93,7 @@ dependencies {
 
   if (options.includeKotlinxDatetime) {
     content += `
-    
+
     // Kotlin's datetime library
     implementation(libs.kotlinx.datetime)`;
   }
@@ -102,8 +102,7 @@ dependencies {
     content += `
 
     // SLF4J Logging (for hot reload)
-    implementation("org.slf4j:slf4j-api:2.0.12")
-    implementation("org.slf4j:slf4j-simple:2.0.12")`;
+    implementation(libs.bundles.slf4j)`;
   }
 
   content += `
@@ -246,6 +245,11 @@ hotReload = "1.0.0-alpha03"`;
 kotlinxDatetime = "0.6.2"`;
   }
 
+  if (options.includeHotReload) {
+    content += `
+slf4j = "2.0.12"`;
+  }
+
   content += `
 
 [libraries]
@@ -293,6 +297,14 @@ okhttp-loggingInterceptor = { group = "com.squareup.okhttp3", name = "logging-in
 
 # kotlinx.datetime
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }`;
+  }
+
+  if (options.includeHotReload) {
+    content += `
+
+# SLF4J Logging (for hot reload)
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
+slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }`;
   }
 
   if (options.includeSQLDelight) {
@@ -369,6 +381,11 @@ ktorClient = ["ktor-clientCore", "ktor-clientCio", "ktor-clientContentNegotiatio
   if (options.includeDecompose) {
     content += `
 decompose = ["decompose-core", "decompose-extensionsComposeJetbrains"]`;
+  }
+
+  if (options.includeHotReload) {
+    content += `
+slf4j = ["slf4j-api", "slf4j-simple"]`;
   }
 
   return content;
