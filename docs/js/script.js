@@ -139,14 +139,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const readmePreviewContent = generateReadmePreview(options);
     const readmePreviewElement = document.getElementById("readmePreview");
-
-    if (readmePreviewElement.closest("#readme-tab")) {
-      readmePreviewElement.innerHTML = marked.parse(readmePreviewContent);
-      readmePreviewElement.classList.remove("language-markdown");
-    } else {
-      readmePreviewElement.textContent = readmePreviewContent;
-      Prism.highlightElement(readmePreviewElement);
-    }
+    readmePreviewElement.innerHTML = marked.parse(readmePreviewContent);
+    readmePreviewElement.classList.remove("language-markdown");
   }
 
   const inputs = form.querySelectorAll("input");

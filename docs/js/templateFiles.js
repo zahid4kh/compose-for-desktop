@@ -549,19 +549,19 @@ chmod +x gradlew
 \`\`\`bash
 ./gradlew run
 \`\`\`
-
 ${
   options.includeHotReload
-    ? `#### Hot Reload (Recommended for Development)
+    ? `
+#### Hot Reload (Recommended for Development)
 \`\`\`bash
 ./gradlew :runHot --mainClass ${options.appName.replace(/\s+/g, "")} --auto
 \`\`\`
 
 This enables automatic recompilation and hot swapping when you modify your code, making development much faster.
-
 `
     : ""
-}### Building a Native Distribution
+}
+### Building a Native Distribution
 
 To build a native distribution for your platform:
 
@@ -573,22 +573,20 @@ This will create a platform-specific installer in the \`build/compose/binaries/m
 
 ### Available Gradle Tasks
 
-- \`./gradlew run\` - Run the application
-${
-  options.includeHotReload
-    ? "- `./gradlew :runHot --mainClass " +
-      options.appName.replace(/\s+/g, "") +
-      " --auto` - Run with hot reload"
-    : ""
-}- \`./gradlew packageDistributionForCurrentOS\` - Build native distribution for current OS
+- \`./gradlew run\` - Run the application${
+    options.includeHotReload
+      ? `
+- \`./gradlew :runHot --mainClass ${options.appName.replace(
+          /\s+/g,
+          ""
+        )} --auto\` - Run with hot reload`
+      : ""
+  }
+- \`./gradlew packageDistributionForCurrentOS\` - Build native distribution for current OS
 - \`./gradlew packageDmg\` - Build macOS DMG (macOS only)
 - \`./gradlew packageMsi\` - Build Windows MSI (Windows only)
 - \`./gradlew packageExe\` - Build Windows EXE (Windows only)
-- \`./gradlew packageDeb\` - Build Linux DEB (Linux only)${
-    options.includeHotReload
-      ? "\n- `./gradlew generateUpgradeUuid` - Generate UUID for Windows MSI updates (run only once)"
-      : ""
-  }
+- \`./gradlew packageDeb\` - Build Linux DEB (Linux only)
 
 
 ## Generated with Compose for Desktop Wizard
