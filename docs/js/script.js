@@ -117,6 +117,9 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("kotlinxDatetime").checked,
     };
 
+    // Add this right after the options object is created
+    console.log("Hot reload option:", options.includeHotReload);
+
     const gradlePreviewContent = generateBuildGradlePreview(options);
     const gradlePreviewElement = document.getElementById("gradlePreview");
     gradlePreviewElement.textContent = gradlePreviewContent;
@@ -264,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
       await addDatabaseFile(kotlinFolder, { appName });
       await addKotlinFiles(kotlinFolder);
       await addThemeFiles(themeFolder);
-      await addReadmeFile(rootFolder, { appName });
+      await addReadmeFile(rootFolder, { appName, includeHotReload });
       await addGitignoreFile(rootFolder);
 
       const content = await zip.generateAsync({ type: "blob" });
