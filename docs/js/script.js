@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+(function () {
   const form = document.getElementById("projectForm");
   const generateBtn = document.getElementById("generateBtn");
   const generatingOverlay = document.getElementById("generatingOverlay");
@@ -284,4 +284,4 @@ document.addEventListener("DOMContentLoaded", function () {
       generatingOverlay.classList.add("hidden");
     }
   }
-});
+})();
