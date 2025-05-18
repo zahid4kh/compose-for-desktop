@@ -22,7 +22,6 @@
     <script src="js/templateFiles.js"></script>
     <script src="js/themeFiles.js"></script>
     <script src="js/kotlinFiles.js"></script>
-    <script src="js/script.js"></script>
     <script src="js/iconFiles.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
@@ -31,293 +30,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-markdown.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
     <script src="js/theme.js"></script>
+    <script src="js/theme-init.js"></script>
     <script src="js/previewFunctions.js"></script>
+    <script src="js/load-sections.js"></script>
 </head>
 
 <body>
-    <header>
-        <h1>Compose for Desktop Wizard</h1>
-        <p>Generate a production-ready Kotlin Compose for Desktop project in seconds</p>
-        <div class="theme-toggle">
-            <span class="theme-label">Light</span>
-            <label class="switch">
-                <input type="checkbox" id="themeToggle">
-                <span class="slider round">
-                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path
-                            d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 2c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41.39.39 1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41.39.39 1.03.39 1.41 0l1.06-1.06z" />
-                    </svg>
-                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path
-                            d="M9.5 2c-1.82 0-3.53.5-5 1.35 2.99 1.73 5 4.95 5 8.65s-2.01 6.92-5 8.65c1.47.85 3.18 1.35 5 1.35 5.52 0 10-4.48 10-10S15.02 2 9.5 2z" />
-                    </svg>
-                </span>
-            </label>
-            <span class="theme-label">Dark</span>
-        </div>
-
-        <div class="github-links">
-            <a href="https://github.com/zahid4kh/compose-for-desktop" target="_blank" title="GitHub Repository">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                </svg>
-            </a>
-            <a href="https://github.com/zahid4kh/compose-for-desktop/wiki" target="_blank" title="GitHub Wiki">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M14.97 16.95L10 13.87V7h2v5.76l4.03 2.49-1.06 1.7zM12 3c-4.96 0-9 4.04-9 9s4.04 9 9 9 9-4.04 9-9-4.04-9-9-9m0-1c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z" />
-                </svg>
-            </a>
-        </div>
-    </header>
+    <div id="header-section"></div>
 
     <main>
         <div class="container">
             <form id="projectForm">
                 <div class="row">
-                    <section class="form-section">
-                        <h2>Project Information</h2>
-                        <div class="form-group">
-                            <label for="appName">Application Name*</label>
-                            <input type="text" id="appName" required placeholder="MyComposeApp">
-                            <small>Used for window title and app name</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="packageName">Package Name*</label>
-                            <input type="text" id="packageName" required placeholder="com.example.myapp">
-                            <small>E.g. com.yourdomain.appname</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="projectVersion">Version</label>
-                            <input type="text" id="projectVersion" value="1.0.0" placeholder="1.0.0">
-                        </div>
-                    </section>
-
-                    <section class="form-section">
-                        <h2>UI Configuration</h2>
-                        <div class="form-group">
-                            <label for="windowWidth">Default Window Width (dp)</label>
-                            <input type="number" id="windowWidth" value="800" min="400">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="windowHeight">Default Window Height (dp)</label>
-                            <input type="number" id="windowHeight" value="600" min="300">
-                        </div>
-                    </section>
+                    <div id="project-info-section"></div>
+                    <div id="ui-config-section"></div>
                 </div>
 
                 <div class="row">
-
-                    <section class="form-section">
-                        <h2>Additional Dependencies</h2>
-                        <div class="dependencies-grid">
-                            <!-- Hot Reload -->
-                            <label class="dependency-card" for="hot-reload">
-                                <input type="checkbox" id="hot-reload" checked>
-                                <div class="dependency-check"></div>
-                                <div class="dependency-card-header">
-                                    <div class="dependency-card-title">Hot Reload</div>
-                                </div>
-                                <div class="dependency-card-description">
-                                    Enable live code updates without restarting the application
-                                </div>
-                                <div class="dependency-card-footer">
-                                    <span class="dependency-card-badge">Compose</span>
-                                </div>
-                            </label>
-
-                            <!-- Retrofit -->
-                            <label class="dependency-card" for="retrofit">
-                                <input type="checkbox" id="retrofit">
-                                <div class="dependency-check"></div>
-                                <div class="dependency-card-header">
-                                    <div class="dependency-card-title">Retrofit + OkHttp</div>
-                                </div>
-                                <div class="dependency-card-description">
-                                    Type-safe HTTP client for API calls
-                                </div>
-                                <div class="dependency-card-footer">
-                                    <span class="dependency-card-badge">Network</span>
-                                </div>
-                            </label>
-
-                            <!-- SQLDelight -->
-                            <label class="dependency-card" for="sqldelight">
-                                <input type="checkbox" id="sqldelight">
-                                <div class="dependency-check"></div>
-                                <div class="dependency-card-header">
-                                    <div class="dependency-card-title">SQLDelight</div>
-                                </div>
-                                <div class="dependency-card-description">
-                                    Type-safe SQL for local database storage
-                                </div>
-                                <div class="dependency-card-footer">
-                                    <span class="dependency-card-badge">Database</span>
-                                </div>
-                            </label>
-
-                            <!-- Ktor -->
-                            <label class="dependency-card" for="ktor">
-                                <input type="checkbox" id="ktor">
-                                <div class="dependency-check"></div>
-                                <div class="dependency-card-header">
-                                    <div class="dependency-card-title">Ktor Client</div>
-                                </div>
-                                <div class="dependency-card-description">
-                                    Kotlin-first HTTP client with co-routines support
-                                </div>
-                                <div class="dependency-card-footer">
-                                    <span class="dependency-card-badge">Network</span>
-                                </div>
-                            </label>
-
-                            <!-- Decompose -->
-                            <label class="dependency-card" for="decompose">
-                                <input type="checkbox" id="decompose">
-                                <div class="dependency-check"></div>
-                                <div class="dependency-card-header">
-                                    <div class="dependency-card-title">Decompose</div>
-                                </div>
-                                <div class="dependency-card-description">
-                                    Component-based navigation for Compose
-                                </div>
-                                <div class="dependency-card-footer">
-                                    <span class="dependency-card-badge">Navigation</span>
-                                </div>
-                            </label>
-
-                            <!-- PreCompose -->
-                            <label class="dependency-card" for="precompose">
-                                <input type="checkbox" id="precompose">
-                                <div class="dependency-check"></div>
-                                <div class="dependency-card-header">
-                                    <div class="dependency-card-title">PreCompose</div>
-                                </div>
-                                <div class="dependency-card-description">
-                                    Navigation, ViewModel and DI for Compose
-                                </div>
-                                <div class="dependency-card-footer">
-                                    <span class="dependency-card-badge">Architecture</span>
-                                </div>
-                            </label>
-
-                            <!-- Sentry -->
-                            <label class="dependency-card" for="sentry">
-                                <input type="checkbox" id="sentry">
-                                <div class="dependency-check"></div>
-                                <div class="dependency-card-header">
-                                    <div class="dependency-card-title">Sentry</div>
-                                </div>
-                                <div class="dependency-card-description">
-                                    Error tracking and performance monitoring
-                                </div>
-                                <div class="dependency-card-footer">
-                                    <span class="dependency-card-badge">Analytics</span>
-                                </div>
-                            </label>
-
-                            <!-- Markdown -->
-                            <label class="dependency-card" for="markdown">
-                                <input type="checkbox" id="markdown">
-                                <div class="dependency-check"></div>
-                                <div class="dependency-card-header">
-                                    <div class="dependency-card-title">Markdown Renderer</div>
-                                </div>
-                                <div class="dependency-card-description">
-                                    Display and render Markdown content
-                                </div>
-                                <div class="dependency-card-footer">
-                                    <span class="dependency-card-badge">UI</span>
-                                </div>
-                            </label>
-
-                            <!-- Image Loader -->
-                            <label class="dependency-card" for="imageLoader">
-                                <input type="checkbox" id="imageLoader">
-                                <div class="dependency-check"></div>
-                                <div class="dependency-card-header">
-                                    <div class="dependency-card-title">Image Loading</div>
-                                </div>
-                                <div class="dependency-card-description">
-                                    Efficient image loading and caching library
-                                </div>
-                                <div class="dependency-card-footer">
-                                    <span class="dependency-card-badge">Media</span>
-                                </div>
-                            </label>
-
-                            <!-- kotlinx.datetime -->
-                            <label class="dependency-card" for="kotlinxDatetime">
-                                <input type="checkbox" id="kotlinxDatetime">
-                                <div class="dependency-check"></div>
-                                <div class="dependency-card-header">
-                                    <div class="dependency-card-title">kotlinx.datetime</div>
-                                </div>
-                                <div class="dependency-card-description">
-                                    Kotlin date and time library
-                                </div>
-                                <div class="dependency-card-footer">
-                                    <span class="dependency-card-badge">DateTime</span>
-                                </div>
-                            </label>
-                        </div>
-                    </section>
-
-                    <section class="form-section">
-                        <h2>Preview</h2>
-                        <div class="preview-tabs">
-                            <button type="button" class="tab-button active" data-tab="gradle">build.gradle.kts</button>
-                            <button type="button" class="tab-button" data-tab="settings">settings.gradle.kts</button>
-                            <button type="button" class="tab-button" data-tab="versions">libs.versions.toml</button>
-                            <button type="button" class="tab-button" data-tab="main">Main.kt</button>
-                            <button type="button" class="tab-button" data-tab="readme">README.md</button>
-                        </div>
-                        <div class="preview-container">
-                            <div class="tab-content active" id="gradle-tab">
-                                <pre><code id="gradlePreview" class="language-kotlin"></code></pre>
-                            </div>
-                            <div class="tab-content" id="settings-tab">
-                                <pre><code id="settingsPreview" class="language-kotlin"></code></pre>
-                            </div>
-                            <div class="tab-content" id="versions-tab">
-                                <pre><code id="versionsPreview" class="language-toml"></code></pre>
-                            </div>
-                            <div class="tab-content" id="main-tab">
-                                <pre><code id="mainPreview" class="language-kotlin"></code></pre>
-                            </div>
-                            <div class="tab-content" id="readme-tab">
-                                <pre><code id="readmePreview" class="language-markdown"></code></pre>
-                            </div>
-                        </div>
-                    </section>
+                    <div id="dependencies-section"></div>
+                    <div id="preview-section"></div>
                 </div>
 
-                <section class="warning-section">
-                    <h2>Important: Before Running Your Project</h2>
-                    <p>After extracting your project, you'll need to make the Gradle wrapper executable on Unix-based
-                        systems (Linux and macOS). This is required because ZIP files don't preserve executable
-                        permissions.</p>
-
-                    <div class="platforms">
-                        <div class="platform-card">
-                            <h3>🐧 Linux / 🍎 macOS</h3>
-                            <p>Open terminal in your project directory and run:</p>
-                            <code>chmod +x gradlew</code>
-                            <p class="note">This makes the Gradle wrapper script executable</p>
-                        </div>
-
-                        <div class="platform-card">
-                            <h3>🪟 Windows</h3>
-                            <p>No action needed! Windows uses the <code>gradlew.bat</code> file which doesn't require
-                                executable permissions.</p>
-                            <p class="note">You can run your project directly</p>
-                        </div>
-                    </div>
-                </section>
+                <div id="warning-section-content"></div>
 
                 <div class="action-buttons">
                     <button type="submit" id="generateBtn">Generate Project</button>
@@ -333,13 +67,19 @@
         </div>
     </main>
 
-    <footer>
-        <p><span class="project-name">Compose for Desktop Wizard </span>is an open-source project. View it on
-            <a href="https://github.com/zahid4kh/compose-for-desktop" target="_blank">
-                GitHub
-            </a>
-        </p>
-    </footer>
+    <div id="footer-section"></div>
+
+    <script>
+        function initializeApp() {
+            const script = document.createElement('script');
+            script.src = 'js/script.js';
+            script.onload = function () {
+                console.log('Main script loaded successfully');
+            };
+            document.head.appendChild(script);
+        }
+    </script>
+
 
 </body>
 
