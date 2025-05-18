@@ -29,7 +29,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-toml.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-markdown.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
-    <script src="js/theme.js"></script>
     <script src="js/theme-init.js"></script>
     <script src="js/previewFunctions.js"></script>
     <script src="js/load-sections.js"></script>
@@ -41,18 +40,22 @@
     <main>
         <div class="container">
             <form id="projectForm">
+                <!-- First row - Project Info & UI Config -->
                 <div class="row">
-                    <div id="project-info-section"></div>
-                    <div id="ui-config-section"></div>
+                    <section class="form-section" id="project-info-section"></section>
+                    <section class="form-section" id="ui-config-section"></section>
                 </div>
 
+                <!-- Second row - Dependencies & Preview -->
                 <div class="row">
-                    <div id="dependencies-section"></div>
-                    <div id="preview-section"></div>
+                    <section class="form-section" id="dependencies-section"></section>
+                    <section class="form-section" id="preview-section"></section>
                 </div>
 
-                <div id="warning-section-content"></div>
+                <!-- Warning Section -->
+                <section id="warning-section-content"></section>
 
+                <!-- Action Buttons -->
                 <div class="action-buttons">
                     <button type="submit" id="generateBtn">Generate Project</button>
                 </div>

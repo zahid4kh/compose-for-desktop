@@ -1,27 +1,25 @@
-<section class="form-section">
-    <h2>Preview</h2>
-    <div class="preview-tabs">
-        <button type="button" class="tab-button active" data-tab="gradle">build.gradle.kts</button>
-        <button type="button" class="tab-button" data-tab="settings">settings.gradle.kts</button>
-        <button type="button" class="tab-button" data-tab="versions">libs.versions.toml</button>
-        <button type="button" class="tab-button" data-tab="main">Main.kt</button>
-        <button type="button" class="tab-button" data-tab="readme">README.md</button>
+<h2>Preview</h2>
+<div class="preview-tabs">
+    <button type="button" class="tab-button active" data-tab="gradle">build.gradle.kts</button>
+    <button type="button" class="tab-button" data-tab="settings">settings.gradle.kts</button>
+    <button type="button" class="tab-button" data-tab="versions">libs.versions.toml</button>
+    <button type="button" class="tab-button" data-tab="main">Main.kt</button>
+    <button type="button" class="tab-button" data-tab="readme">README.md</button>
+</div>
+<div class="preview-container">
+    <div class="tab-content active" id="gradle-tab">
+        <pre><code id="gradlePreview" class="language-kotlin"></code></pre>
     </div>
-    <div class="preview-container">
-        <div class="tab-content active" id="gradle-tab">
-            <pre><code id="gradlePreview" class="language-kotlin"></code></pre>
-        </div>
-        <div class="tab-content" id="settings-tab">
-            <pre><code id="settingsPreview" class="language-kotlin"></code></pre>
-        </div>
-        <div class="tab-content" id="versions-tab">
-            <pre><code id="versionsPreview" class="language-toml"></code></pre>
-        </div>
-        <div class="tab-content" id="main-tab">
-            <pre><code id="mainPreview" class="language-kotlin"></code></pre>
-        </div>
-        <div class="tab-content" id="readme-tab">
-            <pre><code id="readmePreview" class="language-markdown"></code></pre>
-        </div>
+    <div class="tab-content" id="settings-tab">
+        <pre><code id="settingsPreview" class="language-kotlin"></code></pre>
     </div>
-</section>
+    <div class="tab-content" id="versions-tab">
+        <pre><code id="versionsPreview" class="language-toml"></code></pre>
+    </div>
+    <div class="tab-content" id="main-tab">
+        <pre><code id="mainPreview" class="language-kotlin"></code></pre>
+    </div>
+    <div class="tab-content" id="readme-tab">
+        <pre><code id="readmePreview" class="language-markdown"></code></pre>
+    </div>
+</div>
