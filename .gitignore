@@ -6,3 +6,4 @@
 /wiki
 /*.zip
 /docs/node_modules
+/docs/.next
