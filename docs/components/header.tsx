@@ -1,11 +1,22 @@
 "use client";
 import { ModeToggle } from "./mode-toggle";
 import { Github, Clock } from "lucide-react";
+import Image from "next/image";
 
 export default function Header() {
   return (
     <header className="relative overflow-hidden py-12 px-4 text-center text-white monochrome-gradient shadow-md">
-      <div className="absolute inset-0 bg-[radial-gradient(circle,transparent_20%,rgba(255,255,255,0.05)_20%,rgba(255,255,255,0.05)_30%,transparent_30%,transparent)] animate-[backgroundAnimation_30s_linear_infinite] z-0"></div>
+      <div className="absolute inset-0 flex items-center justify-center z-0">
+        <div className="w-[200px] h-[200px] opacity-10 animate-[backgroundAnimation_30s_linear_infinite]">
+          <Image
+            src="/icon.svg"
+            alt="Compose Logo"
+            width={200}
+            height={200}
+            priority
+          />
+        </div>
+      </div>
 
       <div className="relative z-10 flex flex-col items-center gap-6">
         <div>
