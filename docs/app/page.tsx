@@ -7,7 +7,7 @@ import ProjectForm from "@/components/project-form";
 import GeneratingOverlay from "@/components/generating-overlay";
 import type { ProjectOptions } from "@/lib/types";
 import { generateProject } from "@/lib/project-generator";
-
+// stuff
 export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false);
 
