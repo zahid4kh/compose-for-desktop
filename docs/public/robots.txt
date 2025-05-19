@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://composefordesktop.vercel.app/sitemap.xml
