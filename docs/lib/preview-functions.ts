@@ -129,7 +129,9 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Exe)
-            packageName = "${options.appName.toLowerCase().replace(/\s+/g, "")}"
+            packageName = "${options.packageName
+              .toLowerCase()
+              .replace(/\s+/g, "")}"
             packageVersion = "${options.projectVersion}"
 
             linux{
