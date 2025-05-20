@@ -14,6 +14,7 @@ version = "1.0.0"
 dependencies {
     implementation(compose.desktop.currentOs)
     implementation(compose.material3)
+    implementation(compose.components.resources)
     implementation(compose.materialIconsExtended)
 
     implementation(libs.kotlinx.serialization.json)
@@ -55,6 +56,12 @@ compose.desktop {
             }
         }
     }
+}
+
+compose.resources{
+    publicResClass = false
+    packageOfResClass = "desktop.resources"
+    generateResClass = auto
 }
 
 tasks.register("generateUpgradeUuid") {
