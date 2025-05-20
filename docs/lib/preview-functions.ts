@@ -34,6 +34,11 @@ plugins {
 group = "${options.packageName.replace(/\s+/g, ".")}"
 version = "${options.projectVersion}"
 
+repositories {
+    mavenCentral()
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    google()
+}
 
 dependencies {
     implementation(compose.desktop.currentOs)
