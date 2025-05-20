@@ -1,5 +1,8 @@
 # Compose for Desktop Wizard
 
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.1.20-blue.svg?logo=kotlin)](https://kotlinlang.org)
+[![Compose](https://img.shields.io/badge/Compose-1.8.0-blue.svg?logo=jetpack-compose)](https://www.jetbrains.com/lp/compose-multiplatform/)
+
 A web-based project generator that creates ready-to-use Kotlin Compose for Desktop applications with a single click.
 
 ![Screenshot of Wizard](media/screenshot.png)
