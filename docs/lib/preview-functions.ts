@@ -204,7 +204,7 @@ compose.resources{
 
 export function generateVersionCatalogPreview(options: ProjectOptions): string {
   let content = `[versions]
-composePlugin = "1.7.3"
+composePlugin = "1.8.0"
 kotlin = "2.1.20"
 kotlinxCoroutines = "1.10.2"
 kotlinxSerializationJson = "1.8.1"
