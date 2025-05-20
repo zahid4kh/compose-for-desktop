@@ -46,6 +46,10 @@ export default function MarkdownPreview({ markdown }: MarkdownPreviewProps) {
         /^### (.*$)/gm,
         '<h3 class="text-lg font-bold mt-4 mb-2">$1</h3>'
       );
+      processed = processed.replace(
+        /^#### (.*$)/gm,
+        '<h4 class="text-base font-bold mt-3 mb-1">$1</h4>'
+      );
 
       // Process lists
       processed = processed.replace(
