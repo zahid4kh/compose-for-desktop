@@ -478,7 +478,8 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         state = rememberWindowState(size = DpSize(${options.windowWidth}.dp, ${options.windowHeight}.dp)),
         alwaysOnTop = true,
-        title = "${options.appName} - Made with Compose for Desktop Wizard"
+        title = "${options.appName} - Made with Compose for Desktop Wizard",
+        icon = null
     ) {
         window.minimumSize = Dimension(${options.windowWidth}, ${options.windowHeight})
 
