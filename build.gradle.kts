@@ -11,6 +11,12 @@ plugins {
 group = "desktop"
 version = "1.0.0"
 
+repositories {
+    mavenCentral()
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+    google()
+}
+
 dependencies {
     implementation(compose.desktop.currentOs)
     implementation(compose.material3)
@@ -39,20 +45,20 @@ compose.desktop {
 
             linux{
                 shortcut = true
-                iconFile.set(project.file("icons/compose.png"))
+                iconFile.set(project.file("src/main/composeResources/drawable/linuxos.png"))
             }
 
             windows{
                 shortcut = true
                 dirChooser = true
                 menu = true
-                upgradeUuid = "run the 'generateUpgradeUuid' task and paste the generated UUID here only once"
-                iconFile.set(project.file("icons/compose.ico"))
+                upgradeUuid = "run the 'generateUpgradeUuid' task and paste the generated UUID here only once. Must be done before packaging the app for windows"
+                iconFile.set(project.file("src/main/composeResources/drawable/windowsos.ico"))
             }
 
             macOS{
                 dockName = "Compose for Desktop"
-                iconFile.set(project.file("icons/compose.icns"))
+                iconFile.set(project.file("src/main/composeResources/drawable/macos.icns"))
             }
         }
     }
