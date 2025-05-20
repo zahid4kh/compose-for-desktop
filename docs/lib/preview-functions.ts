@@ -43,6 +43,7 @@ repositories {
 dependencies {
     implementation(compose.desktop.currentOs)
     implementation(compose.material3)
+    implementation(compose.components.resources)
     implementation(compose.materialIconsExtended)
 
     implementation(libs.kotlinx.serialization.json)
@@ -187,6 +188,14 @@ tasks.register("generateUpgradeUuid") {
         println(UUID.randomUUID().toString())
         println("--------------------------------------------------")
     }
+}
+
+compose.resources{
+    publicResClass = false
+    packageOfResClass = "${options.packageName
+      .toLowerCase()
+      .replace(/\s+/g, "")}.resources"
+    generateResClass = auto
 }
 `;
 

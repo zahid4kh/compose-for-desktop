@@ -258,6 +258,16 @@ export async function generateProject(options: ProjectOptions) {
       throw new Error("Failed to create main folder");
     }
 
+    const composeResourcesFolder = mainFolder.folder("composeResources");
+    if (!composeResourcesFolder) {
+      throw new Error("Failed to create composeResources folder");
+    }
+
+    const drawableFolder = composeResourcesFolder.folder("drawable");
+    if (!drawableFolder) {
+      throw new Error("Failed to create drawable folder");
+    }
+
     const kotlinFolder = mainFolder.folder("kotlin");
     if (!kotlinFolder) {
       throw new Error("Failed to create kotlin folder");
