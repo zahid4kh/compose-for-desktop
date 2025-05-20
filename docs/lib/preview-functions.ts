@@ -122,10 +122,10 @@ compose.desktop {
     application {
         /*
         must match the annotation in Main.kt
-        @file:JvmName("${options.appName.replace(/\s+/g, "")}").
+        @file:JvmName("${options.appName}").
         This also sets the app's dock name on Linux.
          */
-        mainClass = "${options.appName.replace(/\s+/g, "")}"
+        mainClass = "${options.appName}"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Exe)
@@ -445,10 +445,7 @@ rootProject.name = "${options.appName.toLowerCase().replace(/\s+/g, "")}"`;
 }
 
 export function generateMainFilePreview(options: ProjectOptions): string {
-  const imports = `@file:JvmName("${options.appName.replace(
-    /\s+/g,
-    ""
-  )}") // Must have no spaces!!!
+  const imports = `@file:JvmName("${options.appName}")
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
