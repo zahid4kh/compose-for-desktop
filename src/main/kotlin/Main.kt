@@ -1,4 +1,4 @@
-@file:JvmName("Desktop") // custom class name
+@file:JvmName("Compose for Desktop Wizard")
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
@@ -21,7 +21,7 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         state = rememberWindowState(size = DpSize(800.dp, 600.dp)),
         alwaysOnTop = true,
-        title = "Desktop App - Made with Compose for Desktop"
+        title = "Compose for Desktop Wizard - Desktop Client"
     ) {
         window.minimumSize = Dimension(800, 600)
 

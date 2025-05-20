@@ -32,15 +32,15 @@ dependencies {
 compose.desktop {
     application {
         /*
-        must match the annotation in Main.kt
-        @file:JvmName("Desktop").
+        Must match the annotation in Main.kt
+        @file:JvmName("Compose for Desktop Wizard").
         This also sets the app's dock name on Linux.
          */
-        mainClass = "Desktop"
+        mainClass = "Compose for Desktop Wizard"
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Exe)
-            packageName = "desktop"
+            packageName = "composedesktop"
             packageVersion = "1.0.0"
 
             linux{
@@ -57,7 +57,7 @@ compose.desktop {
             }
 
             macOS{
-                dockName = "Compose for Desktop"
+                dockName = "Compose for Desktop Wizard"
                 iconFile.set(project.file("src/main/composeResources/drawable/macos.icns"))
             }
         }
