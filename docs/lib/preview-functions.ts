@@ -34,7 +34,13 @@ plugins {
 group = "${options.packageName.replace(/\s+/g, ".")}"
 version = "${options.projectVersion}"
 
-repositories {
+repositories {`;
+
+  if (options.includeDeskit) {
+    content += `
+    maven { url = uri("https://jitpack.io") }`;
+  }
+  content += `
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     google()
@@ -366,7 +372,7 @@ imageLoader = { group = "io.github.qdsfdhvh", name = "image-loader", version.ref
     content += `
 
 # Deskit
-deskit = { module = "com.github.zahid4kh:deskit", version.ref = "deskit" }`;
+deskit = { group = "com.github.zahid4kh", name = "deskit", version.ref = "deskit" }`;
   }
 
   content += `
@@ -422,11 +428,7 @@ slf4j = ["slf4j-api", "slf4j-simple"]`;
 
 export function generateSettingsGradlePreview(options: ProjectOptions): string {
   let content = `pluginManagement {
-    repositories {
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        google()
-        gradlePluginPortal()
-        mavenCentral()`;
+    repositories {`;
 
   if (options.includeDeskit) {
     content += `
@@ -434,6 +436,10 @@ export function generateSettingsGradlePreview(options: ProjectOptions): string {
   }
 
   content += `
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        google()
+        gradlePluginPortal()
+        mavenCentral()
     }
 }`;
 
