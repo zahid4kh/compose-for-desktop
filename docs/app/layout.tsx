@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     "Build Configuration",
   ],
   verification: {
-    google: "9441a938179c7cbb",
+    google: "ed5e970364aeda1e",
   },
   category: "Development Tools",
   creator: "Zahid Khalilov",
