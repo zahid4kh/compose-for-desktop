@@ -13,7 +13,8 @@ export default function Header() {
             alt="Compose Logo"
             width={200}
             height={200}
-            priority
+            loading="eager"
+            style={{ width: "auto", height: "auto" }}
           />
         </div>
       </div>
