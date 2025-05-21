@@ -216,6 +216,20 @@ class Database {
   folder.file("Database.kt", content);
 }
 
+async function addProguardRulesFile(folder: JSZip): Promise<void> {
+  const content = `-dontwarn kotlinx.serialization.**
+
+-dontwarn sun.font.CFont
+-dontwarn sun.swing.SwingUtilities2$AATextInfo
+-dontwarn net.miginfocom.swing.MigLayout
+
+-dontnote kotlinx.serialization.**
+-dontnote META-INF.**
+-dontnote kotlinx.serialization.internal.PlatformKt`;
+
+  folder.file("proguard-rules.pro", content);
+}
+
 export async function generateProject(options: ProjectOptions) {
   try {
     console.log("Starting project generation...", options);
@@ -337,6 +351,10 @@ export async function generateProject(options: ProjectOptions) {
     // Add .gitignore
     await addGitignoreFile(rootFolder);
     console.log(".gitignore generated");
+
+    // Add Proguard rules
+    await addProguardRulesFile(rootFolder);
+    console.log("Proguard rules generated");
 
     console.log("Generating ZIP file...");
 
