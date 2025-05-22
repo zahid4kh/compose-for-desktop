@@ -131,7 +131,6 @@ compose.desktop {
         /*
         must match the annotation in Main.kt
         @file:JvmName("${options.appName.replace(/\s+/g, "")}").
-        This also sets the app's dock name on Linux.
          */
         mainClass = "${options.appName.replace(/\s+/g, "")}"
 
@@ -222,6 +221,7 @@ compose.resources{
 val workDir = file("deb-temp")
 val packageName = "${options.packageName.toLowerCase().replace(/[\s.]+/g, "")}"
 val desktopRelativePath = "opt/$packageName/lib/$packageName-$packageName.desktop"
+val appDislayName = "${options.appName}"
 val mainClass = "${options.appName.replace(/\s+/g, "")}"
 
 fun promptUserChoice(): String {
@@ -239,7 +239,7 @@ fun promptUserChoice(): String {
 
 tasks.register("addStartupWMClassToDebDynamic") {
     group = "release"
-    description = "Finds .deb file, modifies .desktop with StartupWMClass, and rebuilds it"
+    description = "Finds .deb file, modifies .desktop with Name and StartupWMClass, and rebuilds it"
 
     doLast {
         val debRoot = file("build/compose/binaries")
@@ -263,28 +263,62 @@ tasks.register("addStartupWMClassToDebDynamic") {
             commandLine("dpkg-deb", "-R", originalDeb.absolutePath, workDir.absolutePath)
         }
 
-        // Step 2: Modifying the desktop entry file to add StartupWMClass parameter so that the window manager associates this app's window with this .desktop file
+        // Step 2: Modifying the desktop entry file
         val desktopFile = File(workDir, desktopRelativePath)
         if (!desktopFile.exists()) throw GradleException("❌ .desktop file not found: \${desktopRelativePath}")
 
         val lines = desktopFile.readLines().toMutableList()
-        val wmClassLine = "StartupWMClass=\${mainClass}"
-        if (lines.none { it.trim().startsWith("StartupWMClass=") }) {
-            lines.add(wmClassLine)
-            desktopFile.writeText(lines.joinToString("\\n"))
-            println("✅ Added: \${wmClassLine}")
-        } else {
-            println("ℹ️ StartupWMClass already exists.")
+
+        // Modifying the Name field (app's display name on dock)
+        var nameModified = false
+        for (i in lines.indices) {
+            if (lines[i].trim().startsWith("Name=")) {
+                lines[i] = "Name=$appDisplayName"
+                nameModified = true
+                println("✅ Modified Name entry to: $appDisplayName")
+                break
+            }
         }
+
+        // adding Name field if it doesn't exist
+        if (!nameModified) {
+            lines.add("Name=$appDisplayName")
+            println("✅ Added Name entry: $appDisplayName")
+        }
+
+        // Checking StartupWMClass field
+        var wmClassModified = false
+        for (i in lines.indices) {
+            if (lines[i].trim().startsWith("StartupWMClass=")) {
+                if (lines[i] != "StartupWMClass=$mainClass") {
+                    lines[i] = "StartupWMClass=$mainClass"
+                    wmClassModified = true
+                    println("✅ Updated StartupWMClass entry to: $mainClass")
+                } else {
+                    println("ℹ️ StartupWMClass already correctly set to: $mainClass")
+                }
+                break
+            }
+        }
+
+        // Adding StartupWMClass if it doesn't exist
+        if (!lines.any { it.trim().startsWith("StartupWMClass=") }) {
+            lines.add("StartupWMClass=$mainClass")
+            println("✅ Added StartupWMClass entry: $mainClass")
+        }
+
+        // Writing changes back to file
+        desktopFile.writeText(lines.joinToString("\n"))
 
         // Step 3: Repackaging the debian package back
         exec {
             commandLine("dpkg-deb", "-b", workDir.absolutePath, modifiedDeb.absolutePath)
         }
 
-        println("✅ Done: Rebuilt with WMClass -> \${modifiedDeb.name}")
+        println("✅ Done: Rebuilt with Name=$appDisplayName and StartupWMClass=$mainClass -> \${modifiedDeb.name}")
     }
 }
+
 
 tasks.register("releaseWithWMClass") {
     group = "release"
@@ -302,6 +336,7 @@ tasks.register("releaseWithWMClass") {
         gradle.includedBuilds.forEach { it.task(":\${packagingTask}") } // just in case of composite builds
 
         exec {
+            commandLine("./gradlew clean")
             commandLine("./gradlew", packagingTask)
         }
 
@@ -573,7 +608,9 @@ import androidx.compose.ui.window.rememberWindowState
 import theme.AppTheme
 import java.awt.Dimension
 import org.koin.core.context.startKoin
-import org.koin.java.KoinJavaComponent.getKoin`;
+import org.koin.java.KoinJavaComponent.getKoin
+import ${options.packageName.toLowerCase().replace(/\s+/g, "")}.resources.*
+`;
 
   const mainFunction = `
 
