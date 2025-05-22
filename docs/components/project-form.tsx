@@ -61,9 +61,9 @@ export default function ProjectForm({
   }, [options.packageName]);
 
   const validatePackageName = (packageName: string) => {
-    if (packageName.includes(" ")) {
+    if (packageName.includes(" ") || packageName.includes(".")) {
       setPackageNameError(
-        "Package name cannot contain spaces. Use dots instead (e.g., com.example.myapp)"
+        "Package name cannot contain spaces or dots. Will be auto-fixed when you finish typing. (e.g., codeeditor)"
       );
       setIsValid(false);
     } else {
@@ -96,13 +96,17 @@ export default function ProjectForm({
   };
 
   const handlePackageNameBlur = () => {
-    if (options.packageName.includes(" ")) {
-      const fixedPackageName = options.packageName.replace(/\s+/g, ".");
+    if (
+      options.packageName.includes(" ") ||
+      options.packageName.includes(".")
+    ) {
+      const fixedPackageName = options.packageName.replace(/[\s.]+/g, "");
       setOptions((prev) => ({
         ...prev,
         packageName: fixedPackageName,
       }));
-      validatePackageName(fixedPackageName);
+      setPackageNameError("");
+      setIsValid(true);
     }
   };
 
@@ -134,7 +138,7 @@ export default function ProjectForm({
                 id="appName"
                 value={options.appName}
                 onChange={handleInputChange}
-                placeholder="MyComposeApp"
+                placeholder="My Compose App"
                 required
               />
               <p className="text-sm text-muted-foreground">
@@ -149,16 +153,14 @@ export default function ProjectForm({
                 value={options.packageName}
                 onChange={handleInputChange}
                 onBlur={handlePackageNameBlur}
-                placeholder="com.example.myapp"
+                placeholder="myapp"
                 required
                 className={packageNameError ? "border-red-500" : ""}
               />
               {packageNameError && (
                 <p className="text-sm text-red-500">{packageNameError}</p>
               )}
-              <p className="text-sm text-muted-foreground">
-                E.g. com.yourdomain.appname
-              </p>
+              <p className="text-sm text-muted-foreground">E.g. codeeditor</p>
             </div>
 
             <div className="space-y-2">
