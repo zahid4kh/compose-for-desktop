@@ -136,6 +136,16 @@ compose.desktop {
         mainClass = "${options.appName.replace(/\s+/g, "")}"
 
         nativeDistributions {
+
+            jvmArgs += listOf("-Dfile.encoding=UTF-8")
+            
+            buildTypes.release.proguard {
+                configurationFiles.from("proguard-rules.pro")
+                isEnabled = true
+                obfuscate = false
+                optimize = true
+            }
+            
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Exe)
             packageName = "${options.packageName
               .toLowerCase()
