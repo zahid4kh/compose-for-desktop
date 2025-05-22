@@ -2,7 +2,8 @@ import type { ProjectOptions } from "./types";
 
 export function generateBuildGradlePreview(options: ProjectOptions): string {
   let content = `import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import java.util.UUID`;
+import java.util.UUID
+import java.util.Scanner`;
 
   if (options.includeHotReload) {
     content += `
