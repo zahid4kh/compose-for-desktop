@@ -154,6 +154,7 @@ compose.desktop {
             linux{
                 shortcut = true
                 iconFile.set(project.file("icons/compose.png"))
+                description = "SET YOUR DESCRIPTION HERE"
             }
 
             windows{
