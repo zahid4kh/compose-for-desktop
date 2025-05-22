@@ -32,7 +32,7 @@ plugins {
   content += `
 }
 
-group = "${options.packageName.replace(/\s+/g, ".")}"
+group = "${options.packageName.replace(/[\s.]+/g, "")}"
 version = "${options.projectVersion}"
 
 repositories {`;
