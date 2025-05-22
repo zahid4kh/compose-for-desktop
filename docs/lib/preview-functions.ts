@@ -321,7 +321,7 @@ tasks.register("addStartupWMClassToDebDynamic") {
 }
 
 
-tasks.register("releaseWithWMClass") {
+tasks.register("packageDebWithWMClass") {
     group = "release"
     description = "Runs packaging task (packageDeb or packageReleaseDeb), then adds StartupWMClass"
 
