@@ -309,7 +309,7 @@ tasks.register("addStartupWMClassToDebDynamic") {
         }
 
         // Writing changes back to file
-        desktopFile.writeText(lines.joinToString("\n"))
+        desktopFile.writeText(lines.joinToString("\\n"))
 
         // Step 3: Repackaging the debian package back
         exec {
