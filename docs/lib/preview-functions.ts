@@ -205,6 +205,99 @@ compose.resources{
 }
 `;
 
+  content += `
+
+// only for LinuxOS
+val workDir = file("deb-temp")
+val packageName = "${options.packageName.toLowerCase().replace(/[\s.]+/g, "")}"
+val desktopRelativePath = "opt/$packageName/lib/$packageName-$packageName.desktop"
+val mainClass = "${options.appName.replace(/\s+/g, "")}"
+
+fun promptUserChoice(): String {
+    println(
+        """
+        🧩 Which packaging task do you want to run?
+        1 = packageDeb (default)
+        2 = packageReleaseDeb
+        """.trimIndent()
+    )
+    print("👉 Enter your choice [1/2]: ")
+
+    return Scanner(System.\`in\`).nextLine().trim().ifEmpty { "1" }
+}
+
+tasks.register("addStartupWMClassToDebDynamic") {
+    group = "release"
+    description = "Finds .deb file, modifies .desktop with StartupWMClass, and rebuilds it"
+
+    doLast {
+        val debRoot = file("build/compose/binaries")
+        if (!debRoot.exists()) throw GradleException("❌ Folder not found: \${debRoot}")
+
+        val allDebs = debRoot.walkTopDown().filter { it.isFile && it.extension == "deb" }.toList()
+        if (allDebs.isEmpty()) throw GradleException("❌ No .deb files found under \${debRoot}")
+
+        // picking the latest .deb file
+        val originalDeb = allDebs.maxByOrNull { it.lastModified() }!!
+        println("📦 Found deb package: \${originalDeb.relativeTo(rootDir)}")
+
+        val modifiedDeb = File(originalDeb.parentFile, originalDeb.nameWithoutExtension + "-wm.deb")
+
+        // cleaning up "deb-temp" folder, if exists
+        if (workDir.exists()) workDir.deleteRecursively()
+        workDir.mkdirs()
+
+        // Step 1: Extracting generated debian package
+        exec {
+            commandLine("dpkg-deb", "-R", originalDeb.absolutePath, workDir.absolutePath)
+        }
+
+        // Step 2: Modifying the desktop entry file to add StartupWMClass parameter so that the window manager associates this app's window with this .desktop file
+        val desktopFile = File(workDir, desktopRelativePath)
+        if (!desktopFile.exists()) throw GradleException("❌ .desktop file not found: \${desktopRelativePath}")
+
+        val lines = desktopFile.readLines().toMutableList()
+        val wmClassLine = "StartupWMClass=\${mainClass}"
+        if (lines.none { it.trim().startsWith("StartupWMClass=") }) {
+            lines.add(wmClassLine)
+            desktopFile.writeText(lines.joinToString("\\n"))
+            println("✅ Added: \${wmClassLine}")
+        } else {
+            println("ℹ️ StartupWMClass already exists.")
+        }
+
+        // Step 3: Repackaging the debian package back
+        exec {
+            commandLine("dpkg-deb", "-b", workDir.absolutePath, modifiedDeb.absolutePath)
+        }
+
+        println("✅ Done: Rebuilt with WMClass -> \${modifiedDeb.name}")
+    }
+}
+
+tasks.register("releaseWithWMClass") {
+    group = "release"
+    description = "Runs packaging task (packageDeb or packageReleaseDeb), then adds StartupWMClass"
+
+    doLast {
+        val choice = promptUserChoice()
+
+        val packagingTask = when (choice) {
+            "2" -> "packageReleaseDeb"
+            else -> "packageDeb"
+        }
+
+        println("▶️ Running: \${packagingTask}")
+        gradle.includedBuilds.forEach { it.task(":\${packagingTask}") } // just in case of composite builds
+
+        exec {
+            commandLine("./gradlew", packagingTask)
+        }
+
+        tasks.named("addStartupWMClassToDebDynamic").get().actions.forEach { it.execute(this) }
+    }
+}`;
+
   return content;
 }
 
