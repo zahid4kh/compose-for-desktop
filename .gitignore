@@ -11,3 +11,4 @@
 /desktopclient/build
 /desktopclient/.kotlin
 /desktopclient/.run
+/desktopclient/deb-temp/
