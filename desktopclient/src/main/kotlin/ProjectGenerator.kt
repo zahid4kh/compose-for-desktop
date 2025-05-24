@@ -112,6 +112,15 @@ class ProjectGenerator {
     private suspend fun fetchAndWriteTextFile(path: String, destination: File) = withContext(Dispatchers.IO) {
         val url = URL("https://raw.githubusercontent.com/zahid4kh/compose-for-desktop/main/$path")
         url.readText().let { destination.writeText(it) }
+        if (path.endsWith("gradlew") && !System.getProperty("os.name").lowercase().contains("windows")) {
+            try {
+                destination.setExecutable(true)
+            } catch (e: Exception) {
+                println("Warning: Failed to set executable permission on ${destination.absolutePath}")
+                println(e.message)
+            }
+        }
+
     }
 
     private suspend fun fetchAndWriteBinaryFile(path: String, destination: File) = withContext(Dispatchers.IO) {
