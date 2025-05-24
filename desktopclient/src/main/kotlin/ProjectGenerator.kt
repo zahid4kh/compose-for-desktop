@@ -1,4 +1,3 @@
-
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.BufferedOutputStream
@@ -227,14 +226,19 @@ class Database {
     private fun createZipFile(sourceDir: File, destination: File) {
         ZipOutputStream(BufferedOutputStream(FileOutputStream(destination))).use { zipOut ->
             sourceDir.walkTopDown().forEach { file ->
-                val zipEntry = ZipEntry(file.relativeTo(sourceDir.parentFile).path.replace("\\", "/"))
+                val relativePath = file.relativeTo(sourceDir).path
+                
+                if (file == sourceDir) {
+                    return@forEach
+                }
+                
+                val entryPath = relativePath.replace("\\", "/")
+                
                 if (file.isDirectory) {
-                    if (!zipEntry.name.endsWith("/")) {
-                        zipEntry.name + "/"
-                    }
-                    zipOut.putNextEntry(ZipEntry(zipEntry.name))
+                    val directoryEntryPath = if (entryPath.endsWith("/")) entryPath else "$entryPath/"
+                    zipOut.putNextEntry(ZipEntry(directoryEntryPath))
                 } else {
-                    zipOut.putNextEntry(zipEntry)
+                    zipOut.putNextEntry(ZipEntry(entryPath))
                     file.inputStream().use { it.copyTo(zipOut) }
                 }
             }
