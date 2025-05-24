@@ -10,16 +10,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun GenerateButton(){
+fun GenerateButton(
+    state: ViewState,
+    onIntent: (ViewIntent) -> Unit
+) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp),
         horizontalArrangement = Arrangement.Center
-    ){
+    ) {
         Button(
-            onClick = {},
+            onClick = { onIntent(ViewIntent.GenerateProject) },
             shape = MaterialTheme.shapes.medium,
-        ){
-            Text("Generate Project")
+            enabled = !state.isGenerating &&
+                    state.appName.isNotBlank() &&
+                    state.packageName.isNotBlank() &&
+                    state.packageNameError.isEmpty()
+        ) {
+            Text(if (state.isGenerating) "Generating..." else "Generate Project")
         }
     }
 }

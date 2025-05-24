@@ -1,4 +1,3 @@
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -7,7 +6,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -18,14 +17,14 @@ import composefordesktop.resources.Res
 import org.jetbrains.compose.resources.Font
 
 @Composable
-fun UIConfigSection(){
-    var width by remember { mutableStateOf("My Cool App") }
-    var height by remember { mutableStateOf("mycoolapp") }
-
+fun UIConfigSection(
+    state: ViewState,
+    onIntent: (ViewIntent) -> Unit
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         modifier = Modifier.padding(16.dp)
-    ){
+    ) {
         Text(
             text = "UI CONFIGURATION",
             fontFamily = FontFamily(Font(
@@ -38,16 +37,16 @@ fun UIConfigSection(){
 
         UIConfigItem(
             itemTitle = "Default Window Width (dp)",
-            placeholderText = width,
-            value = width,
-            onValueChange = {width = it},
+            placeholderText = "800",
+            value = state.windowWidth,
+            onValueChange = { onIntent(ViewIntent.UpdateWindowWidth(it)) },
         )
 
         UIConfigItem(
             itemTitle = "Default Window Height (dp)",
-            placeholderText = height,
-            value = height,
-            onValueChange = {height = it},
+            placeholderText = "600",
+            value = state.windowHeight,
+            onValueChange = { onIntent(ViewIntent.UpdateWindowHeight(it)) },
         )
     }
 }
@@ -56,10 +55,10 @@ fun UIConfigSection(){
 fun UIConfigItem(
     itemTitle: String = "",
     placeholderText: String = "",
-    value: String? = "",
+    value: String = "",
     onValueChange: (String) -> Unit = {}
-){
-    Column{
+) {
+    Column {
         Text(
             text = itemTitle,
             fontFamily = FontFamily(
@@ -72,8 +71,8 @@ fun UIConfigItem(
         )
 
         OutlinedTextField(
-            value = value?:"",
-            onValueChange = {it -> onValueChange(it)},
+            value = value,
+            onValueChange = onValueChange,
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text(text = placeholderText) },
             shape = MaterialTheme.shapes.medium,

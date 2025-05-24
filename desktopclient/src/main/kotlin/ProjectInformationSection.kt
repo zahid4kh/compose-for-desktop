@@ -1,32 +1,31 @@
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.*
-import composefordesktop.resources.*
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import composefordesktop.resources.Inter_VariableFont
+import composefordesktop.resources.Res
 import org.jetbrains.compose.resources.Font
 
 @Composable
-fun ProjectInformationSection(){
-    var version by remember { mutableStateOf("1.0.0") }
-    var appName by remember { mutableStateOf("My Cool App") }
-    var packageName by remember { mutableStateOf("mycoolapp") }
-
-    LaunchedEffect(version){
-        println("Version: $version")
-    }
-
+fun ProjectInformationSection(
+    state: ViewState,
+    onIntent: (ViewIntent) -> Unit
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         modifier = Modifier.padding(16.dp)
-    ){
+    ) {
         Text(
             text = "PROJECT INFORMATION",
             fontFamily = FontFamily(Font(
@@ -39,28 +38,31 @@ fun ProjectInformationSection(){
 
         ProjectInfoItem(
             itemTitle = "Application Name*",
-            placeholderText = appName,
-            value = appName,
-            onValueChange = {appName = it},
+            placeholderText = "My Compose App",
+            value = state.appName,
+            onValueChange = { onIntent(ViewIntent.UpdateAppName(it)) },
             subtitle = "The name of your application. Used for window title and app name"
         )
 
         ProjectInfoItem(
             itemTitle = "Package Name*",
-            placeholderText = packageName,
-            value = packageName,
-            onValueChange = {packageName = it},
-            subtitle = "The package name of your application. Can be used for launching your app from terminal"
+            placeholderText = "myapp",
+            value = state.packageName,
+            onValueChange = { onIntent(ViewIntent.UpdatePackageName(it)) },
+            subtitle = state.packageNameError.ifEmpty {
+                "The package name of your application. E.g. codeeditor"
+            },
+            isError = state.packageNameError.isNotEmpty()
         )
 
         ProjectInfoItem(
             itemTitle = "Version",
-            value = version,
-            onValueChange = {version = it},
+            placeholderText = "1.0.0",
+            value = state.projectVersion,
+            onValueChange = { onIntent(ViewIntent.UpdateVersion(it)) },
             subtitle = "The version of your application. Used for versioning your app"
         )
     }
-
 }
 
 @Composable
@@ -68,10 +70,11 @@ fun ProjectInfoItem(
     itemTitle: String = "",
     placeholderText: String = "",
     subtitle: String? = null,
-    value: String? = "",
-    onValueChange: (String) -> Unit = {}
-){
-    Column{
+    value: String = "",
+    onValueChange: (String) -> Unit = {},
+    isError: Boolean = false
+) {
+    Column {
         Text(
             text = itemTitle,
             fontFamily = FontFamily(
@@ -84,12 +87,20 @@ fun ProjectInfoItem(
         )
 
         OutlinedTextField(
-            value = value?:"",
-            onValueChange = {it -> onValueChange(it)},
+            value = value,
+            onValueChange = onValueChange,
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text(text = placeholderText) },
             shape = MaterialTheme.shapes.medium,
-            supportingText = { Text(text = subtitle?:"", textAlign = TextAlign.Start, modifier = Modifier.fillMaxWidth()) },
+            supportingText = {
+                Text(
+                    text = subtitle ?: "",
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier.fillMaxWidth(),
+                    color = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            },
+            isError = isError
         )
     }
 }

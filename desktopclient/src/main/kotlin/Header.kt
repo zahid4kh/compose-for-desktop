@@ -1,9 +1,9 @@
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Expand
 import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.Preview
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -22,13 +22,14 @@ import org.jetbrains.compose.resources.Font
 
 @Composable
 fun Header(
-    windowState: WindowState
-){
+    windowState: WindowState,
+    onIntent: (ViewIntent) -> Unit
+) {
     var expandClicked by remember { mutableStateOf(false) }
 
-    if (expandClicked){
+    if (expandClicked) {
         windowState.size = windowState.size.copy(width = 800.dp)
-    }else{
+    } else {
         windowState.size = windowState.size.copy(width = 480.dp)
     }
 
@@ -37,10 +38,10 @@ fun Header(
             .fillMaxWidth()
             .height(120.dp)
             .background(MaterialTheme.colorScheme.surface)
-            .padding(vertical =10.dp),
+            .padding(vertical = 10.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         Text(
             text = "Compose for Desktop Wizard",
             fontSize = 22.sp,
@@ -61,15 +62,24 @@ fun Header(
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
-        ){
+        ) {
             IconButton(
                 onClick = {
                     expandClicked = !expandClicked
                 }
-            ){
+            ) {
                 Icon(
-                    imageVector = if(expandClicked) Icons.Default.ExpandLess else Icons.Default.Expand,
-                    contentDescription = "Settings"
+                    imageVector = if (expandClicked) Icons.Default.ExpandLess else Icons.Default.Expand,
+                    contentDescription = "Toggle Width"
+                )
+            }
+
+            IconButton(
+                onClick = { onIntent(ViewIntent.ShowPreview) }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Preview,
+                    contentDescription = "Preview"
                 )
             }
         }
