@@ -34,6 +34,7 @@ dependencies {
     implementation(libs.bundles.slf4j)
 
     implementation("com.github.zahid4kh:deskit:1.2.0")
+    implementation("org.apache.commons:commons-compress:1.27.1")
 }
 
 compose.desktop {
