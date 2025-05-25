@@ -51,10 +51,31 @@
 -dontwarn com.github.luben.zstd.**
 -dontwarn sun.misc.Cleaner
 
-# Keep Apache Commons Compress classes used in code
+# XZ compression library (not needed for basic ZIP)
+-dontwarn org.tukaani.xz.**
+
+# Apache Commons Compress optional formats we don't use
+-dontwarn org.apache.commons.compress.archivers.sevenz.**
+-dontwarn org.apache.commons.compress.compressors.lzma.**
+-dontwarn org.apache.commons.compress.compressors.xz.**
+-dontwarn org.apache.commons.compress.harmony.pack200.**
+-dontwarn org.apache.commons.compress.harmony.unpack200.**
+
+# Keep Apache Commons Compress classes we actually use
 -keep class org.apache.commons.compress.archivers.zip.** { *; }
 -keep class org.apache.commons.compress.archivers.ArchiveEntry { *; }
 -keep class org.apache.commons.compress.archivers.ArchiveOutputStream { *; }
+
+# Keep Pack200 internal references to avoid the "inconsistent" warnings
+-keep class org.apache.commons.compress.harmony.pack200.Pack200ClassReader {
+    byte[] b;
+}
+-keep class org.apache.commons.compress.harmony.pack200.NewAttribute {
+    java.lang.String type;
+}
+-keep class org.apache.commons.compress.harmony.pack200.Segment$SegmentAnnotationVisitor {
+    org.objectweb.asm.AnnotationVisitor av;
+}
 
 # Suppress notes about dynamic class loading in Apache Commons
 -dontnote org.apache.commons.compress.**
