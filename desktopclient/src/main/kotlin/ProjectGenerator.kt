@@ -1,12 +1,14 @@
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.apache.commons.compress.archivers.zip.UnixStat
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry
+import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
 import java.nio.file.Files
-import java.util.zip.ZipEntry
-import java.util.zip.ZipOutputStream
 import javax.swing.JFileChooser
 import javax.swing.filechooser.FileNameExtensionFilter
 
@@ -224,23 +226,26 @@ class Database {
     }
 
     private fun createZipFile(sourceDir: File, destination: File) {
-        ZipOutputStream(BufferedOutputStream(FileOutputStream(destination))).use { zipOut ->
+        ZipArchiveOutputStream(BufferedOutputStream(FileOutputStream(destination))).use { zipOut ->
+            zipOut.setLevel(9)
+
             sourceDir.walkTopDown().forEach { file ->
-                val relativePath = file.relativeTo(sourceDir).path
-                
-                if (file == sourceDir) {
-                    return@forEach
-                }
-                
+                val relativePath = file.relativeTo(sourceDir.parentFile).path
                 val entryPath = relativePath.replace("\\", "/")
-                
-                if (file.isDirectory) {
-                    val directoryEntryPath = if (entryPath.endsWith("/")) entryPath else "$entryPath/"
-                    zipOut.putNextEntry(ZipEntry(directoryEntryPath))
-                } else {
-                    zipOut.putNextEntry(ZipEntry(entryPath))
+
+                val entry = ZipArchiveEntry(file, entryPath)
+
+                if (file.name == "gradlew" && file.isFile) {
+                    entry.unixMode = UnixStat.FILE_FLAG or 493 // for 0755 octal
+                }
+
+                zipOut.putArchiveEntry(entry)
+
+                if (file.isFile) {
                     file.inputStream().use { it.copyTo(zipOut) }
                 }
+
+                zipOut.closeArchiveEntry()
             }
         }
     }
