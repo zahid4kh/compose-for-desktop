@@ -58,11 +58,16 @@ dependencies {
     implementation(libs.kotlinx.coroutines.swing)
 
     // Koin for dependency injection
-    implementation(libs.koin.core)`;
+    implementation(libs.koin.core)
+    `;
 
   if (options.includePrecompose) {
     content += `
-    implementation(libs.precompose)`;
+    // PreCompose for Compose navigation and view models
+    api(libs.precompose)
+    api(libs.precompose.viewmodel)
+    api(compose.foundation)
+    api(compose.animation)`;
   }
 
   if (options.includeSentry) {
@@ -433,7 +438,9 @@ koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin"
     content += `
 
 # PreCompose
-precompose = { group = "moe.tlaster", name = "precompose", version.ref = "precompose" }`;
+precompose = { group = "moe.tlaster", name = "precompose", version.ref = "precompose" }
+precompose-viewmodel = { group = "moe.tlaster", name = "precompose-viewmodel", version.ref = "precompose"
+`;
   }
 
   if (options.includeSentry) {
