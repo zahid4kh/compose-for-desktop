@@ -167,6 +167,7 @@ compose.desktop {
                 shortcut = true
                 dirChooser = true
                 menu = true
+                vendor = "Your Name or Company Name"
                 upgradeUuid = "run the 'generateUpgradeUuid' task and paste the generated UUID here only once"
                 iconFile.set(project.file("icons/compose.ico"))
             }
