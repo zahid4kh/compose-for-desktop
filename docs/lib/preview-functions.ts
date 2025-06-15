@@ -32,8 +32,9 @@ plugins {
   content += `
 }
 
+val appPackageVersion = "${options.projectVersion}"
 group = "${options.packageName.replace(/[\s.]+/g, "")}"
-version = "${options.projectVersion}"
+version = appPackageVersion
 
 repositories {`;
 
@@ -154,7 +155,7 @@ compose.desktop {
             packageName = "${options.packageName
               .toLowerCase()
               .replace(/\s+/g, "")}"
-            packageVersion = "${options.projectVersion}"
+            packageVersion = appPackageVersion
 
             linux{
                 shortcut = true
