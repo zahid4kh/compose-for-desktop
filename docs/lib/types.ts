@@ -15,4 +15,6 @@ export interface ProjectOptions {
   includeMarkdown: boolean;
   includeHotReload: boolean;
   includeKotlinxDatetime: boolean;
+  linuxMaintainer: string;
+  linuxDescription: string;
 }

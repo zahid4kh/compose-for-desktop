@@ -160,7 +160,9 @@ compose.desktop {
             linux{
                 shortcut = true
                 iconFile.set(project.file("icons/compose.png"))
-                description = "SET YOUR DESCRIPTION HERE"
+                description = "${
+                  options.linuxDescription || "SET YOUR APP's DESCRIPTION HERE"
+                }"
             }
 
             windows{
@@ -231,8 +233,12 @@ val packageName = "${options.packageName.toLowerCase().replace(/[\s.]+/g, "")}"
 val desktopRelativePath = "opt/$packageName/lib/$packageName-$packageName.desktop"
 val appDislayName = "${options.appName}"
 val mainClass = "${options.appName.replace(/\s+/g, "")}"
-val maintainer = "Your Name <youremail@gmail.com>"
-val controlDescription = "SET YOUR APP's DESCRIPTION HERE"
+val maintainer = "${
+    options.linuxMaintainer || "Your Name <youremail@gmail.com>"
+  }"
+val controlDescription = "${
+    options.linuxDescription || "SET YOUR APP's DESCRIPTION HERE"
+  }"
 
 
 fun promptUserChoice(): String {
@@ -316,12 +322,12 @@ tasks.register("addStartupWMClassToDebDynamic") {
         }
 
         // Writing changes back to file
-        desktopFile.writeText(lines.joinToString("\n"))
+        desktopFile.writeText(lines.joinToString("\\n"))
 
-        println("\n📄 Final .desktop file content:")
+        println("\\n📄 Final .desktop file content:")
         println("--------------------------------")
         desktopFile.readLines().forEach { println(it) }
-        println("--------------------------------\n")
+        println("--------------------------------\\n")
 
         // Step 3: Modifying the DEBIAN/control file
         val controlFile = File(workDir, "DEBIAN/control")
@@ -356,12 +362,12 @@ tasks.register("addStartupWMClassToDebDynamic") {
         }
 
         // Write changes back to control file
-        controlFile.writeText(controlLines.joinToString("\n"))
+        controlFile.writeText(controlLines.joinToString("\\n"))
 
-        println("\n📄 Final control file content:")
+        println("\\n📄 Final control file content:")
         println("--------------------------------")
         controlFile.readLines().forEach { println(it) }
-        println("--------------------------------\n")
+        println("--------------------------------\\n")
 
         // Step 4: Modifying the DEBIAN/postinst script
         val postinstFile = File(workDir, "DEBIAN/postinst")
@@ -468,15 +474,15 @@ exit 0"""
             commandLine("chmod", "+x", prermFile.absolutePath)
         }
 
-        println("\n📄 Final postinst script content:")
+        println("\\n📄 Final postinst script content:")
         println("--------------------------------")
         postinstFile.readLines().forEach { println(it) }
-        println("--------------------------------\n")
+        println("--------------------------------\\n")
 
-        println("\n📄 Final prerm script content:")
+        println("\\n📄 Final prerm script content:")
         println("--------------------------------")
         prermFile.readLines().forEach { println(it) }
-        println("--------------------------------\n")
+        println("--------------------------------\\n")
 
         // Step 6: Repackaging the debian package back
         exec {

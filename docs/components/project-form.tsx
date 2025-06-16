@@ -42,6 +42,8 @@ export default function ProjectForm({
     includeMarkdown: false,
     includeHotReload: true,
     includeKotlinxDatetime: false,
+    linuxMaintainer: "",
+    linuxDescription: "",
   });
 
   const [gradlePreview, setGradlePreview] = useState("");
@@ -366,6 +368,42 @@ export default function ProjectForm({
           </Tabs>
         </Card>
       </div>
+
+      <Card className="p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all">
+        <h2 className="text-xl font-semibold text-primary mb-6 pb-2 border-b border-border relative after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-20 after:h-0.5 after:bg-accent hover:after:w-30 after:transition-all">
+          Details for Linux Specific Builds
+        </h2>
+
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="linuxMaintainer">Maintainer</Label>
+            <Input
+              id="linuxMaintainer"
+              value={options.linuxMaintainer}
+              onChange={handleInputChange}
+              placeholder="Your Name <youremail@gmail.com>"
+            />
+            <p className="text-sm text-muted-foreground">
+              Required for setting the Maintainer field in the DEBIAN/control
+              file
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="linuxDescription">Description</Label>
+            <Input
+              id="linuxDescription"
+              value={options.linuxDescription}
+              onChange={handleInputChange}
+              placeholder="Your application description"
+            />
+            <p className="text-sm text-muted-foreground">
+              Required for setting the Description field in the DEBIAN/control
+              file
+            </p>
+          </div>
+        </div>
+      </Card>
 
       <WarningSection />
 
