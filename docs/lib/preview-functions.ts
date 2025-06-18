@@ -531,7 +531,7 @@ koin = "4.0.3"`;
 
   if (options.includePrecompose) {
     content += `
-precompose = "1.7.0-alpha03"`;
+precompose = "1.6.2"`;
   }
 
   if (options.includeSentry) {
