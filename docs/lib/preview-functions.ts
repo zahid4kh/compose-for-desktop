@@ -607,7 +607,7 @@ koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin"
 
 # PreCompose
 precompose = { group = "moe.tlaster", name = "precompose", version.ref = "precompose" }
-precompose-viewmodel = { group = "moe.tlaster", name = "precompose-viewmodel", version.ref = "precompose"
+precompose-viewmodel = { group = "moe.tlaster", name = "precompose-viewmodel", version.ref = "precompose"}
 `;
   }
 
