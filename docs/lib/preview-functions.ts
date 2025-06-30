@@ -588,7 +588,7 @@ slf4j = "2.0.12"`;
 
   if (options.includeDeskit) {
     content += `
-deskit = "1.2.0"`;
+deskit = "1.3.0"`;
   }
 
   content += `
