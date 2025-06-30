@@ -105,6 +105,44 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              name: "Compose for Desktop Wizard",
+              applicationCategory: "DeveloperApplication",
+              operatingSystem: "Windows, macOS, Linux",
+              description:
+                "Generate a production-ready Kotlin Compose for Desktop project in seconds. Features instant setup, custom configuration, interactive dependency selection, live preview, and cross-platform support.",
+              url: "https://composefordesktop.vercel.app",
+              author: {
+                "@type": "Person",
+                name: "Zahid Khalilov",
+                url: "https://github.com/zahid4kh",
+              },
+              creator: {
+                "@type": "Person",
+                name: "Zahid Khalilov",
+                url: "https://github.com/zahid4kh",
+              },
+              publisher: {
+                "@type": "Person",
+                name: "Zahid Khalilov",
+              },
+              offers: {
+                "@type": "Offer",
+                price: "0",
+                priceCurrency: "USD",
+              },
+              dateCreated: "2025-01-01",
+              dateModified: "2025-01-01",
+              inLanguage: "en",
+              isAccessibleForFree: true,
+            }),
+          }}
+        />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
