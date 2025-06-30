@@ -83,7 +83,7 @@ dependencies {
 
   if (options.includeImageLoader) {
     content += `
-    implementation(libs.imageLoader)`;
+    api(libs.imageLoader)`;
   }
 
   if (options.includeRetrofit) {
@@ -568,7 +568,7 @@ decomposeExtensions = "2.2.3"`;
 
   if (options.includeImageLoader) {
     content += `
-imageLoader = "1.7.1"`;
+imageLoader = "1.10.0"`;
   }
 
   if (options.includeHotReload) {
