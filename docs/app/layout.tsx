@@ -10,6 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL("https://composefordesktop.vercel.app"),
   title: "Compose for Desktop Wizard",
+  authors: [{ name: "Zahid Khalilov" }],
   description:
     "Generate a production-ready Kotlin Compose for Desktop project in seconds. Features instant setup, custom configuration, interactive dependency selection, live preview, and cross-platform support.",
   keywords: [
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
     "Build Configuration",
   ],
   verification: {
-    google: "ed5e970364aeda1e",
+    google: "9441a938179c7cbb",
   },
   category: "Development Tools",
   creator: "Zahid Khalilov",
@@ -91,6 +92,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta
+          name="google-site-verification"
+          content="p4B-z5A5VlfIlnjs6UgUubZHR_SrXcChBB_XjSYuoaM"
+        />
+      </head>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
