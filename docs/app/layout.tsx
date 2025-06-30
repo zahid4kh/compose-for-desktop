@@ -10,7 +10,8 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL("https://composefordesktop.vercel.app"),
   title: "Compose for Desktop Wizard",
-  authors: [{ name: "Zahid Khalilov" }],
+  authors: [{ name: "Zahid Khalilov", url: "https://github.com/zahid4kh" }],
+  publisher: "Zahid Khalilov",
   description:
     "Generate a production-ready Kotlin Compose for Desktop project in seconds. Features instant setup, custom configuration, interactive dependency selection, live preview, and cross-platform support.",
   keywords: [
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Compose for Desktop Project Generator",
+        alt: "Compose for Desktop Project Generator by zahid4kh or @helloffaday",
       },
     ],
   },
@@ -57,6 +58,11 @@ export const metadata: Metadata = {
   },
   other: {
     "application-name": "Compose for Desktop Wizard",
+    author: "Zahid Khalilov",
+    owner: "Zahid Khalilov",
+    designer: "Zahid Khalilov",
+    developer: "Zahid Khalilov",
+    copyright: "© 2025 Zahid Khalilov",
     robots: "index,follow",
     googlebot: "index,follow",
     "application-platform": "Cross-Platform",
