@@ -1,0 +1,143 @@
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogWindow
+import androidx.compose.ui.window.rememberDialogState
+
+@Composable
+fun PreviewDialog(
+    state: ViewState,
+    onDismiss: () -> Unit
+) {
+    val options = ProjectOptions(
+        appName = state.appName,
+        packageName = state.packageName,
+        projectVersion = state.projectVersion,
+        windowWidth = state.windowWidth,
+        windowHeight = state.windowHeight,
+        includeRetrofit = state.dependencies["Retrofit"] ?: false,
+        includeDeskit = state.dependencies["Deskit"] ?: true,
+        includeSQLDelight = state.dependencies["SQLDelight"] ?: false,
+        includeKtor = state.dependencies["Ktor"] ?: false,
+        includeDecompose = state.dependencies["Decompose"] ?: false,
+        includeImageLoader = state.dependencies["ImageLoader"] ?: false,
+        includePrecompose = state.dependencies["Precompose"] ?: false,
+        includeSentry = state.dependencies["Sentry"] ?: false,
+        includeMarkdown = state.dependencies["Markdown"] ?: false,
+        includeHotReload = state.dependencies["HotReload"] ?: true,
+        includeKotlinxDatetime = state.dependencies["KotlinxDatetime"] ?: false
+    )
+
+    DialogWindow(
+        onCloseRequest = onDismiss,
+        state = rememberDialogState(size = DpSize(800.dp, 800.dp)),
+        title = "Preview Generated Files"
+    ) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        "Preview Generated Files",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    IconButton(onClick = onDismiss) {
+                        Icon(Icons.Default.Close, contentDescription = "Close")
+                    }
+                }
+
+                HorizontalDivider()
+
+                var selectedTab by remember { mutableStateOf(0) }
+                val tabs = listOf(
+                    "build.gradle.kts",
+                    "settings.gradle.kts",
+                    "libs.versions.toml",
+                    "Main.kt",
+                    "README.md"
+                )
+
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    TabRow(
+                        selectedTabIndex = selectedTab,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        tabs.forEachIndexed { index, title ->
+                            Tab(
+                                selected = selectedTab == index,
+                                onClick = { selectedTab = index },
+                                text = { Text(title, fontSize = 12.sp) }
+                            )
+                        }
+                    }
+
+                    // Code preview area
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
+                    ) {
+                        val content = when (selectedTab) {
+                            0 -> PreviewFunctions.generateBuildGradlePreview(options)
+                            1 -> PreviewFunctions.generateSettingsGradlePreview(options)
+                            2 -> PreviewFunctions.generateVersionCatalogPreview(options)
+                            3 -> PreviewFunctions.generateMainFilePreview(options)
+                            4 -> PreviewFunctions.generateReadmePreview(options)
+                            else -> ""
+                        }
+
+                        Surface(
+                            modifier = Modifier.fillMaxSize(),
+                            color = Color(0xFF1E1E1E),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp)
+                            ) {
+                                Text(
+                                    text = content,
+                                    color = Color(0xFFD4D4D4),
+                                    fontFamily = FontFamily.Monospace,
+                                    fontSize = 13.sp,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .verticalScroll(rememberScrollState())
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
