@@ -33,6 +33,12 @@ class MainViewModel(
             is ViewIntent.UpdateVersion -> {
                 _state.update { it.copy(projectVersion = intent.version) }
             }
+            is ViewIntent.UpdateWindowWidth -> {
+                _state.update { it.copy(windowWidth = intent.width) }
+            }
+            is ViewIntent.UpdateWindowHeight -> {
+                _state.update { it.copy(windowHeight = intent.height) }
+            }
             is ViewIntent.ToggleDependency -> {
                 _state.update { state ->
                     state.copy(
