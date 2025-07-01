@@ -64,9 +64,12 @@ fun App(
             }
 
             if (state.showPreview) {
-                PreviewDialog(state) {
-                    viewModel.processIntent(ViewIntent.HidePreview)
-                }
+                PreviewDialog(
+                    state = state,
+                    onDismiss = {
+                        viewModel.processIntent(ViewIntent.HidePreview)
+                    }
+                )
             }
 
             SnackbarHost(
