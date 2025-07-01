@@ -2,13 +2,16 @@ package components
 
 import ViewIntent
 import ViewState
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDownward
+import androidx.compose.material.icons.filled.ArrowUpward
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -20,47 +23,79 @@ fun ProjectInformationSection(
     onIntent: (ViewIntent) -> Unit,
     modifier: Modifier
 ) {
+    var expandProjectInfo by remember { mutableStateOf(true) }
+
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         modifier = modifier
+            .background(MaterialTheme.colorScheme.surfaceVariant)
             .padding(20.dp)
     ) {
-        Text(
-            text = "PROJECT INFORMATION",
-            style = MaterialTheme.typography.titleLarge,
-            fontSize = 20.sp
-        )
-        HorizontalDivider()
+        Row(modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween){
+            Text(
+                text = "PROJECT INFORMATION",
+                style = MaterialTheme.typography.titleLarge,
+                fontSize = 20.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
 
-        ProjectInfoItem(
-            itemTitle = "Application Name*",
-            placeholderText = "My Compose App",
-            value = state.appName,
-            onValueChange = { onIntent(ViewIntent.UpdateAppName(it)) },
-            subtitle = "The name of your application. Used for window title and app name",
-            modifier = Modifier.animateContentSize()
-        )
+            IconButton(
+                onClick = {expandProjectInfo = !expandProjectInfo},
+                modifier = Modifier.size(22.dp)
+            ){
+                Icon(
+                    imageVector = if(expandProjectInfo) Icons.Default.ArrowUpward else Icons.Default.ArrowDownward,
+                    contentDescription = null,
+                    modifier = Modifier.size(22.dp),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
 
-        ProjectInfoItem(
-            itemTitle = "Package Name*",
-            placeholderText = "myapp",
-            value = state.packageName,
-            onValueChange = { onIntent(ViewIntent.UpdatePackageName(it)) },
-            subtitle = state.packageNameError.ifEmpty {
-                "The package name of your application. E.g. codeeditor"
-            },
-            isError = state.packageNameError.isNotEmpty(),
-            modifier = Modifier.animateContentSize()
-        )
+        HorizontalDivider(color = MaterialTheme.colorScheme.onSurfaceVariant)
 
-        ProjectInfoItem(
-            itemTitle = "Version",
-            placeholderText = "1.0.0",
-            value = state.projectVersion,
-            onValueChange = { onIntent(ViewIntent.UpdateVersion(it)) },
-            subtitle = "The version of your application. Used for versioning your app",
-            modifier = Modifier.animateContentSize()
-        )
+        AnimatedVisibility(
+            visible = expandProjectInfo
+        ){
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ){
+                ProjectInfoItem(
+                    itemTitle = "Application Name*",
+                    placeholderText = "My Compose App",
+                    value = state.appName,
+                    onValueChange = { onIntent(ViewIntent.UpdateAppName(it)) },
+                    subtitle = "The name of your application. Used for window title and app name",
+                    modifier = Modifier.animateContentSize()
+                )
+
+                ProjectInfoItem(
+                    itemTitle = "Package Name*",
+                    placeholderText = "myapp",
+                    value = state.packageName,
+                    onValueChange = { onIntent(ViewIntent.UpdatePackageName(it)) },
+                    subtitle = state.packageNameError.ifEmpty {
+                        "The package name of your application. E.g. codeeditor"
+                    },
+                    isError = state.packageNameError.isNotEmpty(),
+                    modifier = Modifier.animateContentSize()
+                )
+
+                ProjectInfoItem(
+                    itemTitle = "Version",
+                    placeholderText = "1.0.0",
+                    value = state.projectVersion,
+                    onValueChange = { onIntent(ViewIntent.UpdateVersion(it)) },
+                    subtitle = "The version of your application. Used for versioning your app",
+                    modifier = Modifier.animateContentSize()
+                )
+            }
+
+        }
+
     }
 }
 
@@ -77,7 +112,8 @@ fun ProjectInfoItem(
     Column(modifier = modifier) {
         Text(
             text = itemTitle,
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Spacer(modifier = Modifier.height(5.dp))
         OutlinedTextField(
