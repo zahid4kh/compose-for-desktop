@@ -11,7 +11,7 @@ plugins {
     alias(libs.plugins.hotReload)
 }
 
-group = "composefordesktop"
+group = "desktopclient"
 version = "1.0.0"
 
 repositories {
