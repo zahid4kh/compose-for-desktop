@@ -1,4 +1,6 @@
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -51,7 +53,13 @@ fun TestingMainLayoutGrid(
                 modifier = Modifier.fillMaxSize().height(500.dp)
             ){
                 item{
-                    ProjectInformationSection(state, viewModel::processIntent)
+                    ProjectInformationSection(
+                        state,
+                        onIntent = viewModel::processIntent,
+                        modifier = Modifier
+                            .animateItem(placementSpec = spring())
+                            .animateContentSize()
+                    )
                 }
 
                 item{

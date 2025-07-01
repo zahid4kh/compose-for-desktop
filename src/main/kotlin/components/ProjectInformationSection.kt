@@ -2,33 +2,28 @@ package components
 
 import ViewIntent
 import ViewState
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import composefordesktop.resources.Res
-import composefordesktop.resources.Ubuntu_Regular
-import org.jetbrains.compose.resources.Font
 
 @Composable
 fun ProjectInformationSection(
     state: ViewState,
-    onIntent: (ViewIntent) -> Unit
+    onIntent: (ViewIntent) -> Unit,
+    modifier: Modifier
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp),
-        modifier = Modifier.padding(20.dp)
+        modifier = modifier
+            .padding(20.dp)
     ) {
         Text(
             text = "PROJECT INFORMATION",
@@ -42,7 +37,8 @@ fun ProjectInformationSection(
             placeholderText = "My Compose App",
             value = state.appName,
             onValueChange = { onIntent(ViewIntent.UpdateAppName(it)) },
-            subtitle = "The name of your application. Used for window title and app name"
+            subtitle = "The name of your application. Used for window title and app name",
+            modifier = Modifier.animateContentSize()
         )
 
         ProjectInfoItem(
@@ -53,7 +49,8 @@ fun ProjectInformationSection(
             subtitle = state.packageNameError.ifEmpty {
                 "The package name of your application. E.g. codeeditor"
             },
-            isError = state.packageNameError.isNotEmpty()
+            isError = state.packageNameError.isNotEmpty(),
+            modifier = Modifier.animateContentSize()
         )
 
         ProjectInfoItem(
@@ -61,7 +58,8 @@ fun ProjectInformationSection(
             placeholderText = "1.0.0",
             value = state.projectVersion,
             onValueChange = { onIntent(ViewIntent.UpdateVersion(it)) },
-            subtitle = "The version of your application. Used for versioning your app"
+            subtitle = "The version of your application. Used for versioning your app",
+            modifier = Modifier.animateContentSize()
         )
     }
 }
@@ -73,26 +71,22 @@ fun ProjectInfoItem(
     subtitle: String? = null,
     value: String = "",
     onValueChange: (String) -> Unit = {},
-    isError: Boolean = false
+    isError: Boolean = false,
+    modifier: Modifier
 ) {
-    Column {
+    Column(modifier = modifier) {
         Text(
             text = itemTitle,
-            fontFamily = FontFamily(
-                Font(
-                    Res.font.Ubuntu_Regular,
-                    weight = FontWeight.Bold
-                )
-            ),
-            fontSize = 16.sp
+            style = MaterialTheme.typography.bodyLarge
         )
-
+        Spacer(modifier = Modifier.height(5.dp))
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text(text = placeholderText) },
             shape = MaterialTheme.shapes.medium,
+            singleLine = true,
             supportingText = {
                 Text(
                     text = subtitle ?: "",
