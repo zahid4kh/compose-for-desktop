@@ -1,21 +1,25 @@
 package components
 import ViewIntent
 import ViewState
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.Preview
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.WindowState
+import composefordesktop.resources.Res
+import composefordesktop.resources.maximize
+import composefordesktop.resources.minimize
+import org.jetbrains.compose.resources.painterResource
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun Header(
     windowState: WindowState,
@@ -35,23 +39,25 @@ fun Header(
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface)
-            .padding(vertical = 10.dp),
+            .padding(vertical = 10.dp)
+            .animateContentSize(),
         verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Compose for Desktop Wizard",
-            fontSize = 22.sp,
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLargeEmphasized,
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
         Text(
             text = "Desktop Client",
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleSmallEmphasized,
+            color = MaterialTheme.colorScheme.onSurface
         )
 
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().animateContentSize(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -61,8 +67,9 @@ fun Header(
                 }
             ) {
                 Icon(
-                    imageVector = if (expandClicked) Icons.Default.ExpandLess else Icons.Default.Expand,
-                    contentDescription = "Toggle Width"
+                    painter = painterResource(if(expandClicked) Res.drawable.minimize else Res.drawable.maximize),
+                    contentDescription = "Window size toggle",
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
 
@@ -71,7 +78,8 @@ fun Header(
             ) {
                 Icon(
                     imageVector = Icons.Default.Preview,
-                    contentDescription = "Preview"
+                    contentDescription = "Preview",
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
 
@@ -81,7 +89,8 @@ fun Header(
             ) {
                 Icon(
                     imageVector = if (state.darkMode) Icons.Default.LightMode else Icons.Default.DarkMode,
-                    contentDescription = "Toggle Theme"
+                    contentDescription = "Toggle Theme",
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
         }
