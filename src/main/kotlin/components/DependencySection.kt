@@ -2,6 +2,8 @@ package components
 
 import ViewIntent
 import ViewState
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -54,7 +56,7 @@ fun DependencySection(
     }
 
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+        columns = GridCells.Adaptive(210.dp),
         state = rememberLazyGridState(),
         modifier = Modifier.height(400.dp)
     ) {
@@ -68,7 +70,8 @@ fun DependencySection(
                     selected = state.dependencies[entry.key] ?: false,
                     onClick = { isSelected ->
                         onIntent(ViewIntent.ToggleDependency(entry.key, isSelected))
-                    }
+                    },
+                    modifier = Modifier.animateItem(placementSpec = spring())
                 )
             }
         )
@@ -80,13 +83,16 @@ fun DependencyItem(
     name: String,
     description: String,
     selected: Boolean,
-    onClick: (Boolean) -> Unit
+    onClick: (Boolean) -> Unit,
+    modifier: Modifier
 ) {
     OutlinedCard(
         colors = CardDefaults.outlinedCardColors(
             containerColor = MaterialTheme.colorScheme.background
         ),
-        modifier = Modifier.padding(10.dp)
+        modifier = modifier
+            .padding(10.dp)
+            .animateContentSize()
     ) {
         Column(
             modifier = Modifier.padding(8.dp)
