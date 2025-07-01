@@ -1,26 +1,18 @@
-// App.kt
-import androidx.compose.animation.*
-import androidx.compose.animation.core.tween
+
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
-import components.DependencySection
-import components.GenerateButton
-import components.Header
 import components.PreviewDialog
-import components.ProjectInformationSection
-import components.UIConfigSection
-import kotlinx.coroutines.launch
 import theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
@@ -37,7 +29,6 @@ fun App(
 
     var isExpanded by remember { mutableStateOf(false) }
 
-    // Watch window width changes
     LaunchedEffect(window.size.width) {
         isExpanded = window.size.width > 600.dp
     }
@@ -57,103 +48,16 @@ fun App(
 
     AppTheme(darkTheme = state.darkMode) {
         Box(modifier = Modifier.fillMaxSize()) {
-            LazyColumn(
-                state = listState,
-                modifier = Modifier.fillMaxSize()
-            ) {
-                item {
-                    Header(window, state, viewModel::processIntent, viewModel::toggleDarkMode)
-                }
 
-                item {
-                    HorizontalDivider()
-                }
-
-                item {
-                    AnimatedContent(
-                        targetState = isExpanded,
-                        transitionSpec = {
-                            fadeIn(animationSpec = tween(300)).togetherWith(fadeOut(animationSpec = tween(300)))
-                        }
-                    ) { expanded ->
-                        if (expanded) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
-                                horizontalArrangement = Arrangement.spacedBy(16.dp)
-                            ) {
-                                Box(modifier = Modifier.weight(1f)) {
-                                    StyledCard {
-                                        ProjectInformationSection(state, viewModel::processIntent)
-                                    }
-                                }
-                                Box(modifier = Modifier.weight(1f)) {
-                                    StyledCard {
-                                        UIConfigSection(state, viewModel::processIntent)
-                                    }
-                                }
-                            }
-                        } else {
-                            Column {
-                                StyledCard(modifier = Modifier.padding(horizontal = 16.dp)) {
-                                    ProjectInformationSection(state, viewModel::processIntent)
-                                }
-                                Spacer(modifier = Modifier.height(16.dp))
-                                StyledCard(modifier = Modifier.padding(horizontal = 16.dp)) {
-                                    UIConfigSection(state, viewModel::processIntent)
-                                }
-                            }
-                        }
-                    }
-                }
-
-                item {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    StyledCard(modifier = Modifier.padding(horizontal = 16.dp)) {
-                        DependencySection(state, viewModel::processIntent)
-                    }
-                }
-
-                item {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        GenerateButton(state, viewModel::processIntent)
-
-                        Spacer(modifier = Modifier.width(16.dp))
-
-                        TooltipBox(
-                            positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
-                            tooltip = {
-                                PlainTooltip {
-                                    Text("Go to Top")
-                                }
-                            },
-                            state = rememberTooltipState()
-                        ) {
-                            IconButton(
-                                onClick = {
-                                    coroutineScope.launch {
-                                        listState.animateScrollToItem(0)
-                                    }
-                                }
-                            ) {
-                                Icon(
-                                    Icons.Default.KeyboardArrowUp,
-                                    contentDescription = "Go to Top"
-                                )
-                            }
-                        }
-                    }
-                }
-
-                item {
-                    Spacer(modifier = Modifier.height(32.dp))
-                }
-            }
+            TestingMainLayoutGrid(
+                window = window,
+                viewModel = viewModel,
+                state = state,
+                coroutineScope = coroutineScope,
+                modifier = Modifier.fillMaxSize(),
+                lazyListState = listState,
+                isExpanded = isExpanded
+            )
 
             if (state.isGenerating) {
                 Box(
