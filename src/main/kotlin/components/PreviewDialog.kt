@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogWindow
+import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberDialogState
 
 @Composable
@@ -47,7 +48,7 @@ fun PreviewDialog(
 
     DialogWindow(
         onCloseRequest = onDismiss,
-        state = rememberDialogState(size = DpSize(800.dp, 800.dp)),
+        state = rememberDialogState(size = DpSize(800.dp, 800.dp), position = WindowPosition.Aligned(Alignment.Center)),
         title = "Preview Generated Files"
     ) {
         Surface(
