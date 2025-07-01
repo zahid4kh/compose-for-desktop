@@ -16,8 +16,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import composefordesktop.resources.Inter_VariableFont
 import composefordesktop.resources.Res
+import composefordesktop.resources.Ubuntu_Regular
 import org.jetbrains.compose.resources.Font
 
 @Composable
@@ -32,7 +32,7 @@ fun UIConfigSection(
         Text(
             text = "UI CONFIGURATION",
             fontFamily = FontFamily(Font(
-                Res.font.Inter_VariableFont,
+                Res.font.Ubuntu_Regular,
                 weight = FontWeight.Bold,
             )),
             fontSize = 20.sp
@@ -67,7 +67,7 @@ fun UIConfigItem(
             text = itemTitle,
             fontFamily = FontFamily(
                 Font(
-                    Res.font.Inter_VariableFont,
+                    Res.font.Ubuntu_Regular,
                     weight = FontWeight.Bold
                 )
             ),

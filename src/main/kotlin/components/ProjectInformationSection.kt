@@ -17,8 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import composefordesktop.resources.Inter_VariableFont
 import composefordesktop.resources.Res
+import composefordesktop.resources.Ubuntu_Regular
 import org.jetbrains.compose.resources.Font
 
 @Composable
@@ -32,10 +32,7 @@ fun ProjectInformationSection(
     ) {
         Text(
             text = "PROJECT INFORMATION",
-            fontFamily = FontFamily(Font(
-                Res.font.Inter_VariableFont,
-                weight = FontWeight.Bold,
-            )),
+            style = MaterialTheme.typography.titleLarge,
             fontSize = 20.sp
         )
         HorizontalDivider()
@@ -83,7 +80,7 @@ fun ProjectInfoItem(
             text = itemTitle,
             fontFamily = FontFamily(
                 Font(
-                    Res.font.Inter_VariableFont,
+                    Res.font.Ubuntu_Regular,
                     weight = FontWeight.Bold
                 )
             ),

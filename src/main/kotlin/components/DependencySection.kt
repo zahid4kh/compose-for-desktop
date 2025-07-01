@@ -17,8 +17,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import composefordesktop.resources.Inter_VariableFont
 import composefordesktop.resources.Res
+import composefordesktop.resources.Ubuntu_Regular
 import org.jetbrains.compose.resources.Font
 
 @Composable
@@ -45,10 +45,7 @@ fun DependencySection(
     ) {
         Text(
             text = "ADDITIONAL DEPENDENCIES",
-            fontFamily = FontFamily(Font(
-                Res.font.Inter_VariableFont,
-                weight = FontWeight.Bold,
-            )),
+            style = MaterialTheme.typography.titleLarge,
             fontSize = 20.sp,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -109,7 +106,7 @@ fun DependencyItem(
                         text = name,
                         fontFamily = FontFamily(
                             Font(
-                                resource = Res.font.Inter_VariableFont,
+                                resource = Res.font.Ubuntu_Regular,
                                 weight = FontWeight.Bold
                             )
                         )
@@ -119,7 +116,7 @@ fun DependencyItem(
                         text = description,
                         fontFamily = FontFamily(
                             Font(
-                                resource = Res.font.Inter_VariableFont,
+                                resource = Res.font.Ubuntu_Regular,
                                 weight = FontWeight.Normal
                             )
                         ),

@@ -12,14 +12,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.WindowState
-import composefordesktop.resources.Inter_VariableFont
-import composefordesktop.resources.Res
-import org.jetbrains.compose.resources.Font
 
 @Composable
 fun Header(
@@ -47,18 +42,12 @@ fun Header(
         Text(
             text = "Compose for Desktop Wizard",
             fontSize = 22.sp,
-            fontFamily = FontFamily(Font(
-                Res.font.Inter_VariableFont,
-                weight = FontWeight.Bold,
-            ))
+            style = MaterialTheme.typography.titleLarge
         )
 
         Text(
             text = "Desktop Client",
-            fontFamily = FontFamily(Font(
-                Res.font.Inter_VariableFont,
-                weight = FontWeight.Normal,
-            ))
+            style = MaterialTheme.typography.titleMedium
         )
 
         Row(
