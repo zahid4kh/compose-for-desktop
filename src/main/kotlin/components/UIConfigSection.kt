@@ -1,3 +1,7 @@
+package components
+
+import ViewIntent
+import ViewState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import composefordesktop.resources.Inter_VariableFont
@@ -18,7 +21,7 @@ import composefordesktop.resources.Res
 import org.jetbrains.compose.resources.Font
 
 @Composable
-fun ProjectInformationSection(
+fun UIConfigSection(
     state: ViewState,
     onIntent: (ViewIntent) -> Unit
 ) {
@@ -27,7 +30,7 @@ fun ProjectInformationSection(
         modifier = Modifier.padding(20.dp)
     ) {
         Text(
-            text = "PROJECT INFORMATION",
+            text = "UI CONFIGURATION",
             fontFamily = FontFamily(Font(
                 Res.font.Inter_VariableFont,
                 weight = FontWeight.Bold,
@@ -36,43 +39,28 @@ fun ProjectInformationSection(
         )
         HorizontalDivider()
 
-        ProjectInfoItem(
-            itemTitle = "Application Name*",
-            placeholderText = "My Compose App",
-            value = state.appName,
-            onValueChange = { onIntent(ViewIntent.UpdateAppName(it)) },
-            subtitle = "The name of your application. Used for window title and app name"
+        UIConfigItem(
+            itemTitle = "Default Window Width (dp)",
+            placeholderText = "800",
+            value = state.windowWidth,
+            onValueChange = { onIntent(ViewIntent.UpdateWindowWidth(it)) },
         )
 
-        ProjectInfoItem(
-            itemTitle = "Package Name*",
-            placeholderText = "myapp",
-            value = state.packageName,
-            onValueChange = { onIntent(ViewIntent.UpdatePackageName(it)) },
-            subtitle = state.packageNameError.ifEmpty {
-                "The package name of your application. E.g. codeeditor"
-            },
-            isError = state.packageNameError.isNotEmpty()
-        )
-
-        ProjectInfoItem(
-            itemTitle = "Version",
-            placeholderText = "1.0.0",
-            value = state.projectVersion,
-            onValueChange = { onIntent(ViewIntent.UpdateVersion(it)) },
-            subtitle = "The version of your application. Used for versioning your app"
+        UIConfigItem(
+            itemTitle = "Default Window Height (dp)",
+            placeholderText = "600",
+            value = state.windowHeight,
+            onValueChange = { onIntent(ViewIntent.UpdateWindowHeight(it)) },
         )
     }
 }
 
 @Composable
-fun ProjectInfoItem(
+fun UIConfigItem(
     itemTitle: String = "",
     placeholderText: String = "",
-    subtitle: String? = null,
     value: String = "",
-    onValueChange: (String) -> Unit = {},
-    isError: Boolean = false
+    onValueChange: (String) -> Unit = {}
 ) {
     Column {
         Text(
@@ -92,15 +80,6 @@ fun ProjectInfoItem(
             modifier = Modifier.fillMaxWidth(),
             placeholder = { Text(text = placeholderText) },
             shape = MaterialTheme.shapes.medium,
-            supportingText = {
-                Text(
-                    text = subtitle ?: "",
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier.fillMaxWidth(),
-                    color = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            },
-            isError = isError
         )
     }
 }

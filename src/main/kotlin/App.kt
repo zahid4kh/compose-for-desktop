@@ -14,6 +14,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
+import components.DependencySection
+import components.GenerateButton
+import components.Header
+import components.PreviewDialog
+import components.ProjectInformationSection
+import components.UIConfigSection
 import kotlinx.coroutines.launch
 import theme.AppTheme
 
