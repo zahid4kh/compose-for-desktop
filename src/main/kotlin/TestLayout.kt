@@ -28,12 +28,11 @@ fun TestingMainLayoutGrid(
     state: ViewState,
     coroutineScope: CoroutineScope,
     lazyListState: LazyListState,
-    isExpanded: Boolean,
     modifier: Modifier
 ){
     val lazyGridState = rememberLazyGridState()
     val gridCells = GridCells.Adaptive(
-        if (isExpanded) 420.dp else 300.dp
+        300.dp // else 420.dp
     )
 
     LazyColumn(

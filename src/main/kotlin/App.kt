@@ -27,12 +27,6 @@ fun App(
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
-    var isExpanded by remember { mutableStateOf(false) }
-
-    LaunchedEffect(window.size.width) {
-        isExpanded = window.size.width > 600.dp
-    }
-
     LaunchedEffect(viewModel) {
         viewModel.effects.collect { effect ->
             when (effect) {
@@ -55,8 +49,7 @@ fun App(
                 state = state,
                 coroutineScope = coroutineScope,
                 modifier = Modifier.fillMaxSize(),
-                lazyListState = listState,
-                isExpanded = isExpanded
+                lazyListState = listState
             )
 
             if (state.isGenerating) {
