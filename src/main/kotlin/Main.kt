@@ -12,6 +12,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
 import theme.AppTheme
+import java.awt.Dimension
 
 fun main() = application {
     startKoin {
@@ -30,8 +31,11 @@ fun main() = application {
         alwaysOnTop = true,
         title = "Compose for Desktop - Desktop Client",
         icon = painterResource(Res.drawable.windowsos),
-        resizable = false
+        resizable = true
     ) {
+        window.maximumSize = Dimension(900, 700)
+        window.minimumSize = Dimension(480, 700)
+
         AppTheme{
             App(
                 viewModel = viewModel,
