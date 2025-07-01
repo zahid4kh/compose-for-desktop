@@ -2,14 +2,16 @@ package components
 
 import ViewIntent
 import ViewState
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDownward
+import androidx.compose.material.icons.filled.ArrowUpward
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -20,35 +22,63 @@ fun UIConfigSection(
     onIntent: (ViewIntent) -> Unit,
     modifier : Modifier
 ) {
+    var expandUiConfig by remember { mutableStateOf(true) }
+
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         modifier = modifier
             .background(MaterialTheme.colorScheme.surfaceVariant)
             .padding(20.dp)
     ) {
-        Text(
-            text = "UI CONFIGURATION",
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            fontSize = 20.sp
-        )
+        Row(modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
+            Text(
+                text = "UI CONFIGURATION",
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                fontSize = 20.sp
+            )
+            IconButton(
+                onClick = {expandUiConfig = !expandUiConfig},
+                modifier = Modifier.size(22.dp)
+            ){
+                Icon(
+                    imageVector = if(expandUiConfig) Icons.Default.ArrowUpward else Icons.Default.ArrowDownward,
+                    contentDescription = null,
+                    modifier = Modifier.size(22.dp),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+
         HorizontalDivider(color = MaterialTheme.colorScheme.onSurfaceVariant)
 
-        UIConfigItem(
-            itemTitle = "Default Window Width (dp)",
-            placeholderText = "800",
-            value = state.windowWidth,
-            onValueChange = { onIntent(ViewIntent.UpdateWindowWidth(it)) },
-            modifier = Modifier.animateContentSize()
-        )
+        AnimatedVisibility(
+            visible = expandUiConfig
+        ){
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ){
+                UIConfigItem(
+                    itemTitle = "Default Window Width (dp)",
+                    placeholderText = "800",
+                    value = state.windowWidth,
+                    onValueChange = { onIntent(ViewIntent.UpdateWindowWidth(it)) },
+                    modifier = Modifier.animateContentSize()
+                )
 
-        UIConfigItem(
-            itemTitle = "Default Window Height (dp)",
-            placeholderText = "600",
-            value = state.windowHeight,
-            onValueChange = { onIntent(ViewIntent.UpdateWindowHeight(it)) },
-            modifier = Modifier.animateContentSize()
-        )
+                UIConfigItem(
+                    itemTitle = "Default Window Height (dp)",
+                    placeholderText = "600",
+                    value = state.windowHeight,
+                    onValueChange = { onIntent(ViewIntent.UpdateWindowHeight(it)) },
+                    modifier = Modifier.animateContentSize()
+                )
+            }
+        }
     }
 }
 
