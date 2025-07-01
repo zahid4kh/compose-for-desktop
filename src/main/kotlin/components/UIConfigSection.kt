@@ -2,48 +2,44 @@ package components
 
 import ViewIntent
 import ViewState
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import composefordesktop.resources.Res
-import composefordesktop.resources.Ubuntu_Regular
-import org.jetbrains.compose.resources.Font
 
 @Composable
 fun UIConfigSection(
     state: ViewState,
-    onIntent: (ViewIntent) -> Unit
+    onIntent: (ViewIntent) -> Unit,
+    modifier : Modifier
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp),
-        modifier = Modifier.padding(20.dp)
+        modifier = modifier
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .padding(20.dp)
     ) {
         Text(
             text = "UI CONFIGURATION",
-            fontFamily = FontFamily(Font(
-                Res.font.Ubuntu_Regular,
-                weight = FontWeight.Bold,
-            )),
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontSize = 20.sp
         )
-        HorizontalDivider()
+        HorizontalDivider(color = MaterialTheme.colorScheme.onSurfaceVariant)
 
         UIConfigItem(
             itemTitle = "Default Window Width (dp)",
             placeholderText = "800",
             value = state.windowWidth,
             onValueChange = { onIntent(ViewIntent.UpdateWindowWidth(it)) },
+            modifier = Modifier.animateContentSize()
         )
 
         UIConfigItem(
@@ -51,6 +47,7 @@ fun UIConfigSection(
             placeholderText = "600",
             value = state.windowHeight,
             onValueChange = { onIntent(ViewIntent.UpdateWindowHeight(it)) },
+            modifier = Modifier.animateContentSize()
         )
     }
 }
@@ -60,20 +57,16 @@ fun UIConfigItem(
     itemTitle: String = "",
     placeholderText: String = "",
     value: String = "",
-    onValueChange: (String) -> Unit = {}
+    onValueChange: (String) -> Unit = {},
+    modifier: Modifier
 ) {
-    Column {
+    Column(modifier = modifier) {
         Text(
             text = itemTitle,
-            fontFamily = FontFamily(
-                Font(
-                    Res.font.Ubuntu_Regular,
-                    weight = FontWeight.Bold
-                )
-            ),
-            fontSize = 16.sp
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-
+        Spacer(modifier = Modifier.height(5.dp))
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,

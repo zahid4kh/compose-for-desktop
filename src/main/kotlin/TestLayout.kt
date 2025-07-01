@@ -50,7 +50,9 @@ fun TestingMainLayoutGrid(
             LazyVerticalGrid(
                 columns = gridCells,
                 state = lazyGridState,
-                modifier = Modifier.fillMaxSize().height(500.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .height(600.dp)
             ){
                 item{
                     ProjectInformationSection(
@@ -63,7 +65,13 @@ fun TestingMainLayoutGrid(
                 }
 
                 item{
-                    UIConfigSection(state, viewModel::processIntent)
+                    UIConfigSection(
+                        state,
+                        onIntent = viewModel::processIntent,
+                        modifier = Modifier
+                            .animateItem(placementSpec = spring())
+                            .animateContentSize()
+                    )
                 }
 
                 item(span = {GridItemSpan(maxLineSpan)}) {
