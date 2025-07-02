@@ -90,18 +90,18 @@ fun PreviewDialog(
                 Column(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    TabRow(
+                    SecondaryTabRow(
                         selectedTabIndex = selectedTab,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        tabs.forEachIndexed { index, title ->
-                            Tab(
-                                selected = selectedTab == index,
-                                onClick = { selectedTab = index },
-                                text = { Text(title, fontSize = 12.sp) }
-                            )
-                        }
-                    }
+                        modifier = Modifier.fillMaxWidth(),
+                        tabs = {
+                            tabs.forEachIndexed { index, title ->
+                                Tab(
+                                    selected = selectedTab == index,
+                                    onClick = { selectedTab = index },
+                                    text = { Text(title, fontSize = 12.sp) }
+                                )
+                            }
+                        })
 
                     // Code preview area
                     Box(
