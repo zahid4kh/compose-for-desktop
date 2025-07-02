@@ -124,6 +124,8 @@ class ProjectGenerator {
         }
 
     }
+    // how to load resources directly from the source code instead of relying on FileSystem
+    //https://stackoverflow.com/questions/61316839/getclassloader-getresourceasstream-not-work-in-modular-java-project-openjdk
 
     private suspend fun fetchAndWriteBinaryFile(path: String, destination: File) = withContext(Dispatchers.IO) {
         val url = URL("https://raw.githubusercontent.com/zahid4kh/compose-for-desktop/main/$path")
