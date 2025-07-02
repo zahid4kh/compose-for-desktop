@@ -1,4 +1,3 @@
-
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.apache.commons.compress.archivers.zip.UnixStat
@@ -8,7 +7,6 @@ import tobegenerated.PreviewFunctions
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.net.URL
 import java.nio.file.Files
 import javax.swing.JFileChooser
 import javax.swing.filechooser.FileNameExtensionFilter
@@ -46,36 +44,37 @@ class ProjectGenerator {
             writeTextFile(File(kotlinDir, "Main.kt"), PreviewFunctions.generateMainFilePreview(options))
             writeTextFile(File(rootDir, "README.md"), PreviewFunctions.generateReadmePreview(options))
 
-            // Fetch and write static files
-            fetchAndWriteTextFile("gradle/wrapper/gradle-wrapper.properties", File(wrapperDir, "gradle-wrapper.properties"))
-            fetchAndWriteBinaryFile("gradle/wrapper/gradle-wrapper.jar", File(wrapperDir, "gradle-wrapper.jar"))
-            fetchAndWriteTextFile("gradlew", File(rootDir, "gradlew"))
-            fetchAndWriteTextFile("gradlew.bat", File(rootDir, "gradlew.bat"))
-            fetchAndWriteTextFile("gradle.properties", File(rootDir, "gradle.properties"))
-            fetchAndWriteTextFile(".gitignore", File(rootDir, ".gitignore"))
+            // Read and write static files from resources
+            readResourceBinaryFile("/tobegenerated/binaries/gradle-wrapper.properties", File(wrapperDir, "gradle-wrapper.properties"))
+            readResourceBinaryFile("/tobegenerated/binaries/gradle-wrapper.jar", File(wrapperDir, "gradle-wrapper.jar"))
+            readResourceTextFile("/tobegenerated/textfiles/gradlew", File(rootDir, "gradlew"))
+            readResourceTextFile("/tobegenerated/textfiles/gradlewbat", File(rootDir, "gradlew.bat"))
+            readResourceTextFile("/tobegenerated/textfiles/gradleproperties", File(rootDir, "gradle.properties"))
+            readResourceTextFile("/tobegenerated/textfiles/gitignore", File(rootDir, ".gitignore"))
 
             // Kotlin files
-            fetchAndWriteTextFile("src/main/kotlin/App.kt", File(kotlinDir, "App.kt"))
-            fetchAndWriteTextFile("src/main/kotlin/AppModule.kt", File(kotlinDir, "AppModule.kt"))
-            fetchAndWriteTextFile("src/main/kotlin/MainViewModel.kt", File(kotlinDir, "MainViewModel.kt"))
-            fetchAndWriteTextFile("src/main/kotlin/Models.kt", File(kotlinDir, "Models.kt"))
+            readResourceTextFile("/tobegenerated/textfiles/App", File(kotlinDir, "App.kt"))
+            readResourceTextFile("/tobegenerated/textfiles/AppModule", File(kotlinDir, "AppModule.kt"))
+            readResourceTextFile("/tobegenerated/textfiles/MainViewModel", File(kotlinDir, "MainViewModel.kt"))
+            readResourceTextFile("/tobegenerated/textfiles/Models", File(kotlinDir, "Models.kt"))
 
             // Theme files
-            fetchAndWriteTextFile("src/main/kotlin/theme/Color.kt", File(themeDir, "Color.kt"))
-            fetchAndWriteTextFile("src/main/kotlin/theme/Theme.kt", File(themeDir, "Theme.kt"))
-            fetchAndWriteTextFile("src/main/kotlin/theme/Type.kt", File(themeDir, "Type.kt"))
+            readResourceTextFile("/tobegenerated/textfiles/Color", File(themeDir, "Color.kt"))
+            readResourceTextFile("/tobegenerated/textfiles/Theme", File(themeDir, "Theme.kt"))
+            readResourceTextFile("/tobegenerated/textfiles/Type", File(themeDir, "Type.kt"))
 
             // Icon files
-            fetchAndWriteBinaryFile("icons/compose.png", File(iconsDir, "compose.png"))
-            fetchAndWriteBinaryFile("icons/compose.ico", File(iconsDir, "compose.ico"))
-            fetchAndWriteBinaryFile("icons/compose.icns", File(iconsDir, "compose.icns"))
+            readResourceBinaryFile("/tobegenerated/images/compose.png", File(iconsDir, "compose.png"))
+            readResourceBinaryFile("/tobegenerated/images/compose.ico", File(iconsDir, "compose.ico"))
+            readResourceBinaryFile("/tobegenerated/images/compose.icns", File(iconsDir, "compose.icns"))
 
             // Database.kt with template
             writeDatabaseFile(kotlinDir, options)
 
             // Proguard rules
-            writeProguardRules(rootDir)
+            readResourceTextFile("/tobegenerated/textfiles/Proguard", File(rootDir, "proguard-rules.pro"))
 
+            // Make gradlew executable on Unix-like systems
             val gradlewFile = File(rootDir, "gradlew")
             if (!System.getProperty("os.name").lowercase().contains("windows")) {
                 try {
@@ -121,25 +120,21 @@ class ProjectGenerator {
         file.writeText(content)
     }
 
-    private suspend fun fetchAndWriteTextFile(path: String, destination: File) = withContext(Dispatchers.IO) {
-        val url = URL("https://raw.githubusercontent.com/zahid4kh/compose-for-desktop/main/$path")
-        url.readText().let { destination.writeText(it) }
-        if (path.endsWith("gradlew") && !System.getProperty("os.name").lowercase().contains("windows")) {
-            try {
-                destination.setExecutable(true)
-            } catch (e: Exception) {
-                println("Warning: Failed to set executable permission on ${destination.absolutePath}")
-                println(e.message)
-            }
+    private fun readResourceTextFile(resourcePath: String, destination: File) {
+        val inputStream = this::class.java.getResourceAsStream(resourcePath)
+            ?: throw IllegalArgumentException("Resource not found: $resourcePath")
+
+        inputStream.use { stream ->
+            val content = stream.bufferedReader().readText()
+            destination.writeText(content)
         }
-
     }
-    // how to load resources directly from the source code instead of relying on FileSystem
-    //https://stackoverflow.com/questions/61316839/getclassloader-getresourceasstream-not-work-in-modular-java-project-openjdk
 
-    private suspend fun fetchAndWriteBinaryFile(path: String, destination: File) = withContext(Dispatchers.IO) {
-        val url = URL("https://raw.githubusercontent.com/zahid4kh/compose-for-desktop/main/$path")
-        url.openStream().use { input ->
+    private fun readResourceBinaryFile(resourcePath: String, destination: File) {
+        val inputStream = this::class.java.getResourceAsStream(resourcePath)
+            ?: throw IllegalArgumentException("Resource not found: $resourcePath")
+
+        inputStream.use { input ->
             destination.outputStream().use { output ->
                 input.copyTo(output)
             }
@@ -186,56 +181,6 @@ class Database {
 }"""
 
         File(kotlinDir, "Database.kt").writeText(content)
-    }
-
-    private fun writeProguardRules(rootDir: File) {
-        val content = """-dontwarn kotlinx.serialization.**
-
--dontwarn sun.font.CFont
--dontwarn sun.swing.SwingUtilities2${'$'}AATextInfo
--dontwarn net.miginfocom.swing.MigLayout
-
--dontnote kotlinx.serialization.**
--dontnote META-INF.**
--dontnote kotlinx.serialization.internal.PlatformKt
-
-# Keep Kotlin Serialization
--keepattributes *Annotation*, InnerClasses
--dontnote kotlinx.serialization.AnnotationsKt
-
-# Keep all serializable classes with their @Serializable annotation
--keepclassmembers class ** {
-    @kotlinx.serialization.Serializable <fields>;
-}
-
-# Keep serializers
--keepclasseswithmembers class **${'$'}${'$'}serializer {
-    static **${'$'}${'$'}serializer INSTANCE;
-}
-
-
-# Keep serializable classes and their properties
--if @kotlinx.serialization.Serializable class **
--keep class <1> {
-    static <1>${'$'}Companion Companion;
-}
-
-# Keep specific serializer classes
--keepclassmembers class kotlinx.serialization.json.** {
-    *** Companion;
-}
--keepclasseswithmembers class kotlinx.serialization.json.** {
-    kotlinx.serialization.KSerializer serializer(...);
-}
-
-# Keep serialization descriptors
--keep class kotlinx.serialization.descriptors.** { *; }
-
-# Specifically keep AppSettings and its serializer
--keep class AppSettings { *; }
--keep class AppSettings${'$'}${'$'}serializer { *; }"""
-
-        File(rootDir, "proguard-rules.pro").writeText(content)
     }
 
     private fun createZipFile(sourceDir: File, destination: File) {
