@@ -33,7 +33,7 @@ class ProjectGenerator {
             val fontDir = File(composeResourcesDir, "font")
 
             listOf(gradleDir, wrapperDir, iconsDir, srcDir, mainDir, kotlinDir,
-                themeDir, resourcesDir, composeResourcesDir, drawableDir).forEach { it.mkdirs() }
+                themeDir, resourcesDir, composeResourcesDir, drawableDir, fontDir).forEach { it.mkdirs() }
 
             // Generate and write text files
             writeTextFile(File(rootDir, "build.gradle.kts"), PreviewFunctions.generateBuildGradlePreview(options))
