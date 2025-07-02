@@ -23,22 +23,15 @@ fun App(
     window: WindowState
 ) {
     val state by viewModel.state.collectAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
-    LaunchedEffect(viewModel) {
-        viewModel.effects.collect { effect ->
-            when (effect) {
-                is ViewEffect.ShowError -> {
-                    snackbarHostState.showSnackbar(effect.message)
-                }
-                is ViewEffect.ProjectGenerated -> {
-                    snackbarHostState.showSnackbar("Project generated at: ${effect.filePath}")
-                }
-            }
-        }
+    var isExpanded by remember { mutableStateOf(false) }
+
+    LaunchedEffect(window.size.width) {
+        isExpanded = window.size.width > 600.dp
     }
+
 
     AppTheme(darkTheme = state.darkMode) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -49,7 +42,8 @@ fun App(
                 state = state,
                 coroutineScope = coroutineScope,
                 modifier = Modifier.fillMaxSize(),
-                lazyListState = listState
+                lazyListState = listState,
+                isExpanded = isExpanded
             )
 
             if (state.isGenerating) {
@@ -71,11 +65,6 @@ fun App(
                     }
                 )
             }
-
-            SnackbarHost(
-                hostState = snackbarHostState,
-                modifier = Modifier.align(Alignment.BottomCenter)
-            )
         }
     }
 }

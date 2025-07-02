@@ -9,11 +9,15 @@ import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Preview
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
+import composefordesktop.resources.Res
+import composefordesktop.resources.maximize
+import composefordesktop.resources.minimize
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -23,6 +27,13 @@ fun Header(
     onIntent: (ViewIntent) -> Unit,
     onToggleDarkMode: () -> Unit
 ) {
+    var expandClicked by remember { mutableStateOf(false) }
+
+    if (expandClicked) {
+        windowState.size = windowState.size.copy(width = 900.dp)
+    } else {
+        windowState.size = windowState.size.copy(width = 480.dp)
+    }
 
     Column(
         modifier = Modifier
@@ -50,6 +61,18 @@ fun Header(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            IconButton(
+                onClick = {
+                    expandClicked = !expandClicked
+                }
+            ) {
+                Icon(
+                    painter = painterResource(if(expandClicked) Res.drawable.minimize else Res.drawable.maximize),
+                    contentDescription = "Window size toggle",
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
+            }
+
             IconButton(
                 onClick = { onIntent(ViewIntent.ShowPreview) }
             ) {

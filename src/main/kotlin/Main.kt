@@ -31,9 +31,9 @@ fun main() = application {
         alwaysOnTop = true,
         title = "Compose for Desktop - Desktop Client",
         icon = painterResource(Res.drawable.windowsos),
-        resizable = true
+        resizable = false
     ) {
-        window.maximumSize = Dimension(900, 700)
+
         window.minimumSize = Dimension(480, 700)
 
         AppTheme{
