@@ -1,4 +1,3 @@
-
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
@@ -52,7 +51,7 @@ fun TestingMainLayoutGrid(
                 state = lazyGridState,
                 modifier = Modifier
                     .fillMaxSize()
-                    .height(600.dp)
+                    .height(650.dp)
             ){
                 item{
                     ProjectInformationSection(
@@ -76,9 +75,11 @@ fun TestingMainLayoutGrid(
 
                 item(span = {GridItemSpan(maxLineSpan)}) {
                     Spacer(modifier = Modifier.height(16.dp))
-                    StyledCard(modifier = Modifier.padding(horizontal = 16.dp)) {
-                        DependencySection(state, viewModel::processIntent)
-                    }
+                    DependencySection(
+                        state = state,
+                        onIntent = viewModel::processIntent,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
                 }
 
                 item {
@@ -119,7 +120,5 @@ fun TestingMainLayoutGrid(
                 }
             }
         }
-
     }
-
 }
