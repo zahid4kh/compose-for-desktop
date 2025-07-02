@@ -30,6 +30,7 @@ class ProjectGenerator {
             val resourcesDir = File(mainDir, "resources")
             val composeResourcesDir = File(mainDir, "composeResources")
             val drawableDir = File(composeResourcesDir, "drawable")
+            val fontDir = File(composeResourcesDir, "font")
 
             listOf(gradleDir, wrapperDir, iconsDir, srcDir, mainDir, kotlinDir,
                 themeDir, resourcesDir, composeResourcesDir, drawableDir).forEach { it.mkdirs() }
@@ -57,16 +58,23 @@ class ProjectGenerator {
 
             // Theme files
             readResourceTextFile("/tobegenerated/textfiles/Color", File(themeDir, "Color.kt"))
-            readResourceTextFile("/tobegenerated/textfiles/Theme", File(themeDir, "Theme.kt"))
-            /*
-            already handling typography from Theme
-            readResourceTextFile("/tobegenerated/textfiles/Type", File(themeDir, "Type.kt"))
-             */
+            writeTextFile(File(themeDir, "Theme.kt"), PreviewFunctions.generateThemeFilePreview(options))
 
             // Icon files
             readResourceBinaryFile("/tobegenerated/images/compose.png", File(iconsDir, "compose.png"))
             readResourceBinaryFile("/tobegenerated/images/compose.ico", File(iconsDir, "compose.ico"))
             readResourceBinaryFile("/tobegenerated/images/compose.icns", File(iconsDir, "compose.icns"))
+
+            // Fonts
+            readResourceBinaryFile("/tobegenerated/fonts/JetBrainsMono-Regular.ttf", File(fontDir, "JetBrainsMono-Regular.ttf"))
+            readResourceBinaryFile("/tobegenerated/fonts/JetBrainsMono-Italic.ttf", File(fontDir, "JetBrainsMono-Italic.ttf"))
+            readResourceBinaryFile("/tobegenerated/fonts/JetBrainsMono-Bold.ttf", File(fontDir, "JetBrainsMono-Bold.ttf"))
+            readResourceBinaryFile("/tobegenerated/fonts/Roboto-Regular.ttf", File(fontDir, "Roboto-Regular.ttf"))
+            readResourceBinaryFile("/tobegenerated/fonts/Roboto-Italic.ttf", File(fontDir, "Roboto-Italic.ttf"))
+            readResourceBinaryFile("/tobegenerated/fonts/Roboto-Bold.ttf", File(fontDir, "Roboto-Bold.ttf"))
+            readResourceBinaryFile("/tobegenerated/fonts/Ubuntu-Regular.ttf", File(fontDir, "Ubuntu-Regular.ttf"))
+            readResourceBinaryFile("/tobegenerated/fonts/Ubuntu-Italic.ttf", File(fontDir, "Ubuntu-Italic.ttf"))
+            readResourceBinaryFile("/tobegenerated/fonts/Ubuntu-Bold.ttf", File(fontDir, "Ubuntu-Bold.ttf"))
 
             // Database.kt with template
             writeDatabaseFile(kotlinDir, options)
