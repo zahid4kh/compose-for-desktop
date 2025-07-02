@@ -76,6 +76,16 @@ class ProjectGenerator {
             // Proguard rules
             writeProguardRules(rootDir)
 
+            val gradlewFile = File(rootDir, "gradlew")
+            if (!System.getProperty("os.name").lowercase().contains("windows")) {
+                try {
+                    gradlewFile.setExecutable(true)
+                } catch (e: Exception) {
+                    println("Warning: Failed to set executable permission on ${gradlewFile.absolutePath}")
+                    println(e.message)
+                }
+            }
+
             // Create ZIP file
             createZipFile(rootDir, destinationPath)
 
