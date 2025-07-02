@@ -1,3 +1,5 @@
+import java.io.File
+
 sealed class ViewIntent {
     data class UpdateAppName(val name: String) : ViewIntent()
     data class UpdatePackageName(val name: String) : ViewIntent()
@@ -8,5 +10,10 @@ sealed class ViewIntent {
     object ShowPreview : ViewIntent()
     object HidePreview : ViewIntent()
     object GenerateProject : ViewIntent()
+    object ShowFileSaver : ViewIntent()
+    object HideFileSaver : ViewIntent()
+    object HideSuccessDialog : ViewIntent()
+    object HideErrorDialog : ViewIntent()
+    data class SaveProjectToFile(val file: File) : ViewIntent()
     data class SetGenerating(val isGenerating: Boolean) : ViewIntent()
 }

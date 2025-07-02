@@ -2,17 +2,20 @@
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.*
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
 import components.PreviewDialog
+import deskit.dialogs.file.filesaver.FileSaverDialog
+import deskit.dialogs.info.InfoDialog
 import theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
@@ -31,7 +34,6 @@ fun App(
     LaunchedEffect(window.size.width) {
         isExpanded = window.size.width > 600.dp
     }
-
 
     AppTheme(darkTheme = state.darkMode) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -53,7 +55,16 @@ fun App(
                         .background(MaterialTheme.colorScheme.background.copy(alpha = 0.8f)),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator()
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        CircularProgressIndicator()
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            "Generating your project...",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
                 }
             }
 
@@ -65,26 +76,40 @@ fun App(
                     }
                 )
             }
-        }
-    }
-}
 
-@Composable
-fun StyledCard(
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
-) {
-    Card(
-        modifier = modifier.padding(5.dp),
-        shape = MaterialTheme.shapes.medium,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.7f)
-        ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 2.dp,
-            hoveredElevation = 6.dp
-        )
-    ) {
-        content()
+            if (state.showFileSaver) {
+                FileSaverDialog(
+                    title = "Save Project As",
+                    suggestedFileName = state.suggestedFileName,
+                    extension = ".zip",
+                    onSave = { file ->
+                        viewModel.processIntent(ViewIntent.SaveProjectToFile(file))
+                    },
+                    onCancel = {
+                        viewModel.processIntent(ViewIntent.HideFileSaver)
+                    }
+                )
+            }
+
+            if (state.showSuccessDialog) {
+                InfoDialog(
+                    title = "Project Generated Successfully!",
+                    message = state.successMessage,
+                    onClose = {
+                        viewModel.processIntent(ViewIntent.HideSuccessDialog)
+                    }
+                )
+            }
+
+            if (state.showErrorDialog) {
+                InfoDialog(
+                    title = "Error",
+                    message = state.errorMessage,
+                    onClose = {
+                        viewModel.processIntent(ViewIntent.HideErrorDialog)
+                    }
+                )
+            }
+        }
     }
 }

@@ -8,14 +8,11 @@ import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.nio.file.Files
-import javax.swing.JFileChooser
-import javax.swing.filechooser.FileNameExtensionFilter
 
 class ProjectGenerator {
 
-    suspend fun generateProject(options: ProjectOptions): String = withContext(Dispatchers.IO) {
+    suspend fun generateProject(options: ProjectOptions, destinationFile: File): Boolean = withContext(Dispatchers.IO) {
         val appNameFormatted = options.appName.lowercase().replace(Regex("\\s+"), "-")
-        val destinationPath = chooseDestination(appNameFormatted)
         val tempDir = Files.createTempDirectory("compose-desktop-").toFile()
 
         try {
@@ -61,7 +58,10 @@ class ProjectGenerator {
             // Theme files
             readResourceTextFile("/tobegenerated/textfiles/Color", File(themeDir, "Color.kt"))
             readResourceTextFile("/tobegenerated/textfiles/Theme", File(themeDir, "Theme.kt"))
+            /*
+            already handling typography from Theme
             readResourceTextFile("/tobegenerated/textfiles/Type", File(themeDir, "Type.kt"))
+             */
 
             // Icon files
             readResourceBinaryFile("/tobegenerated/images/compose.png", File(iconsDir, "compose.png"))
@@ -81,38 +81,20 @@ class ProjectGenerator {
                     gradlewFile.setExecutable(true)
                 } catch (e: Exception) {
                     println("Warning: Failed to set executable permission on ${gradlewFile.absolutePath}")
-                    println(e.message)
                 }
             }
 
             // Create ZIP file
-            createZipFile(rootDir, destinationPath)
+            createZipFile(rootDir, destinationFile)
 
-            return@withContext destinationPath.absolutePath
+            return@withContext true
 
+        } catch (e: Exception) {
+            println("Error generating project: ${e.message}")
+            e.printStackTrace()
+            return@withContext false
         } finally {
             tempDir.deleteRecursively()
-        }
-    }
-
-    private fun chooseDestination(defaultName: String): File {
-        val fileChooser = JFileChooser().apply {
-            fileSelectionMode = JFileChooser.FILES_ONLY
-            val downloadsDir = File(System.getProperty("user.home"), "Downloads")
-            selectedFile = File(downloadsDir, "$defaultName.zip")
-            fileFilter = FileNameExtensionFilter("ZIP files", "zip")
-        }
-
-        return if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-            val file = fileChooser.selectedFile
-            if (file.extension != "zip") {
-                File(file.absolutePath + ".zip")
-            } else {
-                file
-            }
-        } else {
-            val downloadsDir = File(System.getProperty("user.home"), "Downloads")
-            File(downloadsDir, "$defaultName.zip")
         }
     }
 
