@@ -48,7 +48,10 @@ fun PreviewDialog(
 
     DialogWindow(
         onCloseRequest = onDismiss,
-        state = rememberDialogState(size = DpSize(800.dp, 800.dp), position = WindowPosition.Aligned(Alignment.Center)),
+        state = rememberDialogState(
+            size = DpSize(800.dp, 800.dp),
+            position = WindowPosition.Aligned(Alignment.Center)
+        ),
         title = "Preview Generated Files"
     ) {
         Surface(
@@ -90,7 +93,7 @@ fun PreviewDialog(
                 Column(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    SecondaryTabRow(
+                    TabRow(
                         selectedTabIndex = selectedTab,
                         modifier = Modifier.fillMaxWidth(),
                         tabs = {

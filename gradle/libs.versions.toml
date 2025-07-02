@@ -1,6 +1,6 @@
 [versions]
 # --- Plugin Versions ---
-composePlugin = "1.9.0-alpha02"
+composePlugin = "1.8.0"
 kotlin = "2.1.20"
 hotReload = "1.0.0-alpha10"
 slf4j = "2.0.12"

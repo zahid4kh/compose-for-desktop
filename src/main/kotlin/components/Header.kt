@@ -19,7 +19,6 @@ import composefordesktop.resources.maximize
 import composefordesktop.resources.minimize
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun Header(
     windowState: WindowState,
@@ -46,13 +45,13 @@ fun Header(
     ) {
         Text(
             text = "Compose for Desktop Wizard",
-            style = MaterialTheme.typography.titleLargeEmphasized,
+            style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onSurface,
         )
 
         Text(
             text = "Desktop Client",
-            style = MaterialTheme.typography.titleSmallEmphasized,
+            style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.onSurface
         )
 
