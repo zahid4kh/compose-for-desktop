@@ -1,5 +1,5 @@
 package components
-import PreviewFunctions
+import tobegenerated.PreviewFunctions
 import ProjectOptions
 import ViewState
 import androidx.compose.foundation.layout.*

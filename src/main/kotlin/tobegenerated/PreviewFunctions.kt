@@ -1,3 +1,7 @@
+package tobegenerated
+
+import ProjectOptions
+
 object PreviewFunctions {
 
     fun generateBuildGradlePreview(options: ProjectOptions): String {
