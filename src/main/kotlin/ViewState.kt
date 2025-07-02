@@ -20,5 +20,11 @@ data class ViewState(
     ),
     val isGenerating: Boolean = false,
     val showPreview: Boolean = false,
-    val packageNameError: String = ""
+    val showFileSaver: Boolean = false,
+    val showSuccessDialog: Boolean = false,
+    val showErrorDialog: Boolean = false,
+    val packageNameError: String = "",
+    val errorMessage: String = "",
+    val successMessage: String = "",
+    val suggestedFileName: String = ""
 )
