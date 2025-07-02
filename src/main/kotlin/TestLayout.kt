@@ -82,7 +82,7 @@ fun TestingMainLayoutGrid(
                     )
                 }
 
-                item {
+                item(span = {GridItemSpan(maxCurrentLineSpan)}) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
