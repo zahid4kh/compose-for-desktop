@@ -4,7 +4,6 @@ import ViewIntent
 import ViewState
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
@@ -25,77 +24,83 @@ fun ProjectInformationSection(
 ) {
     var expandProjectInfo by remember { mutableStateOf(true) }
 
-    Column(
-        verticalArrangement = Arrangement.spacedBy(10.dp),
+    OutlinedCard(
         modifier = modifier
-            .background(MaterialTheme.colorScheme.surfaceVariant)
-            .padding(20.dp)
+            .fillMaxHeight()
+            .padding(8.dp),
+        elevation = CardDefaults.outlinedCardElevation(defaultElevation = 0.dp),
+        colors = CardDefaults.outlinedCardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
     ) {
-        Row(modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween){
-            Text(
-                text = "PROJECT INFORMATION",
-                style = MaterialTheme.typography.titleLarge,
-                fontSize = 20.sp,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            IconButton(
-                onClick = {expandProjectInfo = !expandProjectInfo},
-                modifier = Modifier.size(22.dp)
-            ){
-                Icon(
-                    imageVector = if(expandProjectInfo) Icons.Default.ArrowUpward else Icons.Default.ArrowDownward,
-                    contentDescription = null,
-                    modifier = Modifier.size(22.dp),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
-
-        HorizontalDivider(color = MaterialTheme.colorScheme.onSurfaceVariant)
-
-        AnimatedVisibility(
-            visible = expandProjectInfo
-        ){
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
-            ){
-                ProjectInfoItem(
-                    itemTitle = "Application Name*",
-                    placeholderText = "My Compose App",
-                    value = state.appName,
-                    onValueChange = { onIntent(ViewIntent.UpdateAppName(it)) },
-                    subtitle = "The name of your application. Used for window title and app name",
-                    modifier = Modifier.animateContentSize()
+        Column(
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.padding(20.dp)
+        ) {
+            Row(modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween){
+                Text(
+                    text = "PROJECT INFORMATION",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontSize = 20.sp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
-                ProjectInfoItem(
-                    itemTitle = "Package Name*",
-                    placeholderText = "myapp",
-                    value = state.packageName,
-                    onValueChange = { onIntent(ViewIntent.UpdatePackageName(it)) },
-                    subtitle = state.packageNameError.ifEmpty {
-                        "The package name of your application. E.g. codeeditor"
-                    },
-                    isError = state.packageNameError.isNotEmpty(),
-                    modifier = Modifier.animateContentSize()
-                )
-
-                ProjectInfoItem(
-                    itemTitle = "Version",
-                    placeholderText = "1.0.0",
-                    value = state.projectVersion,
-                    onValueChange = { onIntent(ViewIntent.UpdateVersion(it)) },
-                    subtitle = "The version of your application. Used for versioning your app",
-                    modifier = Modifier.animateContentSize()
-                )
+                IconButton(
+                    onClick = {expandProjectInfo = !expandProjectInfo},
+                    modifier = Modifier.size(22.dp)
+                ){
+                    Icon(
+                        imageVector = if(expandProjectInfo) Icons.Default.ArrowUpward else Icons.Default.ArrowDownward,
+                        contentDescription = null,
+                        modifier = Modifier.size(22.dp),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
 
-        }
+            HorizontalDivider(color = MaterialTheme.colorScheme.onSurfaceVariant)
 
+            AnimatedVisibility(
+                visible = expandProjectInfo
+            ){
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ){
+                    ProjectInfoItem(
+                        itemTitle = "Application Name*",
+                        placeholderText = "My Compose App",
+                        value = state.appName,
+                        onValueChange = { onIntent(ViewIntent.UpdateAppName(it)) },
+                        subtitle = "The name of your application. Used for window title and app name",
+                        modifier = Modifier.animateContentSize()
+                    )
+
+                    ProjectInfoItem(
+                        itemTitle = "Package Name*",
+                        placeholderText = "myapp",
+                        value = state.packageName,
+                        onValueChange = { onIntent(ViewIntent.UpdatePackageName(it)) },
+                        subtitle = state.packageNameError.ifEmpty {
+                            "The package name of your application. E.g. codeeditor"
+                        },
+                        isError = state.packageNameError.isNotEmpty(),
+                        modifier = Modifier.animateContentSize()
+                    )
+
+                    ProjectInfoItem(
+                        itemTitle = "Version",
+                        placeholderText = "1.0.0",
+                        value = state.projectVersion,
+                        onValueChange = { onIntent(ViewIntent.UpdateVersion(it)) },
+                        subtitle = "The version of your application. Used for versioning your app",
+                        modifier = Modifier.animateContentSize()
+                    )
+                }
+            }
+        }
     }
 }
 
