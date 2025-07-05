@@ -79,7 +79,10 @@ export default function WarningSection() {
             file which doesn't require executable permissions.
           </p>
           <p className="text-xs text-slate-500">
-            You can run your project directly
+            You can run your project directly by running{" "}
+            <code className="bg-slate-100 dark:gb-slate-900 px-1 rounded">
+              ./gradlew.bat :run
+            </code>
           </p>
         </div>
       </div>
