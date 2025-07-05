@@ -7,10 +7,3 @@
 /*.zip
 /docs/node_modules
 /docs/.next
-/desktopclient/.gradle
-/desktopclient/build
-/desktopclient/.kotlin
-/desktopclient/.run
-/desktopclient/deb-temp/
-/desktopclient
-/deb-temp/
