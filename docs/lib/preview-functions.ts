@@ -231,7 +231,7 @@ compose.resources{
 val workDir = file("deb-temp")
 val packageName = "${options.packageName.toLowerCase().replace(/[\s.]+/g, "")}"
 val desktopRelativePath = "opt/$packageName/lib/$packageName-$packageName.desktop"
-val appDislayName = "${options.appName}"
+val appDisplayName = "${options.appName}"
 val mainClass = "${options.appName.replace(/\s+/g, "")}"
 val maintainer = "${
     options.linuxMaintainer || "Your Name <youremail@gmail.com>"
