@@ -844,7 +844,8 @@ A desktop application built with Kotlin and Compose for Desktop.
 After cloning the repository, you need to make the Gradle wrapper executable:
 
 ```bash
-chmod +x gradlew```
+chmod +x gradlew
+```
 
 **Note:** This step is not required on Windows as it uses `gradlew.bat`.
 
@@ -852,14 +853,16 @@ chmod +x gradlew```
 
 #### Standard Run
 ```bash
-./gradlew run```"""
+./gradlew run
+```"""
 
         if (options.includeHotReload) {
             content += """
 
 #### Hot Reload (Recommended for Development)
 ```bash
-./gradlew :runHot --mainClass ${options.appName.replace(Regex("\\s+"), "")} --auto```
+./gradlew :runHot --mainClass ${options.appName.replace(Regex("\\s+"), "")} --auto
+```
 
 This enables automatic recompilation and hot swapping when you modify your code, making development much faster."""
         }
@@ -871,7 +874,8 @@ This enables automatic recompilation and hot swapping when you modify your code,
 To build a native distribution for your platform:
 
 ```bash
-./gradlew packageDistributionForCurrentOS```
+./gradlew packageDistributionForCurrentOS
+```
 
 This will create a platform-specific installer in the `build/compose/binaries/main-release/{extension}/` directory.
 
@@ -894,7 +898,7 @@ This will create a platform-specific installer in the `build/compose/binaries/ma
 
 ## Generated with Compose for Desktop Wizard
 
-This project was generated using the [Compose for Desktop Wizard](https://github.com/zahid4kh/compose-for-desktop)."""
+This project was generated using the [Desktop Client of Compose for Desktop Wizard](https://github.com/zahid4kh/compose-for-desktop/tree/desktop)."""
 
         return content
     }

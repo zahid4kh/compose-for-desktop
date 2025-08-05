@@ -1,6 +1,7 @@
 package components
 import ProjectOptions
 import ViewState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,15 +12,17 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogWindow
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberDialogState
+import theme.getJetbrainsMonoFamily
 import tobegenerated.PreviewFunctions
 
 @Composable
@@ -76,7 +79,10 @@ fun PreviewDialog(
                         fontWeight = FontWeight.Bold
                     )
 
-                    IconButton(onClick = onDismiss) {
+                    IconButton(
+                        onClick = onDismiss,
+                        modifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
+                    ) {
                         Icon(Icons.Default.Close, contentDescription = "Close")
                     }
                 }
@@ -103,7 +109,17 @@ fun PreviewDialog(
                                 Tab(
                                     selected = selectedTab == index,
                                     onClick = { selectedTab = index },
-                                    text = { Text(title, fontSize = 12.sp) }
+                                    text = {
+                                        Text(
+                                            text = title,
+                                            style = MaterialTheme.typography.bodyMedium,
+                                            fontSize = 12.sp,
+                                            overflow = TextOverflow.Ellipsis,
+                                            softWrap = false
+
+                                        )
+                                    },
+                                    modifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
                                 )
                             }
                         })
@@ -125,18 +141,19 @@ fun PreviewDialog(
 
                         Surface(
                             modifier = Modifier.fillMaxSize(),
-                            color = Color(0xFF1E1E1E),
+                            color = MaterialTheme.colorScheme.surface,
                             shape = RoundedCornerShape(8.dp)
                         ) {
                             Box(
                                 modifier = Modifier
                                     .fillMaxSize()
+                                    .background(MaterialTheme.colorScheme.surfaceVariant)
                                     .padding(16.dp)
                             ) {
                                 Text(
                                     text = content,
-                                    color = Color(0xFFD4D4D4),
-                                    fontFamily = FontFamily.Monospace,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    fontFamily = getJetbrainsMonoFamily(),
                                     fontSize = 13.sp,
                                     modifier = Modifier
                                         .fillMaxSize()
