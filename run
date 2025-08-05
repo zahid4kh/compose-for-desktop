@@ -3,4 +3,4 @@
 
 chmod +x gradlew
 clear
-./gradlew :runHot --mainClass "ComposeforDesktopWizard" --auto
+./gradlew :hotRun --mainClass "ComposeforDesktopWizard" --auto
