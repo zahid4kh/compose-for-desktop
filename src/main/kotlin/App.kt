@@ -43,7 +43,9 @@ fun App(
                 viewModel = viewModel,
                 state = state,
                 coroutineScope = coroutineScope,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.surfaceContainer),
                 lazyListState = listState,
                 isExpanded = isExpanded
             )
