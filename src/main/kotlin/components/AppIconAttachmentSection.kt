@@ -67,7 +67,9 @@ fun AppIconAttachmentSection(
                     modifier = Modifier.size(64.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    if (selectedIconPath.isNotEmpty() && File(selectedIconPath).exists()) {
+                    if (selectedIconPath.isNotEmpty()
+                        && File(selectedIconPath).exists()
+                        && File(selectedIconPath).extension == "png") {
                         val image = ImageIO.read(File(selectedIconPath))
                         val imageBitmap = image.toComposeImageBitmap()
                         Image(
