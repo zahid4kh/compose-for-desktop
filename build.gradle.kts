@@ -35,6 +35,10 @@ dependencies {
 
     implementation("com.github.zahid4kh:deskit:1.3.0")
     implementation("org.apache.commons:commons-compress:1.28.0")
+
+    implementation("com.twelvemonkeys.imageio:imageio-icns:3.12.0")
+    implementation("org.apache.commons:commons-imaging:1.0.0-alpha6")
+
 }
 
 compose.desktop {
@@ -176,12 +180,10 @@ tasks.register("addStartupWMClassToDebDynamic") {
         }
 
         // Checking StartupWMClass field
-        var wmClassModified = false
         for (i in lines.indices) {
             if (lines[i].trim().startsWith("StartupWMClass=")) {
                 if (lines[i] != "StartupWMClass=$mainClass") {
                     lines[i] = "StartupWMClass=$mainClass"
-                    wmClassModified = true
                     println("✅ Updated StartupWMClass entry to: $mainClass")
                 } else {
                     println("ℹ️ StartupWMClass already correctly set to: $mainClass")
