@@ -84,6 +84,12 @@ fun TestingMainLayoutGrid(
                 }
 
                 item(span = {GridItemSpan(maxLineSpan)}) {
+                    AppIconAttachmentSection(
+                        modifier = Modifier
+                    )
+                }
+
+                item(span = {GridItemSpan(maxLineSpan)}) {
                     Spacer(modifier = Modifier.height(16.dp))
                     DependencySection(
                         state = state,
