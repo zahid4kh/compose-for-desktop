@@ -33,7 +33,6 @@ class MainViewModel(
     }
 
     data class UiState(
-        val darkMode: Boolean = false,
-        val isConverting: Boolean = false
+        val darkMode: Boolean = false
     )
 }
