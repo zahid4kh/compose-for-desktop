@@ -26,5 +26,7 @@ data class ViewState(
     val packageNameError: String = "",
     val errorMessage: String = "",
     val successMessage: String = "",
-    val suggestedFileName: String = ""
+    val suggestedFileName: String = "",
+    val linuxMaintainer: String = "",
+    val appDescription: String = ""
 )

@@ -7,6 +7,8 @@ sealed class ViewIntent {
     data class UpdateWindowWidth(val width: String) : ViewIntent()
     data class UpdateWindowHeight(val height: String) : ViewIntent()
     data class ToggleDependency(val dependency: String, val enabled: Boolean) : ViewIntent()
+    data class SetProjectDescription(val description: String): ViewIntent()
+    data class SetLinuxMaintainer(val maintainer: String): ViewIntent()
     object ShowPreview : ViewIntent()
     object HidePreview : ViewIntent()
     object GenerateProject : ViewIntent()

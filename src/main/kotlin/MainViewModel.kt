@@ -1,3 +1,4 @@
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -54,6 +55,12 @@ class MainViewModel(
                         }
                     )
                 }
+            }
+            is ViewIntent.SetLinuxMaintainer -> {
+                _state.update { it.copy(linuxMaintainer = intent.maintainer) }
+            }
+            is ViewIntent.SetProjectDescription -> {
+                _state.update { it.copy(appDescription = intent.description) }
             }
             is ViewIntent.ShowPreview -> {
                 _state.update { it.copy(showPreview = true) }
@@ -156,7 +163,9 @@ class MainViewModel(
                             includeSentry = state.dependencies["Sentry"] ?: false,
                             includeMarkdown = state.dependencies["Markdown"] ?: false,
                             includeHotReload = state.dependencies["HotReload"] ?: true,
-                            includeKotlinxDatetime = state.dependencies["KotlinxDatetime"] ?: false
+                            includeKotlinxDatetime = state.dependencies["KotlinxDatetime"] ?: false,
+                            linuxMaintainer = state.linuxMaintainer,
+                            appDescription = state.appDescription
                         ),
                         destinationFile = destinationFile
                     )

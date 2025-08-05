@@ -1,5 +1,4 @@
 package components
-import tobegenerated.PreviewFunctions
 import ProjectOptions
 import ViewState
 import androidx.compose.foundation.layout.*
@@ -21,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogWindow
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberDialogState
+import tobegenerated.PreviewFunctions
 
 @Composable
 fun PreviewDialog(
@@ -43,7 +43,9 @@ fun PreviewDialog(
         includeSentry = state.dependencies["Sentry"] ?: false,
         includeMarkdown = state.dependencies["Markdown"] ?: false,
         includeHotReload = state.dependencies["HotReload"] ?: true,
-        includeKotlinxDatetime = state.dependencies["KotlinxDatetime"] ?: false
+        includeKotlinxDatetime = state.dependencies["KotlinxDatetime"] ?: false,
+        appDescription = state.appDescription,
+        linuxMaintainer = state.linuxMaintainer
     )
 
     DialogWindow(

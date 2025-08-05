@@ -158,14 +158,14 @@ compose.desktop {
             linux{
                 shortcut = true
                 iconFile.set(project.file("icons/compose.png"))
-                description = "SET YOUR DESCRIPTION HERE"
+                description = "${options.appDescription}"
             }
 
             windows{
                 shortcut = true
                 dirChooser = true
                 menu = true
-                vendor = "Your Name or Company Name"
+                vendor = "${options.appName}"
                 upgradeUuid = "run the 'generateUpgradeUuid' task and paste the generated UUID here only once"
                 iconFile.set(project.file("icons/compose.ico"))
             }
@@ -229,7 +229,7 @@ val desktopRelativePath = "opt/${'$'}packageName/lib/${'$'}packageName-${'$'}pac
 val appDisplayName = "${options.appName}"
 val mainClass = "${options.appName.replace(Regex("\\s+"), "")}"
 val maintainer = "${options.linuxMaintainer}"
-val controlDescription = "${options.linuxDescription}"
+val controlDescription = "${options.appDescription}"
 
 fun promptUserChoice(): String {
     println(

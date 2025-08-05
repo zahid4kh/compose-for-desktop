@@ -16,5 +16,5 @@ data class ProjectOptions(
     val includeHotReload: Boolean,
     val includeKotlinxDatetime: Boolean,
     val linuxMaintainer: String?,
-    val linuxDescription: String?
+    val appDescription: String?
 )
