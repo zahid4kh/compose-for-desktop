@@ -9,7 +9,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerIcon
@@ -24,7 +28,7 @@ fun ProjectInformationSection(
     onIntent: (ViewIntent) -> Unit,
     modifier: Modifier
 ) {
-    var expandProjectInfo by remember { mutableStateOf(true) }
+    var expandProjectInfo by rememberSaveable { mutableStateOf(true) }
 
     OutlinedCard(
         modifier = modifier
