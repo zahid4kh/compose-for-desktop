@@ -130,7 +130,8 @@ fun TestingMainLayoutGrid(
                             ) {
                                 Icon(
                                     Icons.Default.KeyboardArrowUp,
-                                    contentDescription = "Go to Top"
+                                    contentDescription = "Go to Top",
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
                         }
