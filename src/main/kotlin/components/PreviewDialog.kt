@@ -23,6 +23,7 @@ import androidx.compose.ui.window.rememberDialogState
 import theme.getJetbrainsMonoFamily
 import tobegenerated.PreviewFunctions
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PreviewDialog(
     state: ViewState,
@@ -80,12 +81,23 @@ fun PreviewDialog(
                         fontWeight = FontWeight.Bold
                     )
 
-                    IconButton(
-                        onClick = onDismiss,
-                        modifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
-                    ) {
-                        Icon(Icons.Default.Close, contentDescription = "Close")
+                    TooltipBox(
+                        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                        tooltip = {
+                            PlainTooltip {
+                                Text("Close Dialog")
+                            }
+                        },
+                        state = rememberTooltipState()
+                    ){
+                        IconButton(
+                            onClick = onDismiss,
+                            modifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
+                        ) {
+                            Icon(Icons.Default.Close, contentDescription = "Close")
+                        }
                     }
+
                 }
 
                 HorizontalDivider()
