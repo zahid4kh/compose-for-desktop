@@ -73,6 +73,14 @@ fun TestingMainLayoutGrid(
                     )
                 }
 
+                item(span = { GridItemSpan(maxLineSpan) }){
+                    LinuxDevAuthorSection(
+                        modifier = Modifier,
+                        state = state,
+                        onIntent = viewModel::processIntent
+                    )
+                }
+
                 item(span = {GridItemSpan(maxLineSpan)}) {
                     Spacer(modifier = Modifier.height(16.dp))
                     DependencySection(
