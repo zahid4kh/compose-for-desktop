@@ -68,7 +68,12 @@ dependencies {
 
         if (options.includePrecompose) {
             content += """
-    implementation(libs.precompose)"""
+    
+    // Precompose (ViewModel&Navigation)
+    api(libs.precompose)
+    api(libs.precompose.viewmodel)
+    api(compose.foundation)
+    api(compose.animation)"""
         }
 
         if (options.includeSentry) {
@@ -521,7 +526,7 @@ koin = "4.0.3""""
 
         if (options.includePrecompose) {
             content += """
-precompose = "1.7.0-alpha03""""
+precompose = "1.6.2""""
         }
 
         if (options.includeSentry) {
@@ -596,7 +601,8 @@ koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin"
             content += """
 
 # PreCompose
-precompose = { group = "moe.tlaster", name = "precompose", version.ref = "precompose" }"""
+precompose = { group = "moe.tlaster", name = "precompose", version.ref = "precompose" }
+precompose-viewmodel = { group = "moe.tlaster", name = "precompose-viewmodel", version.ref = "precompose"}"""
         }
 
         if (options.includeSentry) {
