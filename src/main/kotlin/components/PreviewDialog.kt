@@ -1,11 +1,9 @@
 package components
 import ProjectOptions
 import ViewState
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
@@ -50,6 +48,9 @@ fun PreviewDialog(
         appDescription = state.appDescription,
         linuxMaintainer = state.linuxMaintainer
     )
+
+    val previewVerticalScrollState = rememberScrollState(0)
+    val previewHorizontalScrollState = rememberScrollState(0)
 
     DialogWindow(
         onCloseRequest = onDismiss,
@@ -157,7 +158,32 @@ fun PreviewDialog(
                                     fontSize = 13.sp,
                                     modifier = Modifier
                                         .fillMaxSize()
-                                        .verticalScroll(rememberScrollState())
+                                        .verticalScroll(previewVerticalScrollState)
+                                        .horizontalScroll(previewHorizontalScrollState)
+                                )
+
+                                VerticalScrollbar(
+                                    adapter = rememberScrollbarAdapter(previewVerticalScrollState),
+                                    modifier = Modifier
+                                        .align(Alignment.CenterEnd)
+                                        .fillMaxHeight()
+                                        .pointerHoverIcon(PointerIcon.Hand),
+                                    style = LocalScrollbarStyle.current.copy(
+                                        hoverColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
+                                        unhoverColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.2f)
+                                    )
+                                )
+
+                                HorizontalScrollbar(
+                                    adapter = rememberScrollbarAdapter(previewHorizontalScrollState),
+                                    modifier = Modifier
+                                        .align(Alignment.BottomStart)
+                                        .fillMaxWidth()
+                                        .pointerHoverIcon(PointerIcon.Hand),
+                                    style = LocalScrollbarStyle.current.copy(
+                                        hoverColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
+                                        unhoverColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.2f)
+                                    )
                                 )
                             }
                         }
