@@ -12,6 +12,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -96,6 +98,7 @@ fun DependencyItem(
                 RadioButton(
                     selected = selected,
                     onClick = { onClick(!selected) },
+                    modifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
                 )
 
                 Column(

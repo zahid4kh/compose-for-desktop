@@ -8,10 +8,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Preview
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
 import composefordesktop.resources.Res
@@ -63,7 +68,8 @@ fun Header(
             IconButton(
                 onClick = {
                     expandClicked = !expandClicked
-                }
+                },
+                modifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
             ) {
                 Icon(
                     painter = painterResource(if(expandClicked) Res.drawable.minimize else Res.drawable.maximize),
@@ -73,7 +79,8 @@ fun Header(
             }
 
             IconButton(
-                onClick = { onIntent(ViewIntent.ShowPreview) }
+                onClick = { onIntent(ViewIntent.ShowPreview) },
+                modifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
             ) {
                 Icon(
                     imageVector = Icons.Default.Preview,
@@ -84,7 +91,8 @@ fun Header(
 
             // Theme toggle button
             IconButton(
-                onClick = onToggleDarkMode
+                onClick = onToggleDarkMode,
+                modifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
             ) {
                 Icon(
                     imageVector = if (state.darkMode) Icons.Default.LightMode else Icons.Default.DarkMode,

@@ -12,6 +12,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -48,7 +50,9 @@ fun UIConfigSection(
                 )
                 IconButton(
                     onClick = {expandUiConfig = !expandUiConfig},
-                    modifier = Modifier.size(22.dp)
+                    modifier = Modifier
+                        .size(22.dp)
+                        .pointerHoverIcon(PointerIcon.Hand),
                 ){
                     Icon(
                         imageVector = if(expandUiConfig) Icons.Default.ArrowUpward else Icons.Default.ArrowDownward,

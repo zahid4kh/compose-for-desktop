@@ -13,6 +13,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
 import components.*
@@ -114,9 +116,11 @@ fun TestingMainLayoutGrid(
                             IconButton(
                                 onClick = {
                                     coroutineScope.launch {
+                                        lazyGridState.animateScrollToItem(0)
                                         lazyListState.animateScrollToItem(0)
                                     }
-                                }
+                                },
+                                modifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
                             ) {
                                 Icon(
                                     Icons.Default.KeyboardArrowUp,
