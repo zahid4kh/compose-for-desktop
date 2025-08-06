@@ -89,6 +89,7 @@ fun AppIconAttachmentSection(
                     onValueChange = {selectedIconPath = it},
                     modifier = Modifier
                         .weight(1f)
+                        .height(IntrinsicSize.Max)
                         .animateContentSize(),
                     shape = MaterialTheme.shapes.medium,
                     singleLine = true,
