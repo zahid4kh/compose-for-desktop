@@ -28,17 +28,11 @@ import composefordesktop.resources.Res
 import composefordesktop.resources.circle_x
 import deskit.dialogs.file.filechooser.FileChooserDialog
 import deskit.dialogs.info.InfoDialog
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.apache.commons.imaging.ImageFormats
-import org.apache.commons.imaging.Imaging
-import org.apache.commons.imaging.formats.tiff.TiffImagingParameters
-import org.apache.commons.imaging.formats.tiff.constants.TiffConstants
 import org.jetbrains.compose.resources.painterResource
 import java.awt.datatransfer.DataFlavor
 import java.io.File
-import java.io.IOException
 import javax.imageio.ImageIO
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
@@ -231,42 +225,4 @@ fun AppIconAttachmentSection(
         )
     }
 
-}
-
-fun convertPngToIcnsWithTwelveMonkeys(scope: CoroutineScope) {
-    scope.launch {
-        val input = File("icons/compose.png")
-        val output = File("test.icns")
-
-        try {
-            val image = ImageIO.read(input)
-            val success = ImageIO.write(image, "ICNS", output)
-            if (success) {
-                println("ICNS saved via TwelveMonkeys")
-            } else {
-                println("TwelveMonkeys ICNS writer not found")
-            }
-        } catch (e: Exception) {
-            println("TwelveMonkeys ICNS error: ${e.message}")
-        }
-    }
-}
-
-fun convertPngToIcoWithApacheImaging(scope: CoroutineScope){
-    scope.launch {
-        val file = File("icons/compose.png")
-        val image = Imaging.getBufferedImage(file)
-
-        val params = TiffImagingParameters()
-        params.compression = TiffConstants.COMPRESSION_UNCOMPRESSED
-        val format = ImageFormats.ICO
-
-        try{
-            Imaging.writeImage(image, File("test.ico"), format)
-            println("ico file created")
-        }catch(e: IOException){
-            println("error creating ico file")
-            e.printStackTrace()
-        }
-    }
 }
