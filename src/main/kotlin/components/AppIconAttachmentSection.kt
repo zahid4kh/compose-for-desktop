@@ -114,7 +114,8 @@ fun AppIconAttachmentSection(
                         ){
                             Icon(
                                 painter = painterResource(Res.drawable.circle_x),
-                                contentDescription = "Clear"
+                                contentDescription = "Clear",
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
