@@ -4,10 +4,12 @@ import ViewIntent
 import ViewState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -40,6 +42,7 @@ fun DependencySection(
         "KotlinxDatetime" to "Date and time library for Kotlin."
     )
     val title by remember { mutableStateOf("Additional Dependencies") }
+    val localGridState = rememberLazyGridState()
 
     OutlinedCard(
         modifier = Modifier
@@ -50,7 +53,7 @@ fun DependencySection(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
     ){
-        Column(modifier = Modifier.padding(20.dp)) {
+        Column(modifier = Modifier.fillMaxSize().padding(20.dp)) {
             Text(
                 text = title.uppercase(),
                 style = MaterialTheme.typography.titleLarge,
@@ -61,27 +64,39 @@ fun DependencySection(
 
             HorizontalDivider()
 
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(215.dp),
-                state = rememberLazyGridState(),
-                modifier = Modifier.height(400.dp).padding(top = 16.dp)
-            ) {
-                items(
-                    count = depMaps.size,
-                    itemContent = { index ->
-                        val entry = depMaps.entries.elementAt(index)
-                        DependencyItem(
-                            name = entry.key,
-                            description = entry.value,
-                            selected = state.dependencies[entry.key] ?: false,
-                            onClick = { isSelected ->
-                                onIntent(ViewIntent.ToggleDependency(entry.key, isSelected))
-                            },
-                            modifier = Modifier.animateItem(placementSpec = spring())
-                        )
-                    }
+            Box(modifier = Modifier.fillMaxSize()){
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(215.dp),
+                    state = localGridState,
+                    modifier = Modifier.height(400.dp).padding(end = 8.dp)
+                ) {
+                    items(
+                        count = depMaps.size,
+                        itemContent = { index ->
+                            val entry = depMaps.entries.elementAt(index)
+                            DependencyItem(
+                                name = entry.key,
+                                description = entry.value,
+                                selected = state.dependencies[entry.key] ?: false,
+                                onClick = { isSelected ->
+                                    onIntent(ViewIntent.ToggleDependency(entry.key, isSelected))
+                                },
+                                modifier = Modifier.animateItem(placementSpec = spring())
+                            )
+                        }
+                    )
+                }
+
+                VerticalScrollbar(
+                    adapter = rememberScrollbarAdapter(localGridState),
+                    modifier = Modifier
+                        .height(400.dp)
+                        .align(Alignment.TopEnd)
+                        .padding(vertical = 8.dp)
+                        .pointerHoverIcon(PointerIcon.Hand)
                 )
             }
+
         }
     }
 }
