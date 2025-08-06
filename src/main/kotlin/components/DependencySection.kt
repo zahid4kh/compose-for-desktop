@@ -10,22 +10,25 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
 fun DependencySection(
     state: ViewState,
-    onIntent: (ViewIntent) -> Unit,
-    modifier: Modifier = Modifier
+    onIntent: (ViewIntent) -> Unit
 ) {
     val depMaps = mapOf(
         "HotReload" to "Enable live code updates without restarting.",
-        "Deskit" to "Material3/Native FileChooser and dialogs.",
+        "Deskit" to "Material3 FileChooser and dialogs.",
         "Decompose" to "Component-based navigation.",
         "Ktor" to "Kotlin-first HTTP client.",
         "Markdown" to "Display Markdown content.",
@@ -36,40 +39,49 @@ fun DependencySection(
         "Precompose" to "Navigation, ViewModel, DI.",
         "KotlinxDatetime" to "Date and time library for Kotlin."
     )
+    val title by remember { mutableStateOf("Additional Dependencies") }
 
-    Column(
-        modifier = modifier
-    ) {
-        Text(
-            text = "ADDITIONAL DEPENDENCIES",
-            style = MaterialTheme.typography.titleLarge,
-            fontSize = 20.sp,
-            modifier = Modifier.padding(bottom = 16.dp),
-            color = MaterialTheme.colorScheme.onSurface
+    OutlinedCard(
+        modifier = Modifier
+            .fillMaxHeight()
+            .padding(8.dp),
+        elevation = CardDefaults.outlinedCardElevation(defaultElevation = 0.dp),
+        colors = CardDefaults.outlinedCardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
-
-        HorizontalDivider()
-
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(210.dp),
-            state = rememberLazyGridState(),
-            modifier = Modifier.height(400.dp).padding(top = 16.dp)
-        ) {
-            items(
-                count = depMaps.size,
-                itemContent = { index ->
-                    val entry = depMaps.entries.elementAt(index)
-                    DependencyItem(
-                        name = entry.key,
-                        description = entry.value,
-                        selected = state.dependencies[entry.key] ?: false,
-                        onClick = { isSelected ->
-                            onIntent(ViewIntent.ToggleDependency(entry.key, isSelected))
-                        },
-                        modifier = Modifier.animateItem(placementSpec = spring())
-                    )
-                }
+    ){
+        Column(modifier = Modifier.padding(20.dp)) {
+            Text(
+                text = title.uppercase(),
+                style = MaterialTheme.typography.titleLarge,
+                fontSize = 20.sp,
+                modifier = Modifier.padding(bottom = 16.dp),
+                color = MaterialTheme.colorScheme.onSurface
             )
+
+            HorizontalDivider()
+
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(215.dp),
+                state = rememberLazyGridState(),
+                modifier = Modifier.height(400.dp).padding(top = 16.dp)
+            ) {
+                items(
+                    count = depMaps.size,
+                    itemContent = { index ->
+                        val entry = depMaps.entries.elementAt(index)
+                        DependencyItem(
+                            name = entry.key,
+                            description = entry.value,
+                            selected = state.dependencies[entry.key] ?: false,
+                            onClick = { isSelected ->
+                                onIntent(ViewIntent.ToggleDependency(entry.key, isSelected))
+                            },
+                            modifier = Modifier.animateItem(placementSpec = spring())
+                        )
+                    }
+                )
+            }
         }
     }
 }
@@ -107,7 +119,8 @@ fun DependencyItem(
                 ) {
                     Text(
                         text = name,
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold,
                     )
                     Spacer(modifier = Modifier.height(5.dp))
                     Text(

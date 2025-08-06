@@ -93,8 +93,7 @@ fun TestingMainLayoutGrid(
                     Spacer(modifier = Modifier.height(16.dp))
                     DependencySection(
                         state = state,
-                        onIntent = viewModel::processIntent,
-                        modifier = Modifier.padding(horizontal = 16.dp)
+                        onIntent = viewModel::processIntent
                     )
                 }
 
