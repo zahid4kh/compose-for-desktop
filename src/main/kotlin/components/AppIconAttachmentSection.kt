@@ -21,6 +21,7 @@ import androidx.compose.ui.draganddrop.DragAndDropTarget
 import androidx.compose.ui.draganddrop.awtTransferable
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.toComposeImageBitmap
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
@@ -89,7 +90,8 @@ fun AppIconAttachmentSection(
                         Image(
                             imageVector = Icons.Default.Computer,
                             contentDescription = "Default App Icon",
-                            modifier = Modifier.size(64.dp)
+                            modifier = Modifier.size(64.dp),
+                            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
                         )
                     }
                 }

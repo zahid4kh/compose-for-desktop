@@ -4,6 +4,7 @@ import ViewIntent
 import ViewState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.LocalScrollbarStyle
 import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -93,7 +94,11 @@ fun DependencySection(
                         .height(400.dp)
                         .align(Alignment.TopEnd)
                         .padding(vertical = 8.dp)
-                        .pointerHoverIcon(PointerIcon.Hand)
+                        .pointerHoverIcon(PointerIcon.Hand),
+                    style = LocalScrollbarStyle.current.copy(
+                        hoverColor = MaterialTheme.colorScheme.primary,
+                        unhoverColor = MaterialTheme.colorScheme.surfaceContainerLowest
+                    )
                 )
             }
 
