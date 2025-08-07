@@ -28,5 +28,6 @@ data class ViewState(
     val successMessage: String = "",
     val suggestedFileName: String = "",
     val linuxMaintainer: String = "",
-    val appDescription: String = ""
+    val appDescription: String = "",
+    val attachedPngIcon: String = ""
 )

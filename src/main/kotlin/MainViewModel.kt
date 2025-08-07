@@ -80,6 +80,9 @@ class MainViewModel(
             is ViewIntent.HideErrorDialog -> {
                 _state.update { it.copy(showErrorDialog = false) }
             }
+            is ViewIntent.SetSelectedIcon -> {
+                _state.update { it.copy(attachedPngIcon = intent.icon.absolutePath) }
+            }
             is ViewIntent.GenerateProject -> {
                 validateAndShowFileSaver()
             }
@@ -165,7 +168,8 @@ class MainViewModel(
                             includeHotReload = state.dependencies["HotReload"] ?: true,
                             includeKotlinxDatetime = state.dependencies["KotlinxDatetime"] ?: false,
                             linuxMaintainer = state.linuxMaintainer,
-                            appDescription = state.appDescription
+                            appDescription = state.appDescription,
+                            attachedPngIcon = state.attachedPngIcon
                         ),
                         destinationFile = destinationFile
                     )

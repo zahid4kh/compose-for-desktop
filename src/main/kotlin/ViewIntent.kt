@@ -16,6 +16,7 @@ sealed class ViewIntent {
     object HideFileSaver : ViewIntent()
     object HideSuccessDialog : ViewIntent()
     object HideErrorDialog : ViewIntent()
+    data class SetSelectedIcon(val icon: File) : ViewIntent()
     data class SaveProjectToFile(val file: File) : ViewIntent()
     data class SetGenerating(val isGenerating: Boolean) : ViewIntent()
 }
