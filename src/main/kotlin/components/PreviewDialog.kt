@@ -47,7 +47,8 @@ fun PreviewDialog(
         includeHotReload = state.dependencies["HotReload"] ?: true,
         includeKotlinxDatetime = state.dependencies["KotlinxDatetime"] ?: false,
         appDescription = state.appDescription,
-        linuxMaintainer = state.linuxMaintainer
+        linuxMaintainer = state.linuxMaintainer,
+        attachedPngIcon = state.attachedPngIcon
     )
 
     val previewVerticalScrollState = rememberScrollState(0)
