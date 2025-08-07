@@ -1,13 +1,22 @@
+
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.apache.commons.compress.archivers.zip.UnixStat
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry
 import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream
+import org.apache.commons.imaging.ImageFormats
+import org.apache.commons.imaging.Imaging
+import org.apache.commons.imaging.formats.tiff.TiffImagingParameters
+import org.apache.commons.imaging.formats.tiff.constants.TiffConstants
 import tobegenerated.PreviewFunctions
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.nio.file.Files
+import javax.imageio.ImageIO
 
 class ProjectGenerator {
 
@@ -61,9 +70,19 @@ class ProjectGenerator {
             writeTextFile(File(themeDir, "Theme.kt"), PreviewFunctions.generateThemeFilePreview(options))
 
             // Icon files
-            readResourceBinaryFile("/tobegenerated/images/compose.png", File(iconsDir, "compose.png"))
-            readResourceBinaryFile("/tobegenerated/images/compose.ico", File(iconsDir, "compose.ico"))
-            readResourceBinaryFile("/tobegenerated/images/compose.icns", File(iconsDir, "compose.icns"))
+            val newIconFile = File(options.attachedPngIcon)
+            println("[PROJECT GENERATOR]: New icon file path: ${newIconFile.absolutePath}")
+            if(newIconFile.exists() && newIconFile.isFile && newIconFile.extension == "png"){
+                convertPngToWinMacIconsAndSave(
+                    fileToConvert = newIconFile,
+                    iconsDir = iconsDir
+                )
+            }else{
+                readResourceBinaryFile("/tobegenerated/images/linux.png", File(iconsDir, "linux.png"))
+                readResourceBinaryFile("/tobegenerated/images/windows.ico", File(iconsDir, "windows.ico"))
+                readResourceBinaryFile("/tobegenerated/images/macos.icns", File(iconsDir, "macos.icns"))
+            }
+
 
             // Fonts
             readResourceBinaryFile("/tobegenerated/fonts/JetBrainsMono-Regular.ttf", File(fontDir, "JetBrainsMono-Regular.ttf"))
@@ -127,6 +146,71 @@ class ProjectGenerator {
         inputStream.use { input ->
             destination.outputStream().use { output ->
                 input.copyTo(output)
+            }
+        }
+    }
+
+    private fun convertPngToWinMacIconsAndSave(fileToConvert: File, iconsDir: File){
+        val scope = CoroutineScope(Dispatchers.IO)
+
+        savePngForLinuxIcon(scope, fileToConvert, File(iconsDir, "linux.png"))
+        convertPngToIcnsWithTwelveMonkeys(scope, fileToConvert, File(iconsDir, "macos.icns"))
+        convertPngToIcoWithApacheImaging(scope, fileToConvert, File(iconsDir, "windows.ico"))
+    }
+
+    private fun savePngForLinuxIcon(
+        scope: CoroutineScope,
+        fileToSave: File,
+        destination: File
+    ){
+        scope.launch {
+            try {
+                ImageIO.write(ImageIO.read(fileToSave), "png", destination)
+                println("PNG saved via ImageIO to ${destination.absolutePath}")
+            } catch (e: Exception) {
+                println("ImageIO error: ${e.message}")
+            }
+        }
+    }
+
+    fun convertPngToIcnsWithTwelveMonkeys(
+        scope: CoroutineScope,
+        fileToConvert: File,
+        destination: File
+    ) {
+        scope.launch {
+            try {
+                val image = ImageIO.read(fileToConvert)
+                val success = ImageIO.write(image, "ICNS", destination)
+                if (success) {
+                    println("ICNS saved via TwelveMonkeys to ${destination.absolutePath}")
+                } else {
+                    println("TwelveMonkeys ICNS writer not found")
+                }
+            } catch (e: Exception) {
+                println("TwelveMonkeys ICNS error: ${e.message}")
+            }
+        }
+    }
+
+    fun convertPngToIcoWithApacheImaging(
+        scope: CoroutineScope,
+        fileToConvert: File,
+        destination: File
+    ){
+        scope.launch {
+            val image = Imaging.getBufferedImage(fileToConvert)
+
+            val params = TiffImagingParameters()
+            params.compression = TiffConstants.COMPRESSION_UNCOMPRESSED
+            val format = ImageFormats.ICO
+
+            try{
+                Imaging.writeImage(image, destination, format)
+                println("ICO file created and saved to ${destination.absolutePath}")
+            }catch(e: IOException){
+                println("error creating ico file")
+                e.printStackTrace()
             }
         }
     }

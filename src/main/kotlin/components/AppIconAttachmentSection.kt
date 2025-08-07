@@ -1,5 +1,7 @@
 package components
 
+import ViewIntent
+import ViewState
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
@@ -39,6 +41,8 @@ import javax.imageio.ImageIO
 @Composable
 fun AppIconAttachmentSection(
     modifier: Modifier,
+    state: ViewState,
+    onIntent: (ViewIntent) -> Unit,
 ){
     val scope = rememberCoroutineScope()
 
@@ -46,6 +50,10 @@ fun AppIconAttachmentSection(
     var selectedIconPath by rememberSaveable { mutableStateOf("") }
     var isDragging by remember { mutableStateOf(false) }
     var showInfoDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(selectedIconPath){
+        println("selected icon path: $selectedIconPath")
+    }
 
     OutlinedCard(
         modifier = modifier
@@ -93,7 +101,10 @@ fun AppIconAttachmentSection(
                 }
                 OutlinedTextField(
                     value = selectedIconPath,
-                    onValueChange = {selectedIconPath = it},
+                    onValueChange = { filePath ->
+                        selectedIconPath = filePath
+                        onIntent(ViewIntent.SetSelectedIcon(File(filePath)))
+                    },
                     modifier = Modifier
                         .weight(1f)
                         .height(IntrinsicSize.Max)
@@ -124,6 +135,7 @@ fun AppIconAttachmentSection(
                                         }
 
                                         if(files != null && files.last().exists() && files.last().extension == "png"){
+                                            onIntent(ViewIntent.SetSelectedIcon(files.last()))
                                             selectedIconPath = files.last().absolutePath
                                             return true
                                         }
