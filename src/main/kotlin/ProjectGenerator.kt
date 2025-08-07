@@ -71,7 +71,6 @@ class ProjectGenerator {
 
             // Icon files
             val newIconFile = File(options.attachedPngIcon)
-            println("[PROJECT GENERATOR]: New icon file path: ${newIconFile.absolutePath}")
             if(newIconFile.exists() && newIconFile.isFile && newIconFile.extension == "png"){
                 convertPngToWinMacIconsAndSave(
                     fileToConvert = newIconFile,
@@ -108,6 +107,7 @@ class ProjectGenerator {
                     gradlewFile.setExecutable(true)
                 } catch (e: Exception) {
                     println("Warning: Failed to set executable permission on ${gradlewFile.absolutePath}")
+                    e.printStackTrace()
                 }
             }
 
@@ -166,9 +166,8 @@ class ProjectGenerator {
         scope.launch {
             try {
                 ImageIO.write(ImageIO.read(fileToSave), "png", destination)
-                println("PNG saved via ImageIO to ${destination.absolutePath}")
             } catch (e: Exception) {
-                println("ImageIO error: ${e.message}")
+                e.printStackTrace()
             }
         }
     }
@@ -181,14 +180,9 @@ class ProjectGenerator {
         scope.launch {
             try {
                 val image = ImageIO.read(fileToConvert)
-                val success = ImageIO.write(image, "ICNS", destination)
-                if (success) {
-                    println("ICNS saved via TwelveMonkeys to ${destination.absolutePath}")
-                } else {
-                    println("TwelveMonkeys ICNS writer not found")
-                }
+                ImageIO.write(image, "ICNS", destination)
             } catch (e: Exception) {
-                println("TwelveMonkeys ICNS error: ${e.message}")
+                e.printStackTrace()
             }
         }
     }
@@ -207,9 +201,7 @@ class ProjectGenerator {
 
             try{
                 Imaging.writeImage(image, destination, format)
-                println("ICO file created and saved to ${destination.absolutePath}")
             }catch(e: IOException){
-                println("error creating ico file")
                 e.printStackTrace()
             }
         }

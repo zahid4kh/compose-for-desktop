@@ -87,7 +87,6 @@ fun TestingMainLayoutGrid(
                 item(span = {GridItemSpan(maxLineSpan)}) {
                     AppIconAttachmentSection(
                         modifier = Modifier,
-                        state = state,
                         onIntent = viewModel::processIntent,
                     )
                 }

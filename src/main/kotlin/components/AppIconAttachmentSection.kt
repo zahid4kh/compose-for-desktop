@@ -1,7 +1,6 @@
 package components
 
 import ViewIntent
-import ViewState
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
@@ -41,7 +40,6 @@ import javax.imageio.ImageIO
 @Composable
 fun AppIconAttachmentSection(
     modifier: Modifier,
-    state: ViewState,
     onIntent: (ViewIntent) -> Unit,
 ){
     val scope = rememberCoroutineScope()
@@ -50,10 +48,6 @@ fun AppIconAttachmentSection(
     var selectedIconPath by rememberSaveable { mutableStateOf("") }
     var isDragging by remember { mutableStateOf(false) }
     var showInfoDialog by remember { mutableStateOf(false) }
-
-    LaunchedEffect(selectedIconPath){
-        println("selected icon path: $selectedIconPath")
-    }
 
     OutlinedCard(
         modifier = modifier
@@ -123,10 +117,10 @@ fun AppIconAttachmentSection(
                                         val files = try{
                                             if(event.awtTransferable.isDataFlavorSupported(DataFlavor.javaFileListFlavor)){
                                                 @Suppress("UNCHECKED CAST")
-                                                println("file selected: ${event.awtTransferable.getTransferData(DataFlavor.javaFileListFlavor) as List<File>}")
+                                                //println("file selected: ${event.awtTransferable.getTransferData(DataFlavor.javaFileListFlavor) as List<File>}")
                                                 event.awtTransferable.getTransferData(DataFlavor.javaFileListFlavor) as List<File>
                                             }else{
-                                                println("unsupported file type")
+                                                //println("unsupported file type")
                                                 emptyList()
                                             }
                                         }catch(e: Exception){
