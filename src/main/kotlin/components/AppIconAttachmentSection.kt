@@ -20,6 +20,8 @@ import androidx.compose.ui.draganddrop.DragAndDropEvent
 import androidx.compose.ui.draganddrop.DragAndDropTarget
 import androidx.compose.ui.draganddrop.awtTransferable
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.toComposeImageBitmap
@@ -45,6 +47,16 @@ fun AppIconAttachmentSection(
 ){
     val scope = rememberCoroutineScope()
 
+    val cardGradient = Brush.linearGradient(
+        colors = listOf(
+            MaterialTheme.colorScheme.surfaceVariant,
+            MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
+            MaterialTheme.colorScheme.surfaceVariant
+        ),
+        start = Offset(250f, 0f),
+        end = Offset(250f, 300f)
+    )
+
     var showFileChooser by remember { mutableStateOf(false) }
     var selectedIconPath by rememberSaveable { mutableStateOf("") }
     var isDragging by remember { mutableStateOf(false) }
@@ -59,7 +71,10 @@ fun AppIconAttachmentSection(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
     ){
-        Column(modifier = Modifier.fillMaxWidth().padding(20.dp),
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .background(cardGradient)
+            .padding(20.dp),
             verticalArrangement = Arrangement.Center) {
             Text(
                 text = "Select App Icon",

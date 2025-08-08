@@ -6,20 +6,23 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.LocalScrollbarStyle
 import androidx.compose.foundation.VerticalScrollbar
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.PointerIcon
-import androidx.compose.ui.input.pointer.pointerHoverIcon
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.RadialGradientShader
+import androidx.compose.ui.graphics.Shader
+import androidx.compose.ui.graphics.ShaderBrush
+import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,6 +48,17 @@ fun DependencySection(
     val title by remember { mutableStateOf("Additional Dependencies") }
     val localGridState = rememberLazyGridState()
 
+    val cardGradient = Brush.linearGradient(
+        colors = listOf(
+            MaterialTheme.colorScheme.surfaceVariant,
+            MaterialTheme.colorScheme.surface.copy(alpha = 0.6f),
+            MaterialTheme.colorScheme.surfaceVariant,
+            MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)
+        ),
+        start = Offset(0f, 0f),
+        end = Offset(600f, 600f)
+    )
+
     OutlinedCard(
         modifier = Modifier
             .fillMaxHeight()
@@ -54,7 +68,11 @@ fun DependencySection(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         )
     ){
-        Column(modifier = Modifier.fillMaxSize().padding(20.dp)) {
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .background(cardGradient)
+            .padding(20.dp)
+        ) {
             Text(
                 text = title.uppercase(),
                 style = MaterialTheme.typography.titleLarge,
@@ -114,6 +132,32 @@ fun DependencyItem(
     onClick: (Boolean) -> Unit,
     modifier: Modifier
 ) {
+    var isHovered by remember { mutableStateOf(false) }
+    var mousePosition by remember { mutableStateOf(Offset.Zero) }
+    val colors = listOf(
+        MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
+        MaterialTheme.colorScheme.surface.copy(alpha = 0.8f),
+        MaterialTheme.colorScheme.surface
+    )
+
+    val hoverGradient = remember(mousePosition, isHovered) {
+        if (isHovered) {
+            object : ShaderBrush() {
+                override fun createShader(size: Size): Shader {
+                    val radius = 120f
+                    return RadialGradientShader(
+                        center = mousePosition,
+                        radius = radius,
+                        colors = colors,
+                        colorStops = listOf(0f, 0.7f, 1f)
+                    )
+                }
+            }
+        } else {
+            null
+        }
+    }
+
     OutlinedCard(
         colors = CardDefaults.outlinedCardColors(
             containerColor = MaterialTheme.colorScheme.surface
@@ -121,12 +165,30 @@ fun DependencyItem(
         modifier = modifier
             .padding(8.dp)
             .animateContentSize()
+            .pointerInput(Unit) {
+                detectHoverEvents(
+                    onEnter = {
+                        isHovered = true
+                        mousePosition = it
+                    },
+                    onExit = { isHovered = false }
+                ) { position ->
+                    mousePosition = position
+                }
+            }
     ) {
         Column(
-            modifier = Modifier.padding(12.dp)
+            modifier = Modifier.then(
+                if (hoverGradient != null) {
+                    Modifier.background(hoverGradient)
+                } else {
+                    Modifier
+                }
+            ).padding(12.dp)
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
             ) {
                 RadioButton(
                     selected = selected,
@@ -149,6 +211,29 @@ fun DependencyItem(
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+                }
+            }
+        }
+    }
+}
+
+private suspend fun PointerInputScope.detectHoverEvents(
+    onEnter: (Offset) -> Unit = {},
+    onExit: () -> Unit = {},
+    onMove: (Offset) -> Unit = {}
+) {
+    awaitPointerEventScope {
+        while (true) {
+            val event = awaitPointerEvent()
+            when (event.type) {
+                PointerEventType.Enter -> {
+                    onEnter(event.changes.first().position)
+                }
+                PointerEventType.Exit -> {
+                    onExit()
+                }
+                PointerEventType.Move -> {
+                    onMove(event.changes.first().position)
                 }
             }
         }

@@ -2,6 +2,7 @@ package components
 import ViewIntent
 import ViewState
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -15,6 +16,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
@@ -23,6 +26,8 @@ import composefordesktop.resources.Res
 import composefordesktop.resources.maximize
 import composefordesktop.resources.minimize
 import org.jetbrains.compose.resources.painterResource
+import kotlin.math.cos
+import kotlin.math.sin
 
 @Composable
 fun Header(
@@ -39,10 +44,41 @@ fun Header(
         windowState.size = windowState.size.copy(width = 480.dp)
     }
 
+    val animatedAngle by rememberInfiniteTransition("gradient_angle_animation")
+        .animateFloat(
+            initialValue = 0f,
+            targetValue = 360f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(8000, easing = LinearEasing),
+                repeatMode = RepeatMode.Restart
+            )
+        )
+
+    val radians = Math.toRadians(animatedAngle.toDouble())
+    val startOffset = Offset(
+        x = (cos(radians) * 200 + 400).toFloat(),
+        y = (sin(radians) * 200 + 400).toFloat()
+    )
+    val endOffset = Offset(
+        x = (cos(radians + Math.PI) * 200 + 400).toFloat(),
+        y = (sin(radians + Math.PI) * 200 + 400).toFloat()
+    )
+
+    val headerGradientBackground = Brush.linearGradient(
+        colors = listOf(
+            MaterialTheme.colorScheme.primary,
+            MaterialTheme.colorScheme.secondary,
+            MaterialTheme.colorScheme.primary
+        ),
+        start = startOffset,
+        end = endOffset
+    )
+    val colorOnGradient = MaterialTheme.colorScheme.onPrimary
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.surface)
+            .background(headerGradientBackground)
             .padding(vertical = 10.dp)
             .animateContentSize(),
         verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -51,13 +87,13 @@ fun Header(
         Text(
             text = "Compose for Desktop Wizard",
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = colorOnGradient
         )
 
         Text(
             text = "Desktop Client",
             style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.onSurface
+            color = colorOnGradient
         )
 
         Row(
@@ -74,7 +110,7 @@ fun Header(
                 Icon(
                     painter = painterResource(if(expandClicked) Res.drawable.minimize else Res.drawable.maximize),
                     contentDescription = "Window size toggle",
-                    tint = MaterialTheme.colorScheme.onSurface
+                    tint = colorOnGradient
                 )
             }
 
@@ -85,7 +121,7 @@ fun Header(
                 Icon(
                     imageVector = Icons.Default.Preview,
                     contentDescription = "Preview",
-                    tint = MaterialTheme.colorScheme.onSurface
+                    tint = colorOnGradient
                 )
             }
 
@@ -97,7 +133,7 @@ fun Header(
                 Icon(
                     imageVector = if (state.darkMode) Icons.Default.LightMode else Icons.Default.DarkMode,
                     contentDescription = "Toggle Theme",
-                    tint = MaterialTheme.colorScheme.onSurface
+                    tint = colorOnGradient
                 )
             }
         }

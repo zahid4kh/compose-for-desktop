@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
 import components.PreviewDialog
@@ -29,6 +31,17 @@ fun App(
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
+    val gradientBackground = Brush.radialGradient(
+        colors = listOf(
+            MaterialTheme.colorScheme.surface.copy(alpha = 0.3f),
+            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f),
+            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.9f),
+            MaterialTheme.colorScheme.surfaceContainer
+        ),
+        center = Offset(400f, 300f),
+        radius = 800f
+    )
+
     var isExpanded by remember { mutableStateOf(false) }
 
     LaunchedEffect(window.size.width) {
@@ -45,7 +58,7 @@ fun App(
                 coroutineScope = coroutineScope,
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.surfaceContainer),
+                    .background(gradientBackground),
                 lazyListState = listState,
                 isExpanded = isExpanded
             )

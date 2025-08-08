@@ -4,6 +4,7 @@ import ViewIntent
 import ViewState
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDownward
@@ -16,6 +17,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
@@ -29,6 +32,16 @@ fun LinuxDevAuthorSection(
 ){
     var expandLinuxDevConfig by rememberSaveable { mutableStateOf(true) }
 
+    val cardGradient = Brush.linearGradient(
+        colors = listOf(
+            MaterialTheme.colorScheme.surfaceVariant,
+            MaterialTheme.colorScheme.surface.copy(alpha = 0.7f),
+            MaterialTheme.colorScheme.surfaceVariant
+        ),
+        start = Offset(0f, 500f),
+        end = Offset(500f, 0f)
+    )
+
     OutlinedCard(
         modifier = modifier
             .fillMaxHeight()
@@ -40,7 +53,9 @@ fun LinuxDevAuthorSection(
     ){
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier
+                .background(cardGradient)
+                .padding(20.dp)
         ){
             Row(modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
