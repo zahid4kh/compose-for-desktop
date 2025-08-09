@@ -10,7 +10,7 @@ import org.apache.commons.imaging.ImageFormats
 import org.apache.commons.imaging.Imaging
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants
-import tobegenerated.PreviewFunctions
+import projectgen.PreviewFunctions
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream

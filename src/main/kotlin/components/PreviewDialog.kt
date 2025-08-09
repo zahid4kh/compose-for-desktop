@@ -21,7 +21,7 @@ import androidx.compose.ui.window.DialogWindow
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberDialogState
 import theme.getJetbrainsMonoFamily
-import tobegenerated.PreviewFunctions
+import projectgen.PreviewFunctions
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
