@@ -4,6 +4,8 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Preview
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -19,7 +21,9 @@ import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
-import composefordesktop.resources.*
+import composefordesktop.resources.Res
+import composefordesktop.resources.maximize
+import composefordesktop.resources.minimize
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
@@ -37,23 +41,20 @@ fun Header(
 ) {
     val scope = rememberCoroutineScope()
     var expandClicked by remember { mutableStateOf(false) }
-
     if (expandClicked) {
         windowState.size = windowState.size.copy(width = 900.dp)
     } else {
         windowState.size = windowState.size.copy(width = 480.dp)
     }
 
-    val animatedAngle by rememberInfiniteTransition("gradient_angle_animation")
-        .animateFloat(
-            initialValue = 0f,
-            targetValue = 360f,
-            animationSpec = infiniteRepeatable(
-                animation = tween(8000, easing = LinearEasing),
-                repeatMode = RepeatMode.Restart
-            )
+    val animatedAngle by rememberInfiniteTransition("gradient_angle_animation").animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(8000, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
         )
-
+    )
     val radians = Math.toRadians(animatedAngle.toDouble())
     val startOffset = Offset(
         x = (cos(radians) * 200 + 400).toFloat(),
@@ -63,7 +64,6 @@ fun Header(
         x = (cos(radians + Math.PI) * 200 + 400).toFloat(),
         y = (sin(radians + Math.PI) * 200 + 400).toFloat()
     )
-
     val headerGradientBackground = Brush.linearGradient(
         colors = listOf(
             MaterialTheme.colorScheme.primary,
@@ -74,6 +74,23 @@ fun Header(
         end = endOffset
     )
     val colorOnGradient = MaterialTheme.colorScheme.onPrimary
+
+    val themeIconRotation by animateFloatAsState(
+        targetValue = if (state.darkMode) 360f else 0f,
+        animationSpec = tween(
+            durationMillis = 400,
+            easing = LinearEasing,
+            delayMillis = 400
+        )
+    )
+    var themeIconScale by remember { mutableStateOf(1f) }
+    val themeIconScaleAnimation by animateFloatAsState(
+        targetValue = themeIconScale,
+        animationSpec = tween(
+            durationMillis = 200,
+            easing = LinearEasing
+        )
+    )
 
     Column(
         modifier = Modifier
@@ -125,41 +142,25 @@ fun Header(
                 )
             }
 
-            val themeIconRotation by animateFloatAsState(
-                targetValue = if (state.darkMode) 360f else 0f,
-                animationSpec = tween(
-                    durationMillis = 400,
-                    easing = LinearEasing,
-                    delayMillis = 200
-                )
-            )
-
-            var themeIconScale by remember { mutableStateOf(1f) }
-            val themeIconScaleAnimation by animateFloatAsState(
-                targetValue = themeIconScale,
-                animationSpec = tween(
-                    durationMillis = 200,
-                    easing = LinearEasing
-                )
-            )
             IconButton(
-                onClick = onToggleDarkMode,
+                onClick = {
+                    onToggleDarkMode()
+                    scope.launch {
+                        themeIconScale = 1.3f
+                        delay(300)
+                        themeIconScale = 1f
+                    }
+                },
                 modifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
             ) {
                 Icon(
-                    painter = if (state.darkMode) painterResource(Res.drawable.moon) else painterResource(Res.drawable.sun),
+                    imageVector = if (state.darkMode) Icons.Default.DarkMode else Icons.Default.LightMode,
                     contentDescription = "Toggle Theme",
                     tint = colorOnGradient,
                     modifier = Modifier.graphicsLayer{
                         rotationZ = themeIconRotation
                         scaleX = themeIconScaleAnimation
                         scaleY = themeIconScaleAnimation
-
-                        scope.launch {
-                            themeIconScale = 1.3f
-                            delay(300)
-                            themeIconScale = 1f
-                        }
                     }
                 )
             }
