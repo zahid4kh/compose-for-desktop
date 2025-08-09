@@ -1,6 +1,6 @@
 package components
 
-import ViewIntent
+import projectgen.ViewIntent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image

@@ -4,6 +4,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import projectgen.ProjectGenerator
+import projectgen.ProjectOptions
+import projectgen.ViewEffect
+import projectgen.ViewIntent
+import projectgen.ViewState
 import java.io.File
 
 class MainViewModel(

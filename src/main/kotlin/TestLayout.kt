@@ -21,6 +21,7 @@ import androidx.compose.ui.window.WindowState
 import components.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import projectgen.ViewState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

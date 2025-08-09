@@ -1,3 +1,5 @@
+package projectgen
+
 import java.io.File
 
 sealed class ViewIntent {

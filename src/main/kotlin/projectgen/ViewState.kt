@@ -1,3 +1,5 @@
+package projectgen
+
 data class ViewState(
     val darkMode: Boolean = false,
     val appName: String = "",

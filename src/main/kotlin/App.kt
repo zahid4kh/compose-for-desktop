@@ -18,6 +18,7 @@ import androidx.compose.ui.window.WindowState
 import components.PreviewDialog
 import deskit.dialogs.file.filesaver.FileSaverDialog
 import deskit.dialogs.info.InfoDialog
+import projectgen.ViewIntent
 import theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)

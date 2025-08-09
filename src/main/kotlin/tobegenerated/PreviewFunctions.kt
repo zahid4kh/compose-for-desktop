@@ -1,6 +1,6 @@
 package tobegenerated
 
-import ProjectOptions
+import projectgen.ProjectOptions
 
 object PreviewFunctions {
 

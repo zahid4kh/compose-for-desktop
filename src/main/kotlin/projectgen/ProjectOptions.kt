@@ -1,3 +1,5 @@
+package projectgen
+
 data class ProjectOptions(
     val appName: String,
     val packageName: String,

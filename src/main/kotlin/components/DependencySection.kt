@@ -1,7 +1,7 @@
 package components
 
-import ViewIntent
-import ViewState
+import projectgen.ViewIntent
+import projectgen.ViewState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.LocalScrollbarStyle

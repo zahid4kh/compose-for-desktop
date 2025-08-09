@@ -1,13 +1,9 @@
 package components
-import ViewIntent
-import ViewState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Preview
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -18,14 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
-import composefordesktop.resources.Res
-import composefordesktop.resources.maximize
-import composefordesktop.resources.minimize
+import composefordesktop.resources.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
+import projectgen.ViewIntent
+import projectgen.ViewState
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -36,6 +35,7 @@ fun Header(
     onIntent: (ViewIntent) -> Unit,
     onToggleDarkMode: () -> Unit
 ) {
+    val scope = rememberCoroutineScope()
     var expandClicked by remember { mutableStateOf(false) }
 
     if (expandClicked) {
@@ -125,15 +125,42 @@ fun Header(
                 )
             }
 
-            // Theme toggle button
+            val themeIconRotation by animateFloatAsState(
+                targetValue = if (state.darkMode) 360f else 0f,
+                animationSpec = tween(
+                    durationMillis = 400,
+                    easing = LinearEasing,
+                    delayMillis = 200
+                )
+            )
+
+            var themeIconScale by remember { mutableStateOf(1f) }
+            val themeIconScaleAnimation by animateFloatAsState(
+                targetValue = themeIconScale,
+                animationSpec = tween(
+                    durationMillis = 200,
+                    easing = LinearEasing
+                )
+            )
             IconButton(
                 onClick = onToggleDarkMode,
                 modifier = Modifier.pointerHoverIcon(PointerIcon.Hand)
             ) {
                 Icon(
-                    imageVector = if (state.darkMode) Icons.Default.LightMode else Icons.Default.DarkMode,
+                    painter = if (state.darkMode) painterResource(Res.drawable.moon) else painterResource(Res.drawable.sun),
                     contentDescription = "Toggle Theme",
-                    tint = colorOnGradient
+                    tint = colorOnGradient,
+                    modifier = Modifier.graphicsLayer{
+                        rotationZ = themeIconRotation
+                        scaleX = themeIconScaleAnimation
+                        scaleY = themeIconScaleAnimation
+
+                        scope.launch {
+                            themeIconScale = 1.3f
+                            delay(300)
+                            themeIconScale = 1f
+                        }
+                    }
                 )
             }
         }

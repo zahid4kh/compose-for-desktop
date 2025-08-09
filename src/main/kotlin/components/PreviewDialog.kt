@@ -1,6 +1,6 @@
 package components
-import ProjectOptions
-import ViewState
+import projectgen.ProjectOptions
+import projectgen.ViewState
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape

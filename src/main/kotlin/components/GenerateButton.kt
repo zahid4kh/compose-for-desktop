@@ -1,7 +1,7 @@
 package components
 
-import ViewIntent
-import ViewState
+import projectgen.ViewIntent
+import projectgen.ViewState
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
