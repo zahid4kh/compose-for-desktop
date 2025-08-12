@@ -33,7 +33,7 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.bundles.slf4j)
 
-    implementation("com.github.zahid4kh:deskit:1.3.0")
+    implementation("com.github.zahid4kh:deskit:1.4.0")
     implementation("org.apache.commons:commons-compress:1.28.0")
 
     implementation("com.twelvemonkeys.imageio:imageio-icns:3.12.0")
