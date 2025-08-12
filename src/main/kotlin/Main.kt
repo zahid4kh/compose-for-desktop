@@ -7,7 +7,7 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import composefordesktop.resources.Res
-import composefordesktop.resources.windowsos
+import composefordesktop.resources.composedesktop
 import org.jetbrains.compose.resources.painterResource
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
@@ -30,7 +30,7 @@ fun main() = application {
         state = state,
         alwaysOnTop = true,
         title = "Compose for Desktop Wizard",
-        icon = painterResource(Res.drawable.windowsos),
+        icon = painterResource(Res.drawable.composedesktop),
         resizable = false
     ) {
 

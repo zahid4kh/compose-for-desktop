@@ -66,7 +66,7 @@ compose.desktop {
 
             linux{
                 shortcut = true
-                iconFile.set(project.file("src/main/composeResources/drawable/linuxos.png"))
+                iconFile.set(project.file("src/main/composeResources/drawable/composedesktop.png"))
                 description = "Desktop client for Compose for Desktop Wizard"
             }
 
@@ -75,12 +75,12 @@ compose.desktop {
                 dirChooser = true
                 menu = true
                 upgradeUuid = null
-                iconFile.set(project.file("src/main/composeResources/drawable/windowsos.ico"))
+                iconFile.set(project.file("src/main/composeResources/drawable/composedesktop.ico"))
             }
 
             macOS{
                 dockName = "Compose for Desktop Wizard"
-                iconFile.set(project.file("src/main/composeResources/drawable/macos.icns"))
+                iconFile.set(project.file("src/main/composeResources/drawable/composedesktop.icns"))
             }
         }
     }
