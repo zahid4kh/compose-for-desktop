@@ -1,6 +1,4 @@
 package components
-import projectgen.ProjectOptions
-import projectgen.ViewState
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,8 +18,10 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogWindow
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberDialogState
-import theme.getJetbrainsMonoFamily
 import projectgen.PreviewFunctions
+import projectgen.ProjectOptions
+import projectgen.ViewState
+import theme.getJetbrainsMonoFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -83,7 +83,7 @@ fun PreviewDialog(
                     )
 
                     TooltipBox(
-                        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
                         tooltip = {
                             PlainTooltip {
                                 Text("Close Dialog")
@@ -115,7 +115,7 @@ fun PreviewDialog(
                 Column(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    TabRow(
+                    SecondaryTabRow(
                         selectedTabIndex = selectedTab,
                         modifier = Modifier.fillMaxWidth(),
                         tabs = {

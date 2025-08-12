@@ -113,7 +113,7 @@ fun TestingMainLayoutGrid(
                         Spacer(modifier = Modifier.width(16.dp))
 
                         TooltipBox(
-                            positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                            positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
                             tooltip = {
                                 PlainTooltip {
                                     Text("Go to Top")

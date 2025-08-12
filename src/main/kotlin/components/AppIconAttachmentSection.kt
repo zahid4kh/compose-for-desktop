@@ -1,6 +1,5 @@
 package components
 
-import projectgen.ViewIntent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
@@ -35,6 +34,7 @@ import deskit.dialogs.info.InfoDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
+import projectgen.ViewIntent
 import java.awt.datatransfer.DataFlavor
 import java.io.File
 import javax.imageio.ImageIO
@@ -176,7 +176,7 @@ fun AppIconAttachmentSection(
                     modifier = Modifier.animateContentSize(),
                 ){
                     TooltipBox(
-                        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
                         tooltip = {
                             PlainTooltip {
                                 Text("Clear input")
