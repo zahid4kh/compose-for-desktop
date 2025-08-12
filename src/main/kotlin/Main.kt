@@ -29,7 +29,7 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         state = state,
         alwaysOnTop = true,
-        title = "Compose for Desktop - Desktop Client",
+        title = "Compose for Desktop Wizard",
         icon = painterResource(Res.drawable.windowsos),
         resizable = false
     ) {
