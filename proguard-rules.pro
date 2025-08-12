@@ -1,3 +1,4 @@
+
 -dontwarn kotlinx.serialization.**
 
 -dontwarn sun.font.CFont
@@ -22,7 +23,6 @@
     static **$$serializer INSTANCE;
 }
 
-
 # Keep serializable classes and their properties
 -if @kotlinx.serialization.Serializable class **
 -keep class <1> {
@@ -43,7 +43,6 @@
 # Specifically keep AppSettings and its serializer
 -keep class AppSettings { *; }
 -keep class AppSettings$$serializer { *; }
-
 
 # Apache Commons Compress - suppress warnings for optional dependencies
 -dontwarn org.objectweb.asm.**
@@ -85,3 +84,33 @@
 # SLF4J
 -dontwarn org.slf4j.**
 -dontnote org.slf4j.**
+
+# THIS IS A FIX FOR IMAGEIO ICNS SERVICE CONFIGURATION ERROR
+-keep class javax.imageio.spi.** { *; }
+
+# Keep TwelveMonkeys ImageIO service providers
+-keep class com.twelvemonkeys.imageio.** { *; }
+
+# Keep all service provider implementations
+-keep class * implements javax.imageio.spi.ImageReaderSpi { *; }
+-keep class * implements javax.imageio.spi.ImageWriterSpi { *; }
+-keep class * implements javax.imageio.spi.ImageTranscoderSpi { *; }
+
+-keepdirectories META-INF/services/
+-keep class META-INF.services.** { *; }
+
+# Keep service configuration files
+-adaptresourcefilenames META-INF/services/**
+-adaptresourcefilecontents META-INF/services/**
+
+# Keep ImageIO registry and related classes
+-keep class javax.imageio.ImageIO { *; }
+-keep class javax.imageio.spi.IIORegistry { *; }
+-keep class javax.imageio.spi.ServiceRegistry { *; }
+
+-keep class javax.imageio.ImageReader { *; }
+-keep class javax.imageio.ImageWriter { *; }
+-keep class javax.imageio.stream.** { *; }
+
+-keep class org.apache.commons.imaging.** { *; }
+-dontwarn org.apache.commons.imaging.**

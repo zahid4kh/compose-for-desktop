@@ -94,7 +94,7 @@ fun AppIconAttachmentSection(
                 ) {
                     if (selectedIconPath.isNotEmpty()
                         && File(selectedIconPath).exists()
-                        && File(selectedIconPath).extension == "png") {
+                        && File(selectedIconPath).extension.lowercase() == "png") {
                         val image = ImageIO.read(File(selectedIconPath))
                         val imageBitmap = image.toComposeImageBitmap()
                         Image(
@@ -145,7 +145,7 @@ fun AppIconAttachmentSection(
                                             null
                                         }
 
-                                        if(files != null && files.last().exists() && files.last().extension == "png"){
+                                        if(files != null && files.last().exists() && files.last().extension.lowercase() == "png"){
                                             onIntent(ViewIntent.SetSelectedIcon(files.last()))
                                             selectedIconPath = files.last().absolutePath
                                             return true
