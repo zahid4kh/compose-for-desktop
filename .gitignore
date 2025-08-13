@@ -7,3 +7,5 @@
 /*.zip
 /docs/node_modules
 /docs/.next
+/deb-temp
+build-uber-deb.sh
