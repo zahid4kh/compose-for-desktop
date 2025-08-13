@@ -1,28 +1,30 @@
 [versions]
-# --- Plugin Versions ---
+# plugins
 composePlugin = "1.9.0-alpha03"
 kotlin = "2.1.20"
 hotReload = "1.0.0-beta04"
 slf4j = "2.0.12"
-
-# --- Library Versions ---
+# libs
 kotlinxCoroutines = "1.10.2"
 kotlinxSerializationJson = "1.8.1"
 koin = "4.0.3"
-
+deskit = "1.4.0"
+apacheCommonsCompress = "1.28.0"
+twelvemonkeysImageio = "3.12.0"
+apacheCommonsImaging = "1.0.0-alpha6"
 
 [libraries]
-# Kotlinx
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }
-
-
-# Koin
+slf4j-nop = { group = "org.slf4j", name = "slf4j-nop", version.ref = "slf4j" }
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
-
+deskit = { group = "com.github.zahid4kh", name = "deskit", version.ref = "deskit" }
+apache-commons-compress = { group = "org.apache.commons", name = "commons-compress", version.ref = "apacheCommonsCompress" }
+twelvemonkeys-imageio-icns = { group = "com.twelvemonkeys.imageio", name = "imageio-icns", version.ref = "twelvemonkeysImageio" }
+apache-commons-imaging = { group = "org.apache.commons", name = "commons-imaging", version.ref = "apacheCommonsImaging" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -30,7 +32,6 @@ jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "composePlugin
 kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 hotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "hotReload" }
-
 
 [bundles]
 slf4j = ["slf4j-api", "slf4j-simple"]

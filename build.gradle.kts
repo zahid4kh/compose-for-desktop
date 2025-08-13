@@ -8,11 +8,18 @@ plugins {
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.plugin.serialization)
-    alias(libs.plugins.hotReload)
+    alias(libs.plugins.hotReload) apply false
 }
 
 group = "desktopclient"
 version = "1.0.0"
+
+val isReleaseBuild = gradle.startParameter.taskNames.any {
+    it.contains("release", ignoreCase = true) || it.contains("buildUberDeb")
+}
+if (!isReleaseBuild) {
+    apply(plugin = "org.jetbrains.compose.hot-reload")
+}
 
 repositories {
     maven { url = uri("https://jitpack.io") }
@@ -31,13 +38,17 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.swing)
     implementation(libs.koin.core)
-    implementation(libs.bundles.slf4j)
 
-    implementation("com.github.zahid4kh:deskit:1.4.0")
-    implementation("org.apache.commons:commons-compress:1.28.0")
+    if (!isReleaseBuild) {
+        implementation(libs.bundles.slf4j)
+    } else {
+        implementation(libs.slf4j.nop)
+    }
 
-    implementation("com.twelvemonkeys.imageio:imageio-icns:3.12.0")
-    implementation("org.apache.commons:commons-imaging:1.0.0-alpha6")
+    implementation(libs.deskit)
+    implementation(libs.apache.commons.compress)
+    implementation(libs.twelvemonkeys.imageio.icns)
+    implementation(libs.apache.commons.imaging)
 
 }
 
