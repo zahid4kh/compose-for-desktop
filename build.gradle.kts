@@ -430,7 +430,7 @@ tasks.register<Exec>("buildUberDeb") {
         val launcherScript = file("$binDir/$packageName")
         launcherScript.writeText("""
             #!/bin/sh
-            set -e
+            echo "Launching $appDisplayName..."
             exec java -jar /opt/$packageName/lib/$packageName.jar "$@"
         """.trimIndent())
         launcherScript.setExecutable(true, false)
@@ -471,9 +471,17 @@ tasks.register<Exec>("buildUberDeb") {
         postinstFile.writeText("""
             #!/bin/sh
             set -e
+            echo "Creating symlink for terminal access..."
             ln -sf /opt/$packageName/bin/$packageName /usr/local/bin/$packageName
+            echo "Symlink created: /usr/local/bin/$packageName"
+            
+            echo "Updating icon cache..."
             gtk-update-icon-cache -q /usr/share/icons/hicolor || true
+            
+            echo "Updating desktop database..."
             update-desktop-database -q /usr/share/applications || true
+            
+            echo "Installation of '$appDisplayName' complete."
             exit 0
         """.trimIndent())
         postinstFile.setExecutable(true, false)
@@ -482,7 +490,10 @@ tasks.register<Exec>("buildUberDeb") {
         prermFile.writeText("""
             #!/bin/sh
             set -e
+            echo "Removing symlink: /usr/local/bin/$packageName"
             rm -f /usr/local/bin/$packageName
+            echo "Symlink removed."
+            echo "Pre-removal steps for '$appDisplayName' complete."
             exit 0
         """.trimIndent())
         prermFile.setExecutable(true, false)
