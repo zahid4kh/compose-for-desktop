@@ -458,7 +458,7 @@ tasks.register<Exec>("buildUberDeb") {
             StartupWMClass=$mainClass
         """.trimIndent())
 
-        val iconPath = "src/main/composeResources/drawable/composedesktop.png"
+        val iconPath = "icons/composedesktop.png"
         val iconDir = file("${debianRoot.get()}/usr/share/icons/hicolor/512x512/apps")
         iconDir.mkdirs()
         copy {
