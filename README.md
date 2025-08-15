@@ -4,7 +4,7 @@
 [![Compose](https://img.shields.io/badge/Compose-1.9.0-blue.svg?logo=jetpack-compose)](https://www.jetbrains.com/lp/compose-multiplatform/)
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 
-A native desktop application for generating production-ready Kotlin Compose for Desktop projects with advanced customization options and real-time preview.
+A native desktop application for generating production-ready Kotlin Compose for Desktop projects, offline with advanced customization options and real-time preview.
 
 ![Desktop Client Screenshot](media/desktop-dark.png)
 
