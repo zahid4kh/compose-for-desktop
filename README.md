@@ -1,6 +1,6 @@
 # Compose for Desktop Wizard
 
-![Static Badge](https://img.shields.io/badge/Desktop-1_0_0?style=plastic&label=1.0.0&link=https%3A%2F%2Fgithub.com%2Fzahid4kh%2Fcompose-for-desktop%2Freleases%2Ftag%2F1.0.0)
+![Static Badge](https://img.shields.io/badge/Desktop-1_0_1?style=plastic&label=1.0.1&link=https%3A%2F%2Fgithub.com%2Fzahid4kh%2Fcompose-for-desktop%2Freleases%2Ftag%2F1.0.1)
 
 A project generator that creates ready-to-use Kotlin Compose for Desktop applications. Available as both a web application and a native desktop client.
 
@@ -38,14 +38,14 @@ A project generator that creates ready-to-use Kotlin Compose for Desktop applica
 
 **Linux (Recommended)**
 ```bash
-wget https://github.com/zahid4kh/compose-for-desktop/releases/latest/download/composefordesktop_1.0.0_all.deb
-sudo dpkg -i composefordesktop_1.0.0_all.deb
+wget https://github.com/zahid4kh/compose-for-desktop/releases/latest/download/composefordesktop_1.0.1_all.deb
+sudo dpkg -i composefordesktop_1.0.1_all.deb
 ```
 
 **All Platforms (JAR)**
 ```bash
-wget https://github.com/zahid4kh/compose-for-desktop/releases/latest/download/composefordesktop-1.0.0.jar
-java -jar composefordesktop-1.0.0.jar
+wget https://github.com/zahid4kh/compose-for-desktop/releases/latest/download/composefordesktop-1.0.1.jar
+java -jar composefordesktop-1.0.1.jar
 ```
 
 For detailed installation instructions, see the [Installation Guide](https://github.com/zahid4kh/compose-for-desktop/wiki/Installation).
