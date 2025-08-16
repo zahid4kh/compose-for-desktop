@@ -29,13 +29,13 @@ Java 17 or later must be installed on your system. Download from [Oracle](https:
 **Option 1: Debian Package from latest release**
 - Download the .deb file from [releases page](https://github.com/zahid4kh/compose-for-desktop/releases) and install:
 ```bash
-sudo dpkg -i composefordesktop_1.0.0_all.deb
+sudo dpkg -i composefordesktop_1.0.1_all.deb
 ```
 
 **Option 2: JAR File**
 - Download the JAR file from [releases page](https://github.com/zahid4kh/compose-for-desktop/releases)  and run:
 ```bash
-java -jar composefordesktop-1.0.0.jar
+java -jar composefordesktop-1.0.1.jar
 ```
 
 ### Windows & macOS
@@ -43,7 +43,7 @@ java -jar composefordesktop-1.0.0.jar
 Download the JAR file from the [releases page](https://github.com/zahid4kh/compose-for-desktop/releases) and run:
 
 ```bash
-java -jar composefordesktop-1.0.0.jar
+java -jar composefordesktop-1.0.1.jar
 ```
 
 For detailed installation instructions, see the [Installation Guide](https://github.com/zahid4kh/compose-for-desktop/wiki/Installation).
