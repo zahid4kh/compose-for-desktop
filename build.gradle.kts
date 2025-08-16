@@ -85,7 +85,7 @@ compose.desktop {
                 shortcut = true
                 dirChooser = true
                 menu = true
-                upgradeUuid = null
+                upgradeUuid = "ac6acb55-557f-4666-bbd6-ff0521dc2279"
                 iconFile.set(project.file("src/main/composeResources/drawable/composedesktop.ico"))
             }
 
