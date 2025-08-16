@@ -1,7 +1,7 @@
 -dontwarn kotlinx.serialization.**
 
 -dontwarn sun.font.CFont
--dontwarn sun.swing.SwingUtilities2${'$'}AATextInfo
+-dontwarn sun.swing.SwingUtilities2$AATextInfo
 -dontwarn net.miginfocom.swing.MigLayout
 
 -dontnote kotlinx.serialization.**
@@ -18,15 +18,15 @@
 }
 
 # Keep serializers
--keepclasseswithmembers class **${'$'}${'$'}serializer {
-    static **${'$'}${'$'}serializer INSTANCE;
+-keepclasseswithmembers class **$$serializer {
+    static **$$serializer INSTANCE;
 }
 
 
 # Keep serializable classes and their properties
 -if @kotlinx.serialization.Serializable class **
 -keep class <1> {
-    static <1>${'$'}Companion Companion;
+    static <1>$Companion Companion;
 }
 
 # Keep specific serializer classes
@@ -42,4 +42,11 @@
 
 # Specifically keep AppSettings and its serializer
 -keep class AppSettings { *; }
--keep class AppSettings${'$'}${'$'}serializer { *; }
+-keep class AppSettings$$serializer { *; }
+
+# SLF4J
+-dontwarn org.slf4j.**
+-dontnote org.slf4j.**
+
+-keepdirectories META-INF/services/
+-keep class META-INF.services.** { *; }
