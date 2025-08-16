@@ -12,7 +12,7 @@ plugins {
 }
 
 group = "desktopclient"
-version = "1.0.0"
+version = "1.0.1"
 
 val isReleaseBuild = gradle.startParameter.taskNames.any {
     it.contains("release", ignoreCase = true) || it.contains("buildUberDeb")
@@ -73,11 +73,11 @@ compose.desktop {
 
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb, TargetFormat.Exe)
             packageName = "composefordesktop"
-            packageVersion = "1.0.0"
+            packageVersion = "1.0.1"
 
             linux{
                 shortcut = true
-                iconFile.set(project.file("src/main/composeResources/drawable/composedesktop.png"))
+                iconFile.set(project.file("icons/composedesktop.png"))
                 description = "Desktop client for Compose for Desktop Wizard"
             }
 
@@ -86,12 +86,12 @@ compose.desktop {
                 dirChooser = true
                 menu = true
                 upgradeUuid = "ac6acb55-557f-4666-bbd6-ff0521dc2279"
-                iconFile.set(project.file("src/main/composeResources/drawable/composedesktop.ico"))
+                iconFile.set(project.file("icons/composedesktop.ico"))
             }
 
             macOS{
                 dockName = "Compose for Desktop Wizard"
-                iconFile.set(project.file("src/main/composeResources/drawable/composedesktop.icns"))
+                iconFile.set(project.file("icons/composedesktop.icns"))
             }
         }
     }
