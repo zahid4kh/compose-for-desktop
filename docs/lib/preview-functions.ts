@@ -254,6 +254,10 @@ fun promptUserChoice(): String {
     return Scanner(System.\`in\`).nextLine().trim().ifEmpty { "1" }
 }
 
+interface InjectedExecOps {
+    @get:Inject val execOps: ExecOperations
+}
+
 tasks.register("addStartupWMClassToDebDynamic") {
     group = "release"
     description = "Finds .deb file, modifies .desktop, control files, and DEBIAN scripts, and rebuilds it"
@@ -275,8 +279,10 @@ tasks.register("addStartupWMClassToDebDynamic") {
         if (workDir.exists()) workDir.deleteRecursively()
         workDir.mkdirs()
 
+        val injected = project.objects.newInstance<InjectedExecOps>()
+
         // Step 1: Extracting generated debian package
-        exec {
+        injected.execOps.exec {
             commandLine("dpkg-deb", "-R", originalDeb.absolutePath, workDir.absolutePath)
         }
 
@@ -467,10 +473,10 @@ exit 0"""
         println("✅ Updated prerm script to remove terminal symlink")
 
         // Make sure scripts are executable
-        exec {
+        injected.execOps.exec {
             commandLine("chmod", "+x", postinstFile.absolutePath)
         }
-        exec {
+        injected.execOps.exec {
             commandLine("chmod", "+x", prermFile.absolutePath)
         }
 
@@ -485,7 +491,7 @@ exit 0"""
         println("--------------------------------\\n")
 
         // Step 6: Repackaging the debian package back
-        exec {
+        injected.execOps.exec {
             commandLine("dpkg-deb", "-b", workDir.absolutePath, modifiedDeb.absolutePath)
         }
 
@@ -509,7 +515,8 @@ tasks.register("packageDebWithWMClass") {
         println("▶️ Running: \${packagingTask}")
         gradle.includedBuilds.forEach { it.task(":\${packagingTask}") } // just in case of composite builds
 
-        exec {
+        val injected = project.objects.newInstance<InjectedExecOps>()
+        injected.execOps.exec {
             commandLine("./gradlew clean")
             commandLine("./gradlew", packagingTask)
         }
