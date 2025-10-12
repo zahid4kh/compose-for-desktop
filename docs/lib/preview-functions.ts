@@ -530,7 +530,7 @@ tasks.register("packageDebWithWMClass") {
 
 export function generateVersionCatalogPreview(options: ProjectOptions): string {
   let content = `[versions]
-composePlugin = "1.8.0"
+composePlugin = "1.9.0-beta03"
 kotlin = "2.1.20"
 kotlinxCoroutines = "1.10.2"
 kotlinxSerializationJson = "1.8.1"
@@ -595,7 +595,7 @@ slf4j = "2.0.12"`;
 
   if (options.includeDeskit) {
     content += `
-deskit = "1.3.0"`;
+deskit = "1.4.0"`;
   }
 
   content += `
