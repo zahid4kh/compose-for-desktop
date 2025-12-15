@@ -10,7 +10,6 @@ import java.util.Scanner"""
         if (options.includeHotReload) {
             content += """
                 
-import org.jetbrains.compose.reload.ComposeHotRun 
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag"""
         }
 
@@ -72,6 +71,9 @@ dependencies {
     api(libs.precompose.viewmodel)
     api(compose.foundation)
     api(compose.animation)"""
+        } else {
+            content += """
+    implementation(libs.androidx.lifecycle.viewmodel.compose)"""
         }
 
         if (options.includeSentry) {
@@ -483,8 +485,9 @@ tasks.register("packageDebWithWMClass") {
 
     fun generateVersionCatalogPreview(options: ProjectOptions): String {
         var content = """[versions]
-composePlugin = "1.8.0"
-kotlin = "2.1.20"
+composePlugin = "1.9.3"
+kotlin = "2.2.21"
+androidxLifecycle = "2.9.6"
 kotlinxCoroutines = "1.10.2"
 kotlinxSerializationJson = "1.8.1"
 koin = "4.0.3""""
@@ -533,7 +536,7 @@ imageLoader = "1.7.1""""
 
         if (options.includeHotReload) {
             content += """
-hotReload = "1.0.0-alpha10""""
+hotReload = "1.1.0-alpha02""""
         }
 
         if (options.includeKotlinxDatetime) {
@@ -548,7 +551,7 @@ slf4j = "2.0.12""""
 
         if (options.includeDeskit) {
             content += """
-deskit = "1.2.0""""
+deskit = "1.4.1""""
         }
 
         content += """
@@ -558,6 +561,7 @@ deskit = "1.2.0""""
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+androidx-lifecycle-viewmodel-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 
 # Koin
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }"""
@@ -760,7 +764,7 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         state = rememberWindowState(size = DpSize(${options.windowWidth}.dp, ${options.windowHeight}.dp)),
         alwaysOnTop = true,
-        title = "${options.appName} - Made with Compose for Desktop Wizard",
+        HtmlStyle.title = "${options.appName} - Made with Compose for Desktop Wizard",
         icon = null
     ) {
         window.minimumSize = Dimension(${options.windowWidth}, ${options.windowHeight})
