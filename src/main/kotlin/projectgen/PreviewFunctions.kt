@@ -771,10 +771,11 @@ fun main() = application {
     }
 
     val viewModel = getKoin().get<MainViewModel>()
+    val windowState = rememberWindowState(size = DpSize(${options.windowWidth}.dp, ${options.windowHeight}.dp))
 
     Window(
         onCloseRequest = ::exitApplication,
-        state = rememberWindowState(size = DpSize(${options.windowWidth}.dp, ${options.windowHeight}.dp)),
+        state = windowState,
         alwaysOnTop = true,
         HtmlStyle.title = "${options.appName} - Made with Compose for Desktop Wizard",
         icon = null
@@ -797,7 +798,7 @@ fun main() = application {
 
 A desktop application built with Kotlin and Compose for Desktop.
 
-[![Kotlin](https://img.shields.io/badge/Kotlin-2.1.20-blue.svg?logo=kotlin)](https://kotlinlang.org) [![Compose](https://img.shields.io/badge/Compose-1.8.0-blue.svg?logo=jetpack-compose)](https://www.jetbrains.com/lp/compose-multiplatform/)
+[![Kotlin](https://img.shields.io/badge/Kotlin-2.2.21-blue.svg?logo=kotlin)](https://kotlinlang.org) [![Compose](https://img.shields.io/badge/Compose-1.9.3-blue.svg?logo=jetpack-compose)](https://www.jetbrains.com/lp/compose-multiplatform/)
 
 ## Features
 
@@ -817,7 +818,7 @@ A desktop application built with Kotlin and Compose for Desktop.
 ### Prerequisites
 
 - JDK 17 or later
-- Kotlin 2.1.20 or later
+- Kotlin 2.2.21 or later
 - IntelliJ IDEA (recommended) or Android Studio
 
 ### Make Gradle Wrapper Executable (Linux/macOS only)
@@ -842,7 +843,7 @@ chmod +x gradlew
 
 #### Hot Reload (Recommended for Development)
 ```bash
-./gradlew :runHot --mainClass ${options.appName.replace(Regex("\\s+"), "")} --auto
+./gradlew :hotRun --mainClass ${options.appName.replace(Regex("\\s+"), "")} --auto
 ```
 
 This enables automatic recompilation and hot swapping when you modify your code, making development much faster."""
@@ -866,7 +867,7 @@ This will create a platform-specific installer in the `build/compose/binaries/ma
 
         if (options.includeHotReload) {
             content += """
-- `./gradlew :runHot --mainClass ${options.appName.replace(Regex("\\s+"), "")} --auto` - Run with hot reload"""
+- `./gradlew :hotRun --mainClass ${options.appName.replace(Regex("\\s+"), "")} --auto` - Run with hot reload"""
         }
 
         content += """
