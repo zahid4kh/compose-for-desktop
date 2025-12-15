@@ -83,7 +83,7 @@ fun PreviewDialog(
                     )
 
                     TooltipBox(
-                        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
+                        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Below),
                         tooltip = {
                             PlainTooltip {
                                 Text("Close Dialog")

@@ -176,7 +176,7 @@ fun AppIconAttachmentSection(
                     modifier = Modifier.animateContentSize(),
                 ){
                     TooltipBox(
-                        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(),
+                        positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Above),
                         tooltip = {
                             PlainTooltip {
                                 Text("Clear input")
