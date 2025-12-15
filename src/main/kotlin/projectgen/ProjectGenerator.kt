@@ -64,7 +64,12 @@ class ProjectGenerator {
             readResourceTextFile("/tobegenerated/textfiles/gitignore", File(rootDir, ".gitignore"))
 
             // Kotlin files
-            readResourceTextFile("/tobegenerated/textfiles/App", File(kotlinDir, "App.kt"))
+            if(options.includePrecompose){
+                readResourceTextFile("/tobegenerated/textfiles/AppPrecompose", File(kotlinDir, "App.kt"))
+            }else{
+                readResourceTextFile("/tobegenerated/textfiles/App", File(kotlinDir, "App.kt"))
+            }
+
             readResourceTextFile("/tobegenerated/textfiles/AppModule", File(diDir, "AppModule.kt"))
             readResourceTextFile("/tobegenerated/textfiles/MainViewModel", File(vmDir, "MainViewModel.kt"))
             readResourceTextFile("/tobegenerated/textfiles/Models", File(dataDir, "Models.kt"))

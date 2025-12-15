@@ -750,7 +750,7 @@ rootProject.name = "${options.appName.lowercase().replace(Regex("\\s+"), "")}"""
     }
 
     fun generateMainFilePreview(options: ProjectOptions): String {
-        val imports = """@file:JvmName("${options.appName.replace(Regex("\\s+"), "")}")
+        var imports = """@file:JvmName("${options.appName.replace(Regex("\\s+"), "")}")
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
@@ -762,6 +762,9 @@ import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.getKoin
 import ${options.packageName.lowercase().replace(Regex("\\s+"), "")}.resources.*
 """
+        if (options.includePrecompose) {
+            imports += "import moe.tlaster.precompose.ProvidePreComposeLocals\n"
+        }
 
         val mainFunction = """
 
@@ -777,12 +780,12 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         state = windowState,
         alwaysOnTop = true,
-        HtmlStyle.title = "${options.appName} - Made with Compose for Desktop Wizard",
+        title = "${options.appName} - Made with Compose for Desktop Wizard",
         icon = null
     ) {
         window.minimumSize = Dimension(${options.windowWidth}, ${options.windowHeight})
 
-        AppTheme {
+        ${if(options.includePrecompose) "ProvidePrecomposeLocals" else "AppTheme"} {
             App(
                 viewModel = viewModel
             )
