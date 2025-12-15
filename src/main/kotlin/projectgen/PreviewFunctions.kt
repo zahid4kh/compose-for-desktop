@@ -487,10 +487,13 @@ tasks.register("packageDebWithWMClass") {
         var content = """[versions]
 composePlugin = "1.9.3"
 kotlin = "2.2.21"
-androidxLifecycle = "2.9.6"
 kotlinxCoroutines = "1.10.2"
 kotlinxSerializationJson = "1.8.1"
 koin = "4.0.3""""
+        if (!options.includePrecompose) {
+            content += """
+androidxLifecycle = "2.9.6""""
+        }
 
         if (options.includePrecompose) {
             content += """
@@ -561,8 +564,17 @@ deskit = "1.4.1""""
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
-androidx-lifecycle-viewmodel-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
+"""
 
+        if (!options.includePrecompose) {
+            content += """
+
+# Common ViewModel
+androidx-lifecycle-viewmodel-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
+"""
+        }
+
+        content += """
 # Koin
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }"""
 
