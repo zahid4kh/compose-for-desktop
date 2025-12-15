@@ -785,7 +785,7 @@ fun main() = application {
     ) {
         window.minimumSize = Dimension(${options.windowWidth}, ${options.windowHeight})
 
-        ${if(options.includePrecompose) "ProvidePrecomposeLocals" else "AppTheme"} {
+        ${if(options.includePrecompose) "ProvidePreComposeLocals" else "AppTheme"} {
             App(
                 viewModel = viewModel
             )

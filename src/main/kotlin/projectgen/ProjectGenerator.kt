@@ -71,7 +71,12 @@ class ProjectGenerator {
             }
 
             readResourceTextFile("/tobegenerated/textfiles/AppModule", File(diDir, "AppModule.kt"))
-            readResourceTextFile("/tobegenerated/textfiles/MainViewModel", File(vmDir, "MainViewModel.kt"))
+            if(options.includePrecompose){
+                readResourceTextFile("/tobegenerated/textfiles/MainViewModelPreCompose", File(vmDir, "MainViewModel.kt"))
+            }else{
+                readResourceTextFile("/tobegenerated/textfiles/MainViewModel", File(vmDir, "MainViewModel.kt"))
+            }
+
             readResourceTextFile("/tobegenerated/textfiles/Models", File(dataDir, "Models.kt"))
 
             // Theme files
