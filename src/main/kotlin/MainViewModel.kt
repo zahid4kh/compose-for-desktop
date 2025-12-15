@@ -1,29 +1,24 @@
 
-import kotlinx.coroutines.CoroutineScope
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import projectgen.ProjectGenerator
-import projectgen.ProjectOptions
-import projectgen.ViewEffect
-import projectgen.ViewIntent
-import projectgen.ViewState
+import projectgen.*
 import java.io.File
 
 class MainViewModel(
     private val database: Database,
-) {
+) : ViewModel() {
     private val _state = MutableStateFlow(ViewState())
     val state: StateFlow<ViewState> = _state.asStateFlow()
 
     private val _effects = MutableSharedFlow<ViewEffect>()
     val effects: SharedFlow<ViewEffect> = _effects.asSharedFlow()
 
-    private val scope = CoroutineScope(Dispatchers.Main)
-
     init {
-        scope.launch {
+        viewModelScope.launch {
             val settings = database.getSettings()
             _state.update { it.copy(darkMode = settings.darkMode) }
         }
@@ -104,7 +99,7 @@ class MainViewModel(
         val newDarkMode = !_state.value.darkMode
         _state.update { it.copy(darkMode = newDarkMode) }
 
-        scope.launch {
+        viewModelScope.launch {
             val settings = database.getSettings()
             database.saveSettings(settings.copy(darkMode = newDarkMode))
         }
@@ -145,7 +140,7 @@ class MainViewModel(
     }
 
     private fun generateAndSaveProject(destinationFile: File) {
-        scope.launch {
+        viewModelScope.launch {
             try {
                 processIntent(ViewIntent.SetGenerating(true))
                 processIntent(ViewIntent.HideFileSaver)

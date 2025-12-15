@@ -1,8 +1,8 @@
 [versions]
 # plugins
-composePlugin = "1.9.0-alpha03"
-kotlin = "2.1.20"
-hotReload = "1.0.0-beta04"
+composePlugin = "1.9.3"
+kotlin = "2.2.21"
+hotReload = "1.1.0-alpha02"
 slf4j = "2.0.12"
 # libs
 kotlinxCoroutines = "1.10.2"
@@ -12,6 +12,7 @@ deskit = "1.4.0"
 apacheCommonsCompress = "1.28.0"
 twelvemonkeysImageio = "3.12.0"
 apacheCommonsImaging = "1.0.0-alpha6"
+androidxLifecycle = "2.9.6"
 
 [libraries]
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
@@ -25,6 +26,7 @@ deskit = { group = "com.github.zahid4kh", name = "deskit", version.ref = "deskit
 apache-commons-compress = { group = "org.apache.commons", name = "commons-compress", version.ref = "apacheCommonsCompress" }
 twelvemonkeys-imageio-icns = { group = "com.twelvemonkeys.imageio", name = "imageio-icns", version.ref = "twelvemonkeysImageio" }
 apache-commons-imaging = { group = "org.apache.commons", name = "commons-imaging", version.ref = "apacheCommonsImaging" }
+androidx-lifecycle-viewmodel-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

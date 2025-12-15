@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.apache.commons.compress)
     implementation(libs.twelvemonkeys.imageio.icns)
     implementation(libs.apache.commons.imaging)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
 }
 
