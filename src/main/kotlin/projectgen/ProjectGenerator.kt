@@ -10,7 +10,6 @@ import org.apache.commons.imaging.ImageFormats
 import org.apache.commons.imaging.Imaging
 import org.apache.commons.imaging.formats.tiff.TiffImagingParameters
 import org.apache.commons.imaging.formats.tiff.constants.TiffConstants
-import projectgen.PreviewFunctions
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -35,6 +34,10 @@ class ProjectGenerator {
             val srcDir = File(rootDir, "src")
             val mainDir = File(srcDir, "main")
             val kotlinDir = File(mainDir, "kotlin")
+            val uiDir = File(kotlinDir, "ui")
+            val diDir = File(kotlinDir, "di")
+            val vmDir = File(kotlinDir, "viewmodel")
+            val dataDir = File(kotlinDir, "data")
             val themeDir = File(kotlinDir, "theme")
             val resourcesDir = File(mainDir, "resources")
             val composeResourcesDir = File(mainDir, "composeResources")
@@ -42,7 +45,8 @@ class ProjectGenerator {
             val fontDir = File(composeResourcesDir, "font")
 
             listOf(gradleDir, wrapperDir, iconsDir, srcDir, mainDir, kotlinDir,
-                themeDir, resourcesDir, composeResourcesDir, drawableDir, fontDir).forEach { it.mkdirs() }
+                themeDir, resourcesDir, composeResourcesDir, drawableDir, fontDir,
+                uiDir, diDir, vmDir, dataDir).forEach { it.mkdirs() }
 
             // Generate and write text files
             writeTextFile(File(rootDir, "build.gradle.kts"), PreviewFunctions.generateBuildGradlePreview(options))
@@ -61,9 +65,9 @@ class ProjectGenerator {
 
             // Kotlin files
             readResourceTextFile("/tobegenerated/textfiles/App", File(kotlinDir, "App.kt"))
-            readResourceTextFile("/tobegenerated/textfiles/AppModule", File(kotlinDir, "AppModule.kt"))
-            readResourceTextFile("/tobegenerated/textfiles/MainViewModel", File(kotlinDir, "MainViewModel.kt"))
-            readResourceTextFile("/tobegenerated/textfiles/Models", File(kotlinDir, "Models.kt"))
+            readResourceTextFile("/tobegenerated/textfiles/AppModule", File(diDir, "AppModule.kt"))
+            readResourceTextFile("/tobegenerated/textfiles/MainViewModel", File(vmDir, "MainViewModel.kt"))
+            readResourceTextFile("/tobegenerated/textfiles/Models", File(dataDir, "Models.kt"))
 
             // Theme files
             readResourceTextFile("/tobegenerated/textfiles/Color", File(themeDir, "Color.kt"))
@@ -95,7 +99,7 @@ class ProjectGenerator {
             readResourceBinaryFile("/tobegenerated/fonts/Ubuntu-Bold.ttf", File(fontDir, "Ubuntu-Bold.ttf"))
 
             // Database.kt with template
-            writeDatabaseFile(kotlinDir, options)
+            writeDatabaseFile(dataDir, options)
 
             // Proguard rules
             readResourceTextFile("/tobegenerated/textfiles/Proguard", File(rootDir, "proguard-rules.pro"))
@@ -207,7 +211,7 @@ class ProjectGenerator {
         }
     }
 
-    private fun writeDatabaseFile(kotlinDir: File, options: ProjectOptions) {
+    private fun writeDatabaseFile(dataDir: File, options: ProjectOptions) {
         val content = """import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
@@ -246,7 +250,7 @@ class Database {
     }
 }"""
 
-        File(kotlinDir, "Database.kt").writeText(content)
+        File(dataDir, "Database.kt").writeText(content)
     }
 
     private fun createZipFile(sourceDir: File, destination: File) {
