@@ -1,7 +1,5 @@
 package components
 
-import projectgen.ViewIntent
-import projectgen.ViewState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.LocalScrollbarStyle
@@ -26,6 +24,8 @@ import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import projectgen.ViewIntent
+import projectgen.ViewState
 
 @Composable
 fun DependencySection(
@@ -33,7 +33,6 @@ fun DependencySection(
     onIntent: (ViewIntent) -> Unit
 ) {
     val depMaps = mapOf(
-        "HotReload" to "Enable live code updates without restarting.",
         "Deskit" to "Material3 FileChooser and dialogs.",
         "Decompose" to "Component-based navigation.",
         "Ktor" to "Kotlin-first HTTP client.",

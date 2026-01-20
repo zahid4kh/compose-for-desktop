@@ -217,7 +217,6 @@ class MainViewModel(
                             includePrecompose = state.dependencies["Precompose"] ?: false,
                             includeSentry = state.dependencies["Sentry"] ?: false,
                             includeMarkdown = state.dependencies["Markdown"] ?: false,
-                            includeHotReload = state.dependencies["HotReload"] ?: true,
                             includeKotlinxDatetime = state.dependencies["KotlinxDatetime"] ?: false,
                             linuxMaintainer = state.linuxMaintainer,
                             appDescription = state.appDescription,

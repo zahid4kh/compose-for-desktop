@@ -8,7 +8,6 @@ data class ViewState(
     val windowWidth: String = "800",
     val windowHeight: String = "600",
     val dependencies: Map<String, Boolean> = mapOf(
-        "HotReload" to true,
         "Deskit" to true,
         "Retrofit" to false,
         "SQLDelight" to false,

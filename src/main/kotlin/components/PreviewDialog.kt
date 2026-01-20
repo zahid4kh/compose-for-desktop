@@ -44,7 +44,6 @@ fun PreviewDialog(
         includePrecompose = state.dependencies["Precompose"] ?: false,
         includeSentry = state.dependencies["Sentry"] ?: false,
         includeMarkdown = state.dependencies["Markdown"] ?: false,
-        includeHotReload = state.dependencies["HotReload"] ?: true,
         includeKotlinxDatetime = state.dependencies["KotlinxDatetime"] ?: false,
         appDescription = state.appDescription,
         linuxMaintainer = state.linuxMaintainer,

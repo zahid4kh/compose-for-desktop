@@ -15,7 +15,6 @@ data class ProjectOptions(
     val includePrecompose: Boolean,
     val includeSentry: Boolean,
     val includeMarkdown: Boolean,
-    val includeHotReload: Boolean,
     val includeKotlinxDatetime: Boolean,
     val linuxMaintainer: String?,
     val appDescription: String?,

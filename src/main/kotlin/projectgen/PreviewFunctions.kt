@@ -7,12 +7,6 @@ object PreviewFunctions {
 import java.util.UUID
 import java.util.Scanner"""
 
-        if (options.includeHotReload) {
-            content += """
-                
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag"""
-        }
-
         content += """
 
 plugins {
@@ -21,14 +15,14 @@ plugins {
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.plugin.serialization)"""
 
+        if (options.includeSentry) {
+            content += """
+    alias(libs.plugins.io.sentry.kotlin.multiplatform)"""
+        }
+
         if (options.includeSQLDelight) {
             content += """
     alias(libs.plugins.sqldelight)"""
-        }
-
-        if (options.includeHotReload) {
-            content += """
-    alias(libs.plugins.hotReload)"""
         }
 
         content += """
@@ -52,9 +46,9 @@ repositories {"""
 
 dependencies {
     implementation(compose.desktop.currentOs)
-    implementation(compose.material3)
-    implementation(compose.components.resources)
-    implementation(compose.materialIconsExtended)
+    implementation("org.jetbrains.compose.material3:material3:1.10.0-alpha05")
+    implementation("org.jetbrains.compose.components:components-resources:1.10.0")
+    implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
 
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines.core)
@@ -69,16 +63,11 @@ dependencies {
     // Precompose (ViewModel&Navigation)
     api(libs.precompose)
     api(libs.precompose.viewmodel)
-    api(compose.foundation)
-    api(compose.animation)"""
+    api("org.jetbrains.compose.foundation:foundation:1.10.0")
+    api("org.jetbrains.compose.animation:animation:1.10.0")"""
         } else {
             content += """
     implementation(libs.androidx.lifecycle.viewmodel.compose)"""
-        }
-
-        if (options.includeSentry) {
-            content += """
-    implementation(libs.sentry)"""
         }
 
         if (options.includeMarkdown) {
@@ -117,13 +106,6 @@ dependencies {
 
     // Kotlin's datetime library
     implementation(libs.kotlinx.datetime)"""
-        }
-
-        if (options.includeHotReload) {
-            content += """
-
-    // SLF4J Logging (for hot reload)
-    implementation(libs.bundles.slf4j)"""
         }
 
         if (options.includeDeskit) {
@@ -192,15 +174,6 @@ sqldelight {
             packageName.set("${options.packageName.replace(Regex("\\s+"), ".")}")
         }
     }
-}"""
-        }
-
-        if (options.includeHotReload) {
-            content += """
-    
-//https://github.com/JetBrains/compose-hot-reload
-composeCompiler {
-    featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
 }"""
         }
 
@@ -485,7 +458,7 @@ tasks.register("packageDebWithWMClass") {
 
     fun generateVersionCatalogPreview(options: ProjectOptions): String {
         var content = """[versions]
-composePlugin = "1.9.3"
+composePlugin = "1.10.0"
 kotlin = "2.2.21"
 kotlinxCoroutines = "1.10.2"
 kotlinxSerializationJson = "1.8.1"
@@ -502,12 +475,12 @@ precompose = "1.6.2""""
 
         if (options.includeSentry) {
             content += """
-sentry = "8.8.0""""
+sentry = "0.23.0""""
         }
 
         if (options.includeMarkdown) {
             content += """
-markdownRenderer = "0.32.0""""
+markdownRenderer = "0.39.0""""
         }
 
         if (options.includeRetrofit) {
@@ -537,19 +510,9 @@ decomposeExtensions = "2.2.3""""
 imageLoader = "1.7.1""""
         }
 
-        if (options.includeHotReload) {
-            content += """
-hotReload = "1.1.0-alpha02""""
-        }
-
         if (options.includeKotlinxDatetime) {
             content += """
 kotlinxDatetime = "0.6.2""""
-        }
-
-        if (options.includeHotReload) {
-            content += """
-slf4j = "2.0.12""""
         }
 
         if (options.includeDeskit) {
@@ -568,7 +531,6 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 
         if (!options.includePrecompose) {
             content += """
-
 # Common ViewModel
 androidx-lifecycle-viewmodel-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
 """
@@ -584,13 +546,6 @@ koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin"
 # PreCompose
 precompose = { group = "moe.tlaster", name = "precompose", version.ref = "precompose" }
 precompose-viewmodel = { group = "moe.tlaster", name = "precompose-viewmodel", version.ref = "precompose"}"""
-        }
-
-        if (options.includeSentry) {
-            content += """
-
-# Sentry
-sentry = { group = "io.sentry", name = "sentry", version.ref = "sentry" }"""
         }
 
         if (options.includeMarkdown) {
@@ -615,14 +570,6 @@ okhttp-loggingInterceptor = { group = "com.squareup.okhttp3", name = "logging-in
 
 # kotlinx.datetime
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }"""
-        }
-
-        if (options.includeHotReload) {
-            content += """
-
-# SLF4J Logging (for hot reload)
-slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
-slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }"""
         }
 
         if (options.includeSQLDelight) {
@@ -672,15 +619,14 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
 kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }"""
+        if (options.includeSentry) {
+            content += """      
+io-sentry-kotlin-multiplatform = { id = "io.sentry.kotlin.multiplatform.gradle", version.ref = "sentry" }"""
+        }
 
         if (options.includeSQLDelight) {
             content += """
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }"""
-        }
-
-        if (options.includeHotReload) {
-            content += """
-hotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "hotReload" }"""
         }
 
         // bundles
@@ -708,11 +654,6 @@ ktorClient = ["ktor-clientCore", "ktor-clientCio", "ktor-clientContentNegotiatio
 decompose = ["decompose-core", "decompose-extensionsComposeJetbrains"]"""
         }
 
-        if (options.includeHotReload) {
-            content += """
-slf4j = ["slf4j-api", "slf4j-simple"]"""
-        }
-
         return content
     }
 
@@ -732,16 +673,6 @@ slf4j = ["slf4j-api", "slf4j-simple"]"""
         mavenCentral()
     }
 }"""
-
-        if (options.includeHotReload) {
-            content += """
-
-plugins {
-  //https://github.com/JetBrains/compose-hot-reload?tab=readme-ov-file#set-up-automatic-provisioning-of-the-jetbrains-runtime-jbr-via-gradle
-  id("org.gradle.toolchains.foojay-resolver-convention").version("0.10.0")
-}"""
-        }
-
         content += """
 
 rootProject.name = "${options.appName.lowercase().replace(Regex("\\s+"), "")}""""
@@ -808,12 +739,6 @@ A desktop application built with Kotlin and Compose for Desktop.
 - Modern UI with Material 3 design
 - Dark mode support
 - Cross-platform (Windows, macOS, Linux)"""
-
-        if (options.includeHotReload) {
-            content += """
-- Hot reload support for faster development"""
-        }
-
         content += """
 
 ## Development Setup
@@ -841,8 +766,7 @@ chmod +x gradlew
 ./gradlew run
 ```"""
 
-        if (options.includeHotReload) {
-            content += """
+        content += """
 
 #### Hot Reload (Recommended for Development)
 ```bash
@@ -850,7 +774,6 @@ chmod +x gradlew
 ```
 
 This enables automatic recompilation and hot swapping when you modify your code, making development much faster."""
-        }
 
         content += """
 
@@ -868,10 +791,8 @@ This will create a platform-specific installer in the `build/compose/binaries/ma
 
 - `./gradlew run` - Run the application"""
 
-        if (options.includeHotReload) {
-            content += """
+        content += """
 - `./gradlew :hotRun --mainClass ${options.appName.replace(Regex("\\s+"), "")} --auto` - Run with hot reload"""
-        }
 
         content += """
 - `./gradlew packageDistributionForCurrentOS` - Build native distribution for current OS
