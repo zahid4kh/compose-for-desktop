@@ -1,6 +1,4 @@
-
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -23,7 +21,6 @@ import theme.AppTheme
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
-@Preview
 fun App(
     viewModel: MainViewModel,
     window: WindowState

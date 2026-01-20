@@ -43,6 +43,7 @@ import javax.imageio.ImageIO
 @Composable
 fun AppIconAttachmentSection(
     modifier: Modifier,
+    state: projectgen.ViewState,
     onIntent: (ViewIntent) -> Unit,
 ){
     val scope = rememberCoroutineScope()
@@ -157,6 +158,10 @@ fun AppIconAttachmentSection(
                         ),
                     shape = MaterialTheme.shapes.medium,
                     singleLine = true,
+                    isError = state.iconError.isNotEmpty(),
+                    supportingText = if (state.iconError.isNotEmpty()) {
+                        { Text(state.iconError, color = MaterialTheme.colorScheme.error) }
+                    } else null,
                     colors = OutlinedTextFieldDefaults.colors(
                         unfocusedContainerColor = if(isDragging) Color.LightGray else Color.Transparent,
                         focusedContainerColor = if(isDragging) Color.LightGray else Color.Transparent,
@@ -224,7 +229,13 @@ fun AppIconAttachmentSection(
                 .background(MaterialTheme.colorScheme.surfaceVariant)
                 .padding(20.dp)
             ) {
-                Text("You can either:", modifier = Modifier.padding(bottom = 8.dp))
+                Text("Icon Requirements:",
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier.padding(bottom = 8.dp))
+                Text(" - Must be a PNG file")
+                Text(" - Must be exactly 512x512 pixels")
+                Spacer(modifier = Modifier.height(12.dp))
+                Text("You can:", modifier = Modifier.padding(bottom = 8.dp))
                 Text(" - Drag and drop your '.png' icon into the input field")
                 Text(" - Use the file chooser")
                 Text(" - Manually type the full path to the file")

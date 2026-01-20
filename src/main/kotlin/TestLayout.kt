@@ -1,4 +1,3 @@
-
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
@@ -88,6 +87,7 @@ fun TestingMainLayoutGrid(
                 item(span = {GridItemSpan(maxLineSpan)}) {
                     AppIconAttachmentSection(
                         modifier = Modifier,
+                        state = state,
                         onIntent = viewModel::processIntent,
                     )
                 }

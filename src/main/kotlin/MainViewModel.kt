@@ -1,4 +1,3 @@
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -7,6 +6,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import projectgen.*
 import java.io.File
+import javax.imageio.ImageIO
 
 class MainViewModel(
     private val database: Database,
@@ -81,7 +81,24 @@ class MainViewModel(
                 _state.update { it.copy(showErrorDialog = false) }
             }
             is ViewIntent.SetSelectedIcon -> {
-                _state.update { it.copy(attachedPngIcon = intent.icon.absolutePath) }
+                viewModelScope.launch {
+                    val validationError = validateIconDimensions(intent.icon)
+                    _state.update {
+                        it.copy(
+                            attachedPngIcon = intent.icon.absolutePath,
+                            iconError = validationError
+                        )
+                    }
+
+                    if (validationError.isNotEmpty()) {
+                        _state.update {
+                            it.copy(
+                                showErrorDialog = true,
+                                errorMessage = validationError
+                            )
+                        }
+                    }
+                }
             }
             is ViewIntent.GenerateProject -> {
                 validateAndShowFileSaver()
@@ -113,6 +130,31 @@ class MainViewModel(
         }
     }
 
+    private suspend fun validateIconDimensions(iconFile: File): String = withContext(Dispatchers.IO) {
+        try {
+            if (!iconFile.exists() || !iconFile.isFile) {
+                return@withContext "Icon file does not exist"
+            }
+
+            if (iconFile.extension.lowercase() != "png") {
+                return@withContext "Icon must be a PNG file"
+            }
+
+            val image = ImageIO.read(iconFile) ?: return@withContext "Unable to read image file"
+
+            val width = image.width
+            val height = image.height
+
+            if (width != 512 || height != 512) {
+                return@withContext "Icon must be exactly 512x512 pixels. Current size: ${width}x${height} pixels"
+            }
+
+            return@withContext ""
+        } catch (e: Exception) {
+            return@withContext "Error validating icon: ${e.message}"
+        }
+    }
+
     private fun validateAndShowFileSaver() {
         val state = _state.value
 
@@ -131,6 +173,16 @@ class MainViewModel(
                 it.copy(
                     showErrorDialog = true,
                     errorMessage = "Please fix package name errors before generating"
+                )
+            }
+            return
+        }
+
+        if (state.attachedPngIcon.isNotEmpty() && state.iconError.isNotEmpty()) {
+            _state.update {
+                it.copy(
+                    showErrorDialog = true,
+                    errorMessage = "Please fix icon errors before generating:\n${state.iconError}"
                 )
             }
             return
