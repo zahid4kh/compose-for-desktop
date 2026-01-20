@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "desktopclient"
-version = "1.1.0"
+version = "1.2.0"
 
 val isReleaseBuild = gradle.startParameter.taskNames.any {
     it.contains("release", ignoreCase = true) || it.contains("buildUberDeb")

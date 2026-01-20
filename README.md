@@ -1,7 +1,7 @@
 # Compose for Desktop Wizard - Desktop Client
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.2.21-blue.svg?logo=kotlin)](https://kotlinlang.org)
-[![Compose](https://img.shields.io/badge/Compose-1.9.3-blue.svg?logo=jetpack-compose)](https://www.jetbrains.com/lp/compose-multiplatform/)
+[![Compose](https://img.shields.io/badge/Compose-1.10.0-blue.svg?logo=jetpack-compose)](https://www.jetbrains.com/lp/compose-multiplatform/)
 [![Java](https://img.shields.io/badge/Java-17+-blue.svg)](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 
 A native desktop application for generating production-ready Kotlin Compose for Desktop projects, offline with advanced customization options and real-time preview.
@@ -29,13 +29,13 @@ Java 17 or later must be installed on your system. Download from [Oracle](https:
 **Option 1: Debian Package from latest release**
 - Download the .deb file from [releases page](https://github.com/zahid4kh/compose-for-desktop/releases) and install:
 ```bash
-sudo dpkg -i composefordesktop_1.1.0_all.deb
+sudo dpkg -i composefordesktop_1.2.0_all.deb
 ```
 
 **Option 2: JAR File**
 - Download the JAR file from [releases page](https://github.com/zahid4kh/compose-for-desktop/releases)  and run:
 ```bash
-java -jar composefordesktop-1.1.0.jar
+java -jar composefordesktop-1.2.0.jar
 ```
 
 ### Windows & macOS
@@ -43,7 +43,7 @@ java -jar composefordesktop-1.1.0.jar
 Download the JAR file from the [releases page](https://github.com/zahid4kh/compose-for-desktop/releases) and run:
 
 ```bash
-java -jar composefordesktop-1.1.0.jar
+java -jar composefordesktop-1.2.0.jar
 ```
 
 For detailed installation instructions, see the [Installation Guide](https://github.com/zahid4kh/compose-for-desktop/wiki/Installation).
