@@ -1,8 +1,7 @@
 [versions]
 # plugins
-composePlugin = "1.9.3"
+composePlugin = "1.10.0"
 kotlin = "2.2.21"
-hotReload = "1.1.0-alpha02"
 slf4j = "2.0.12"
 # libs
 kotlinxCoroutines = "1.10.2"
@@ -33,7 +32,6 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "composePlugin" }
 kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-hotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "hotReload" }
 
 [bundles]
 slf4j = ["slf4j-api", "slf4j-simple"]

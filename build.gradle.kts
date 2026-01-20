@@ -8,7 +8,6 @@ plugins {
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.plugin.serialization)
-    alias(libs.plugins.hotReload) apply false
 }
 
 group = "desktopclient"
@@ -16,9 +15,6 @@ version = "1.1.0"
 
 val isReleaseBuild = gradle.startParameter.taskNames.any {
     it.contains("release", ignoreCase = true) || it.contains("buildUberDeb")
-}
-if (!isReleaseBuild) {
-    apply(plugin = "org.jetbrains.compose.hot-reload")
 }
 
 repositories {
@@ -30,9 +26,9 @@ repositories {
 
 dependencies {
     implementation(compose.desktop.currentOs)
-    implementation(compose.material3)
-    implementation(compose.components.resources)
-    implementation(compose.materialIconsExtended)
+    implementation("org.jetbrains.compose.material3:material3:1.10.0-alpha05")
+    implementation("org.jetbrains.compose.components:components-resources:1.10.0")
+    implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
 
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines.core)
